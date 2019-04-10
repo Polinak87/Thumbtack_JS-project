@@ -1,0 +1,61 @@
+{
+  "name": "project-template",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "webpack": "webpack --watch",
+    "start": "nodemon --watch backend ./backend/app.js",
+    "debug": "nodemon --watch backend --inspect ./backend/app.js",
+    "dev": "concurrently \"npm run webpack\" \"npm run start\"",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "docker-build": "docker-compose build --no-cache",
+    "docker-start": "docker-compose up",
+    "docker-clean": "docker-compose stop && docker-compose down --rmi local --volumes --remove-orphans",
+    "lint": "eslint --color --quiet ./",
+    "lint:fix": "eslint --color --quiet --fix .",
+    "postinstall": "cd frontend && npm i && cd ..",
+    "precommit": "npm run lint"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@bitbucket.org/ttschool/project-template.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "homepage": "https://bitbucket.org/ttschool/project-template#readme",
+  "dependencies": {
+    "bunyan": "^1.8.12",
+    "koa": "^2.7.0",
+    "koa-body": "^4.1.0",
+    "koa-bunyan": "^1.0.2",
+    "koa-router": "^7.4.0",
+    "koa-static": "^4.0.3",
+    "mysql2": "^1.6.5",
+    "sequelize": "^5.2.6"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.3.4",
+    "@babel/plugin-proposal-object-rest-spread": "^7.3.4",
+    "@babel/preset-env": "^7.3.4",
+    "@babel/preset-react": "^7.0.0",
+    "babel-jest": "^24.1.0",
+    "babel-loader": "^8.0.5",
+    "concurrently": "^4.1.0",
+    "eslint": "^5.5.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.14.0",
+    "husky": "^0.14.3",
+    "nodemon": "^1.18.10",
+    "webpack": "^4.29.6",
+    "webpack-cli": "^3.2.3"
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.jsx?$": "babel-jest"
+    }
+  },
+  "engines": {
+    "node": "10"
+  }
+}
