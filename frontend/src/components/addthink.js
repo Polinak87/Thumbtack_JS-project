@@ -27,4 +27,4 @@ export default class AddThink extends React.Component {
       </div>
     );
   }
-}    
+}

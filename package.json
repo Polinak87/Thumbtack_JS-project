@@ -25,6 +25,7 @@
   "license": "ISC",
   "homepage": "https://bitbucket.org/ttschool/project-template#readme",
   "dependencies": {
+    "bulma": "^0.7.4",
     "bunyan": "^1.8.12",
     "koa": "^2.7.0",
     "koa-body": "^4.1.0",
@@ -48,11 +49,15 @@
     "babel-jest": "^24.1.0",
     "babel-loader": "^8.0.5",
     "concurrently": "^4.1.0",
+    "css-loader": "^2.1.1",
     "eslint": "^5.5.0",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.14.0",
     "husky": "^0.14.3",
+    "mini-css-extract-plugin": "^0.6.0",
+    "node-sass": "^4.11.0",
     "nodemon": "^1.18.10",
+    "sass-loader": "^7.1.0",
     "webpack": "^4.29.6",
     "webpack-cli": "^3.2.3"
   },

@@ -1,5 +1,6 @@
 const webpack = require('webpack');
 const path = require('path');
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 const BUILD_DIR = path.resolve(__dirname, 'public/dist');
 const FRONTEND_APP_DIR = path.resolve(__dirname, 'frontend/src');
@@ -24,9 +25,21 @@ const config = {
           }
         }
       },
+      {
+        test: /\.(css|scss)$/,
+        use: [
+          MiniCssExtractPlugin.loader, // from js to own file.css
+          "css-loader", // @import
+          "sass-loader" // scss -> css
+        ]
+      },
     ]
   },
-  plugins: []
+  plugins: [
+    new MiniCssExtractPlugin({
+      filename: "styles.css",
+    })
+  ]
 };
 
 module.exports = config;

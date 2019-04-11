@@ -31,7 +31,7 @@ export default class Login extends React.Component {
       <div>
         <ul>login</ul>
         <h3>{this.state.value}</h3>
-        <button onClick={this.handleClick}>Log out</button>
+        <button className="button" onClick={this.handleClick}>Log out</button>
       </div>
     );
   }

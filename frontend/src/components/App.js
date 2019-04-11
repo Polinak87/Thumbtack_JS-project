@@ -1,5 +1,5 @@
 import React from 'react';
-// import '../styles/components/App.css';
+import '../styles/components/App.scss';
 
 // import UserName from './UserName';
 // import Thing from './things';
