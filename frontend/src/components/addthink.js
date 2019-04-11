@@ -13,6 +13,7 @@ export default class AddThink extends React.Component {
       description: 'pretty_3',
       category: 'clothes_3',
     })
+
       .then((response) => {
         this.setState({ value: response.data })
       });

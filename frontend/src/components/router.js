@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import Profile from './profile';
 import Market from './market';
 import AddThink from './addthink';
+import Login from './login';
 
 function MainRouter() {
   return (
@@ -19,6 +20,9 @@ function MainRouter() {
           <li>
             <Link to="/addthink">AddThink</Link>
           </li>
+          <li>
+            <Link to="/login">Login</Link>
+          </li>
         </ul>
 
         <button>Обменять </button>
@@ -29,6 +33,7 @@ function MainRouter() {
         <Route exact path="/" component={Profile} />
         <Route path="/market" component={Market} />
         <Route path="/addthink" component={AddThink} />
+        <Route path="/login" component={Login} />
       </div>
     </Router>
   );
