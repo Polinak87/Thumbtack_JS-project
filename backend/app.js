@@ -9,6 +9,8 @@ const koaLogger = require('koa-bunyan');
 const koaBody = require('koa-body');
 const session = require('koa-generic-session');
 const SequelizeSessionStore = require('koa-generic-session-sequelize'); // прочитала
+const send = require('koa-send');
+const path = require('path');
 const { sequelize } = require('./models');
 const { router } = require('./routers/index');
 const passport = require('./middlewares/passport');
@@ -46,6 +48,14 @@ app.use(passport.session());
 
 app.use(router.routes());
 app.use(router.allowedMethods());
+
+app.use(async (ctx) => {
+  if (!ctx.request.path.startsWith('/api/')) {
+    const _path = path.resolve('public');
+
+    await send(ctx, 'index.html', { root: _path });
+  }
+});
 
 app.listen(port, () => {
   console.log(`Server is started on ${port} port`);

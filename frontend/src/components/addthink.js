@@ -8,7 +8,7 @@ export default class AddThink extends React.Component {
   }
 
   componentDidMount() {
-    axios.post('/api/addthink', {
+    axios.post('/api/addthing', {
       name: 'dress_3',
       description: 'pretty_3',
       category: 'clothes_3',

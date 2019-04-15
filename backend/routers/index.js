@@ -1,8 +1,6 @@
 'use strict';
 
-// const koaBody = require('koa-body');
 const Router = require('koa-router');
-// const koaBody = require('../app');
 const passport = require('../middlewares/passport');
 
 const router = new Router();
@@ -13,8 +11,9 @@ const {
 } = require('../models');
 
 // работает
-router.post('/api/addthink', (ctx) => {
+router.post('/api/addnewthing', (ctx) => {
   Thing.create(ctx.request.body);
+  console.log(ctx.request.body);
   ctx.body = 'Thing is added.';
 });
 // работает
@@ -30,6 +29,7 @@ router.get('/api/me', (ctx) => {
   ctx.body = ctx.state.user;
 });
 
+// eslint-disable-next-line consistent-return
 router.post('/api/login', async (ctx) => {
   if (ctx.isAuthenticated()) {
     return ctx.redirect('/');
