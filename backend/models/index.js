@@ -10,9 +10,11 @@ const sequelize = new Sequelize(db.name, db.username, db.password, {
 });
 
 const Thing = require('./thing')(sequelize);
+const User = require('./user')(sequelize);
 
 const models = {
   [Thing.name]: Thing,
+  [User.name]: User,
 };
 
 Object.keys(models).forEach((modelName) => {

@@ -3,18 +3,32 @@
 const passport = require('koa-passport');
 const LocalStrategy = require('passport-local');
 
+const {
+  User,
+} = require('../models');
+
 const options = {
   usernameField: 'email',
   passwordField: 'password',
 };
 
-passport.use('local', new LocalStrategy(options, (email, password, done) => {
-  // Fetch real user data from db and check if passed credentials match
-  if (email === 'test@example.com' && password === 'password') {
+passport.use('local', new LocalStrategy(options, async (email, password, done) => {
+  // console.log('1');
+  // console.log(email);
+  const user = await User.findOne({
+    where: {
+      email,
+      password,
+    },
+  });
+  // console.log('2');
+
+  if (user) {
+    // console.log('3');
     return done(null, {
       email,
       password,
-      id: 1,
+      id: user.id,
     });
   }
 
@@ -22,17 +36,20 @@ passport.use('local', new LocalStrategy(options, (email, password, done) => {
 }));
 
 passport.serializeUser((user, done) => {
-  console.log('serializeUser');
   done(null, user.id);
 });
 
-passport.deserializeUser((userId, done) => {
-  // Fetch real user data from db
-  console.log('deserializeUser');
+passport.deserializeUser(async (userId, done) => {
+  const user = await User.findOne({
+    where: {
+      id: userId,
+    },
+  });
+
   done(null, {
-    email: 'test@example.com',
-    password: 'password',
-    id: 1,
+    email: user.email,
+    password: user.password,
+    id: userId,
   });
 });
 

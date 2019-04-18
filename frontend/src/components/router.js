@@ -7,6 +7,7 @@ import AddThink from './addthink';
 import Login from './login';
 import AddNewThingForm from './form/add-new-thing-form';
 import Logout from './logout';
+import RegistrationForm from './form/registration-form';
 
 function MainRouter() {
   return (
@@ -31,6 +32,9 @@ function MainRouter() {
           <li>
             <Link to="/addnewthink">AddNewThing</Link>
           </li>
+          <li>
+            <Link to="/registration">Registration</Link>
+          </li>
         </ul>
 
         <button>Обменять </button>
@@ -44,6 +48,8 @@ function MainRouter() {
         <Route path="/addnewthink" component={AddNewThingForm} />
         <Route path="/login" component={Login} />
         <Route path="/logout" component={Logout} />
+        <Route path="/registration" component={RegistrationForm} />
+
       </div>
     </Router>
   );
