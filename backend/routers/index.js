@@ -6,10 +6,13 @@ const passport = require('../middlewares/passport');
 const router = new Router();
 
 const {
-  // sequelize,
+  sequelize,
   Thing,
   User,
+  Category,
 } = require('../models');
+
+// let currentUserName;
 
 // работает
 router.post('/api/addnewthing', (ctx) => {
@@ -28,6 +31,8 @@ router.post('/api/registration', async (ctx) => {
 
   if (!userFromDB) {
     await User.create(ctx.request.body);
+
+    // currentUserName = ctx.request.body.firstName + ' ' + ctx.request.body.lastName;
 
     await passport.authenticate('local', {}, async (err, newUser) => {
       // console.log('4');
@@ -90,6 +95,12 @@ router.post('/api/logout', async (ctx) => {
   return ctx.redirect('/');
 });
 
+router.get('/api/category', async (ctx, next) => {
+
+  ctx.body = await Category.findAll();
+  // console.log(ctx.body);
+});
+
 // sequelize.sync({ force: true }).then(async () => {
 //   const user = await User.create({
 //     firstName: 'Ivan',
@@ -99,7 +110,27 @@ router.post('/api/logout', async (ctx) => {
 //   });
 // });
 
+sequelize.sync({ force: true }).then(async () => {
+  const thing = await Thing.create({
+    name: 'summer dress',
+    description: 'pretty',
+    category: '1',
+  });
+});
+
+sequelize.sync({ force: true }).then(async () => {
+  const category1 = await Category.create({
+    name: 'dresses',
+  });
+  const category2 = await Category.create({
+    name: 'skirts',
+  });
+  const category3 = await Category.create({
+    name: 'blouses',
+  });
+});
+
 module.exports = {
   router,
+  // currentUserName,
 };
-

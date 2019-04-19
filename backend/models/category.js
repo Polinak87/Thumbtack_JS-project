@@ -3,19 +3,13 @@
 const Sequelize = require('sequelize');
 
 module.exports = (sequelize) => {
-  const Thing = sequelize.define('Thing', {
+  const Category = sequelize.define('Category', {
     name: {
       type: Sequelize.STRING(50),
     },
-    description: {
-      type: Sequelize.STRING(50),
-    },
-    category: {
-      type: Sequelize.INTEGER(50),
-    },
   }, {
     underscored: true,
-    tableName: 'things',
+    tableName: 'category',
   });
 
   // Thing.associate = function (models) {
@@ -24,5 +18,5 @@ module.exports = (sequelize) => {
   //   });
   // };
 
-  return Thing;
+  return Category;
 };

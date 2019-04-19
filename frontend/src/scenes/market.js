@@ -1,11 +1,11 @@
 import React from 'react';
-import ThingPage from './thingsPage';
+import Thing from './things';
 
 function Market() {
     return (
       <div>
         <h2>Market</h2>
-        <ThingPage />
+        <Thing />
       </div>
     );
 }

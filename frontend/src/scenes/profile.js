@@ -1,15 +1,10 @@
-import React, {useState, useEffect} from 'react';
-import UserName from './userName';
+import React from 'react';
+// import UserName from './userName';
 import axios from 'axios';
 
 export default class Profile extends React.Component {
   constructor(props) {
     super(props);
-    // this.state = {
-    //   name: '',
-    //   description: '',
-    //   category: '',
-    // }
     this.state = {
       value: [],
     }
@@ -18,8 +13,6 @@ export default class Profile extends React.Component {
   componentDidMount() {
     axios.get('/api/things')
       .then((response) => {
-        // const { name, description, category } = response.data;
-        // this.setState({ name, description, category, });
         this.setState({ value: response.data })
       });
   }
@@ -29,7 +22,7 @@ export default class Profile extends React.Component {
   render() {
     let card = (id, name, description, category) => {
       return (
-        <div>
+        <div key={id}>
           <div className="card">
             <div className="card-image">
               <figure className="image is-4by3">
@@ -65,7 +58,7 @@ export default class Profile extends React.Component {
 
     return (
       <div>
-        <UserName />
+        {/* <UserName /> */}
         <ul>{list}</ul>
       </div>
     );

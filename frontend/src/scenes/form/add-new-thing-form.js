@@ -7,7 +7,8 @@ class AddNewThingForm extends React.Component {
     this.state = {
       name: '',
       description: '',
-      category: '',
+      category: '1',
+      categoryList: [],
     }
 
     this.barabashka1 = React.createRef();
@@ -21,8 +22,10 @@ class AddNewThingForm extends React.Component {
   }
 
   componentDidMount() {
-    console.log(this.barabashka1.current);
-    // setTimeout(() => {this.barabashka.current.classList.add('gggg')}, 2000);
+    axios.get('/api/category')
+    .then((response) => {
+      this.setState({ categoryList: response.data })
+    });
   }
 
   handleChangeName(event) {
@@ -47,12 +50,25 @@ class AddNewThingForm extends React.Component {
   }
 
   render() {
+    let categoryOptons = [];
+    this.state.categoryList.forEach((cat, index) => {
+      categoryOptons.push(
+        <option key={cat.id} value={cat.id}>{cat.name} </option>
+      );
+    });
+
     return (
       <form className="" onSubmit={this.handleSubmit}>
         <label>Enter data for new thing:</label>
         <input className="input" type="text" placeholder="Name" onChange={this.handleChangeName} value={this.state.name} ref={this.barabashka1} />
         <input className="input" type="text" placeholder="Description" onChange={this.handleChangeDescription} value={this.state.description} ref={this.barabashka2} />
-        <input className="input" type="text" placeholder="Category" onChange={this.handleChangeCategory} value={this.state.category} ref={this.barabashka3} />
+        <div className="control">
+          <div className="select">
+            <select onChange={this.handleChangeCategory}  value={this.state.category} ref={this.barabashka3}>
+              {categoryOptons}
+            </select>
+          </div>
+        </div>
         <input className="button is-block is-success is-large is-fullwidth" type="submit" value="Add"></input>
       </form>
     );
