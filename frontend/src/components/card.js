@@ -14,7 +14,7 @@ export default class Card extends React.Component {
     // console.log(id);
     axios.post('/api/addthingtomarket', { id })
     .then((response) => {
-      this.props.updateData(id, response.data.onMarket);
+      this.props.updateData(id, response.data.onMarket, response.data.onMarketAt);
     });
   }
 
@@ -24,12 +24,12 @@ export default class Card extends React.Component {
     // console.log(id);
     axios.post('/api/removethingfrommarket', { id })
       .then((response) => {
-        this.props.updateData(id, response.data.onMarket);
+        this.props.updateData(id, response.data.onMarket, response.data.onMarketAt);
       });
   }
 
   render() {
-    const { id, name, description, category, onMarket } = this.props;
+    const { id, name, description, category, onMarket, onMarketAt } = this.props;
     let button;
     if (onMarket) {
       button = <input className="button is-block is-danger is-large is-fullwidth" onClick={this.handleClickRemove} type="submit" value="Remove from market"></input>;
@@ -47,17 +47,15 @@ export default class Card extends React.Component {
           </div>
           <div className="card-content">
             <div className="content">
-              {id}
+              id: {id}
               <br />
-              {name}
+              Name: {name}
               <br />
-              {category}
+              Category: {category}
               <br />
-              {description}
+              Description: {description}
               <br />
-              {onMarket}
-              <br />
-              <time dateTime="2016-1-1">11:09 PM - 1 Jan 2016</time>
+              <time dateTime="2016-1-1">On market from: {onMarketAt}</time>
             </div>
           </div>
         </div>

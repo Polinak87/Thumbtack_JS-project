@@ -10,7 +10,7 @@ module.exports = (sequelize) => {
     description: {
       type: Sequelize.STRING(50),
     },
-    category: {
+    categoryId: {
       type: Sequelize.INTEGER(50),
     },
     userId: {
@@ -19,6 +19,9 @@ module.exports = (sequelize) => {
     onMarket: {
       type: Sequelize.BOOLEAN,
     },
+    onMarketAt: {
+      type: Sequelize.DATE,
+    },
   }, {
     underscored: true,
     tableName: 'things',
@@ -26,6 +29,7 @@ module.exports = (sequelize) => {
 
   Thing.associate = function (models) {
     Thing.belongsTo(models.User);
+    Thing.belongsTo(models.Category);
     // Thing.belongsToMany(models.Driver, {
     //   through: models.DriverCar
     // });

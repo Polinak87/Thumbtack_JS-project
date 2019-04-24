@@ -16,43 +16,63 @@ export default class Profile extends React.Component {
     axios.get('/api/userthings')
       .then((response) => {
         var map = this.state.value;
-        response.data.forEach(function(thing) {
+        console.log(response.data);
+        // debugger;
+        response.data.forEach(function (thing) {
           map.set(thing.id, thing)
         });
-        this.setState({value: map});
+        this.setState({ value: map });
         // console.log(this.state.value);
       });
   }
 
-  updateData(id, data) {
+  updateData(id, onMarket, onMarketAt) {
     let { value } = this.state;
     let thing = value.get(id);
-    thing.onMarket = data;
+    thing.onMarket = onMarket;
+    thing.onMarketAt = onMarketAt;
     value.set(id, thing);
     this.setState({ value });
     console.log(this.state.value);
   };
 
   render() {
-    // let array = this.state.value.values();
     let list = [];
-    for(let thing of this.state.value.values()) {
+    for (let thing of this.state.value.values()) {
       list.push(
-      <Card
-        id={thing.id}
-        name={thing.name}
-        description={thing.description}
-        category={thing.category}
-        onMarket={thing.onMarket}
-        updateData={this.updateData}
-        key={thing.id} />
+        <div className="column is-one-quarter" key={thing.id}>
+          <Card
+            id={thing.id}
+            name={thing.name}
+            description={thing.description}
+            category={thing.category}
+            onMarket={thing.onMarket}
+            onMarketAt={thing.onMarketAt}
+            updateData={this.updateData}/>
+        </div>
       )
     };
 
     return (
       <div>
-        {/* <UserName /> */}
-        <ul>{list}</ul>
+        <br/>
+        <section className="hero is-primary">
+          <div className="hero-body">
+            <div className="container">
+              <h1 className="title">
+                Your inventory
+              </h1>
+            </div>
+          </div>
+        </section>
+        <section className="section">
+          <div>
+            {/* <UserName /> */}
+            <div className="columns is-multiline">
+              {list}
+            </div>
+          </div>
+        </section>
       </div>
     );
   }

@@ -14,26 +14,36 @@ const {
 
 router.post('/api/addthingtomarket', async (ctx) => {
   const thingId = ctx.request.body.id;
-
-  console.log(thingId);
+  const date = new Date();
 
   await Thing.update(
-    { onMarket: true },
+    {
+      onMarket: true,
+      onMarketAt: date,
+    },
     { where: { id: thingId } },
   );
-  ctx.body = { onMarket: true };
+  ctx.body = {
+    onMarket: true,
+    onMarketAt: date,
+  };
 });
 
 router.post('/api/removethingfrommarket', async (ctx) => {
   const thingId = ctx.request.body.id;
-
-  console.log(thingId);
+  // console.log(thingId);
 
   await Thing.update(
-    { onMarket: false },
+    {
+      onMarket: false,
+      onMarketAt: null,
+    },
     { where: { id: thingId } },
   );
-  ctx.body = { onMarket: false };
+  ctx.body = {
+    onMarket: false,
+    onMarketAt: null,
+  };
 });
 
 // работает
@@ -87,13 +97,19 @@ router.get('/api/things', async (ctx, next) => {
       where: {},
     }],
   });
-  console.log(ctx.body);
+  // console.log(ctx.body);
 });
 
 router.get('/api/userthings', async (ctx, next) => {
   const userId = ctx.state.user.id;
 
-  ctx.body = await Thing.findAll({ where: { userId } });
+  ctx.body = await Thing.findAll({
+    // include: [{
+    //   model: Category,
+    //   attributes: [],
+    where: { userId },
+    // }],
+  });
   // console.log(ctx.body);
 });
 
@@ -151,15 +167,16 @@ router.get('/api/category', async (ctx, next) => {
 //   });
 // });
 
-sequelize.sync({ force: false }).then(async () => {
-  const thing = await Thing.create({
-    name: 'summer dress',
-    description: 'pretty',
-    category: '1',
-    userId: '1',
-    onMarket: true,
-  });
-});
+// sequelize.sync({ force: true }).then(async () => {
+//   const thing = await Thing.create({
+//     name: 'summer dress',
+//     description: 'pretty',
+//     categoryId: '1',
+//     userId: '1',
+//     onMarket: true,
+//     onMarketAt: new Date(),
+//   });
+// });
 
 sequelize.sync({ force: false })
   .then(async () => {
