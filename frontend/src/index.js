@@ -1,9 +1,15 @@
 import React from 'react';
 import { render } from 'react-dom';
-import App from './components/App';
+import { Provider } from 'react-redux'
+import App from './App';
+import store from './store';
+import { BrowserRouter as Router} from "react-router-dom";
 
 render(
-  <div>
-    <App/>
-  </div>, document.getElementById('app')
+  <Provider store={store}>
+    <Router>
+    <App />
+    </Router>
+  </Provider>,
+  document.getElementById('app')
 );

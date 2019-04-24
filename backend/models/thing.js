@@ -13,16 +13,23 @@ module.exports = (sequelize) => {
     category: {
       type: Sequelize.INTEGER(50),
     },
+    userId: {
+      type: Sequelize.INTEGER(50),
+    },
+    onMarket: {
+      type: Sequelize.BOOLEAN,
+    },
   }, {
     underscored: true,
     tableName: 'things',
   });
 
-  // Thing.associate = function (models) {
-  //   Thing.belongsToMany(models.Driver, {
-  //     through: models.DriverCar
-  //   });
-  // };
+  Thing.associate = function (models) {
+    Thing.belongsTo(models.User);
+    // Thing.belongsToMany(models.Driver, {
+    //   through: models.DriverCar
+    // });
+  };
 
   return Thing;
 };

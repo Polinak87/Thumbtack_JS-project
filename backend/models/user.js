@@ -21,11 +21,5 @@ module.exports = (sequelize) => {
     tableName: 'users',
   });
 
-  // Thing.associate = function (models) {
-  //   Thing.belongsToMany(models.Driver, {
-  //     through: models.DriverCar
-  //   });
-  // };
-
   return User;
 };

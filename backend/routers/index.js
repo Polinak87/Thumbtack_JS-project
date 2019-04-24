@@ -12,12 +12,41 @@ const {
   Category,
 } = require('../models');
 
-// let currentUserName;
+router.post('/api/addthingtomarket', async (ctx) => {
+  const thingId = ctx.request.body.id;
+
+  console.log(thingId);
+
+  await Thing.update(
+    { onMarket: true },
+    { where: { id: thingId } },
+  );
+  ctx.body = { onMarket: true };
+});
+
+router.post('/api/removethingfrommarket', async (ctx) => {
+  const thingId = ctx.request.body.id;
+
+  console.log(thingId);
+
+  await Thing.update(
+    { onMarket: false },
+    { where: { id: thingId } },
+  );
+  ctx.body = { onMarket: false };
+});
 
 // работает
-router.post('/api/addnewthing', (ctx) => {
-  Thing.create(ctx.request.body);
-  // console.log(ctx.request.body);
+router.post('/api/addnewthing', async (ctx) => {
+  const { name, description, category } = ctx.request.body;
+  const userId = ctx.state.user.id;
+
+  await Thing.create({
+    name,
+    description,
+    category,
+    userId,
+  });
   ctx.body = 'Thing is added.';
 });
 
@@ -31,8 +60,6 @@ router.post('/api/registration', async (ctx) => {
 
   if (!userFromDB) {
     await User.create(ctx.request.body);
-
-    // currentUserName = ctx.request.body.firstName + ' ' + ctx.request.body.lastName;
 
     await passport.authenticate('local', {}, async (err, newUser) => {
       // console.log('4');
@@ -53,8 +80,23 @@ router.post('/api/registration', async (ctx) => {
 
 // работает
 router.get('/api/things', async (ctx, next) => {
-  ctx.body = await Thing.findAll();
+  ctx.body = await Thing.findAll({
+    include: [{
+      model: User,
+      attributes: [],
+      where: {},
+    }],
+  });
+  console.log(ctx.body);
 });
+
+router.get('/api/userthings', async (ctx, next) => {
+  const userId = ctx.state.user.id;
+
+  ctx.body = await Thing.findAll({ where: { userId } });
+  // console.log(ctx.body);
+});
+
 // тестим
 router.get('/api/me', (ctx) => {
   if (ctx.isUnauthenticated()) {
@@ -96,7 +138,6 @@ router.post('/api/logout', async (ctx) => {
 });
 
 router.get('/api/category', async (ctx, next) => {
-
   ctx.body = await Category.findAll();
   // console.log(ctx.body);
 });
@@ -110,27 +151,24 @@ router.get('/api/category', async (ctx, next) => {
 //   });
 // });
 
-sequelize.sync({ force: true }).then(async () => {
+sequelize.sync({ force: false }).then(async () => {
   const thing = await Thing.create({
     name: 'summer dress',
     description: 'pretty',
     category: '1',
+    userId: '1',
+    onMarket: true,
   });
 });
 
-sequelize.sync({ force: true }).then(async () => {
-  const category1 = await Category.create({
-    name: 'dresses',
+sequelize.sync({ force: false })
+  .then(async () => {
+    await Category.create({ name: 'dresses' });
+    await Category.create({ name: 'skirts' });
+    await Category.create({ name: 'blouses' });
   });
-  const category2 = await Category.create({
-    name: 'skirts',
-  });
-  const category3 = await Category.create({
-    name: 'blouses',
-  });
-});
 
 module.exports = {
   router,
-  // currentUserName,
 };
+

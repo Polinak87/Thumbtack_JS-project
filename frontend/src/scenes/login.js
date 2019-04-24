@@ -1,5 +1,7 @@
 import React from 'react';
 import axios from 'axios';
+import store from '../store/index';
+import { addUser } from '../store/actions/user';
 
 export default class Login extends React.Component {
   constructor(props) {
@@ -28,6 +30,10 @@ export default class Login extends React.Component {
     axios.post('/api/login', { email, password })
       .then((response) => {
         console.log(response);
+        if (response && response.status === 200) {
+          store.dispatch(addUser(response.data));
+        }
+        console.log(store.getState().user);
         // this.setState({ value: response.data })
       });
   }
