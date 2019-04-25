@@ -19,17 +19,35 @@ export default class Market extends React.Component {
 
   render() {
     const list = this.state.value.map((thing) => (
-      <Card
-        id={thing.id}
-        name={thing.name}
-        description={thing.description}
-        category={thing.category}
-        key={thing.id} />
+      <div className="column is-one-quarter" key={thing.id}>
+        <Card
+          id={thing.id}
+          name={thing.name}
+          description={thing.description}
+          category={thing.category} />
+        </div>
     ));
 
     return (
       <div>
-        <ul>{list}</ul>
+        <br/>
+        <section className="hero is-primary">
+          <div className="hero-body">
+            <div className="container">
+              <h1 className="title">
+                Market
+              </h1>
+            </div>
+          </div>
+        </section>
+        <section className="section">
+          <div>
+            {/* <UserName /> */}
+            <div className="columns is-multiline">
+              {list}
+            </div>
+          </div>
+        </section>
       </div>
     );
   }

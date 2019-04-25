@@ -29,7 +29,7 @@ export default class Card extends React.Component {
   }
 
   render() {
-    const { id, name, description, category, onMarket, onMarketAt } = this.props;
+    const { id, name, description, categoryName, onMarket, onMarketAt } = this.props;
     let button;
     if (onMarket) {
       button = <input className="button is-block is-danger is-large is-fullwidth" onClick={this.handleClickRemove} type="submit" value="Remove from market"></input>;
@@ -51,7 +51,7 @@ export default class Card extends React.Component {
               <br />
               Name: {name}
               <br />
-              Category: {category}
+              Category: {categoryName}
               <br />
               Description: {description}
               <br />

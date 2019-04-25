@@ -45,7 +45,7 @@ export default class Profile extends React.Component {
             id={thing.id}
             name={thing.name}
             description={thing.description}
-            category={thing.category}
+            categoryName={thing.Category.name}
             onMarket={thing.onMarket}
             onMarketAt={thing.onMarketAt}
             updateData={this.updateData}/>

@@ -7,7 +7,7 @@ class AddNewThingForm extends React.Component {
     this.state = {
       name: '',
       description: '',
-      category: '1',
+      categoryId: '1',
       categoryList: [],
     }
 
@@ -37,14 +37,14 @@ class AddNewThingForm extends React.Component {
   }
 
   handleChangeCategory(event) {
-    this.setState({ category: event.target.value });
+    this.setState({ categoryId: event.target.value });
   }
 
   handleSubmit(event) {
     event.preventDefault();
-    const { name, description, category } = this.state;
-    console.log(name, description, category);
-    axios.post('/api/addnewthing', { name, description, category }).then((response) => {
+    const { name, description, categoryId } = this.state;
+    console.log(name, description, categoryId);
+    axios.post('/api/addnewthing', { name, description, categoryId }).then((response) => {
       console.log(response);
     });
   }
@@ -58,19 +58,34 @@ class AddNewThingForm extends React.Component {
     });
 
     return (
-      <form className="" onSubmit={this.handleSubmit}>
-        <label>Enter data for new thing:</label>
-        <input className="input" type="text" placeholder="Name" onChange={this.handleChangeName} value={this.state.name} ref={this.barabashka1} />
-        <input className="input" type="text" placeholder="Description" onChange={this.handleChangeDescription} value={this.state.description} ref={this.barabashka2} />
-        <div className="control">
-          <div className="select">
-            <select onChange={this.handleChangeCategory}  value={this.state.category} ref={this.barabashka3}>
-              {categoryOptons}
-            </select>
+      <div>
+        <br/>
+        <section className="hero is-primary">
+          <div className="hero-body">
+            <div className="container">
+              <h1 className="title">
+                Add new thing to your inventory
+              </h1>
+            </div>
           </div>
+        </section>
+        <br/>
+        <div className="column is-one-quarter">
+          <form className="" onSubmit={this.handleSubmit}>
+            <input className="input" type="text" placeholder="Name" onChange={this.handleChangeName} value={this.state.name} ref={this.barabashka1} />
+            <input className="input" type="text" placeholder="Description" onChange={this.handleChangeDescription} value={this.state.description} ref={this.barabashka2} />
+            <div className="control">
+              <div className="select">
+                <select onChange={this.handleChangeCategory}  value={this.state.categoryId} ref={this.barabashka3}>
+                  {categoryOptons}
+                </select>
+              </div>
+            </div>
+            <br/>
+            <input className="button is-block is-success is-large is-fullwidth" type="submit" value="Add"></input>
+          </form>
         </div>
-        <input className="button is-block is-success is-large is-fullwidth" type="submit" value="Add"></input>
-      </form>
+      </div>
     );
   };
 }

@@ -48,13 +48,13 @@ router.post('/api/removethingfrommarket', async (ctx) => {
 
 // работает
 router.post('/api/addnewthing', async (ctx) => {
-  const { name, description, category } = ctx.request.body;
+  const { name, description, categoryId } = ctx.request.body;
   const userId = ctx.state.user.id;
 
   await Thing.create({
     name,
     description,
-    category,
+    categoryId,
     userId,
   });
   ctx.body = 'Thing is added.';
@@ -96,22 +96,44 @@ router.get('/api/things', async (ctx, next) => {
       attributes: [],
       where: {},
     }],
+    where: {
+      onMarket: true,
+    },
   });
   // console.log(ctx.body);
 });
 
 router.get('/api/userthings', async (ctx, next) => {
-  const userId = ctx.state.user.id;
-
+  // const currentUserId = ctx.state.user.id;// !!!!
+  console.log(ctx.state);
   ctx.body = await Thing.findAll({
-    // include: [{
-    //   model: Category,
-    //   attributes: [],
-    where: { userId },
-    // }],
-  });
+    include: [{
+      model: Category,
+      // as: 'category',
+      // attributes: [],
+      where: {},
+    }],
+    where: {
+      userId: 1,
+    },
   // console.log(ctx.body);
+  });
 });
+
+// const myThings = await Thing.findAll({
+//   include: [{
+//     model: User,
+//     attributes: [],
+//     where: {
+//       Id: user.id,
+//     },
+//     through: {
+//       where: {
+//         for_exchange: true,
+//       },
+//     },
+//   }],
+// });
 
 // тестим
 router.get('/api/me', (ctx) => {
@@ -188,4 +210,3 @@ sequelize.sync({ force: false })
 module.exports = {
   router,
 };
-
