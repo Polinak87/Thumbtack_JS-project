@@ -1,7 +1,6 @@
 import React from 'react';
-// import UserName from './userName';
 import axios from 'axios';
-import Card from '../components/card'
+import Card from './card';
 
 export default class Profile extends React.Component {
   constructor(props) {
@@ -17,12 +16,10 @@ export default class Profile extends React.Component {
       .then((response) => {
         var map = this.state.value;
         console.log(response.data);
-        // debugger;
         response.data.forEach(function (thing) {
           map.set(thing.id, thing)
         });
         this.setState({ value: map });
-        // console.log(this.state.value);
       });
   }
 
@@ -37,9 +34,9 @@ export default class Profile extends React.Component {
   };
 
   render() {
-    let list = [];
+    let cardList = [];
     for (let thing of this.state.value.values()) {
-      list.push(
+      cardList.push(
         <div className="column is-one-quarter" key={thing.id}>
           <Card
             id={thing.id}
@@ -54,7 +51,7 @@ export default class Profile extends React.Component {
     };
 
     return (
-      <div>
+      <>
         <br/>
         <section className="hero is-primary">
           <div className="hero-body">
@@ -66,14 +63,11 @@ export default class Profile extends React.Component {
           </div>
         </section>
         <section className="section">
-          <div>
-            {/* <UserName /> */}
-            <div className="columns is-multiline">
-              {list}
-            </div>
+          <div className="columns is-multiline">
+            {cardList}
           </div>
         </section>
-      </div>
+      </>
     );
   }
 }

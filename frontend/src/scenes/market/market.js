@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import Card from '../components/card'
+import Card from '../profile/card'
 
 export default class Market extends React.Component {
   constructor(props) {

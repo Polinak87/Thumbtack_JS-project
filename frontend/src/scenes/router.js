@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Redirect, withRouter } from "react-router-dom";
-import Profile from './profile';
-import Market from './market';
+import Profile from './profile/profile';
+import Market from './market/market';
 import Login from './login';
 import AddNewThingForm from './form/add-new-thing-form';
 import Logout from './logout';

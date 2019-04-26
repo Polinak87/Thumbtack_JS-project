@@ -104,8 +104,9 @@ router.get('/api/things', async (ctx, next) => {
 });
 
 router.get('/api/userthings', async (ctx, next) => {
-  // const currentUserId = ctx.state.user.id;// !!!!
+  // const currentUserId = ctx.state.user.id;
   console.log(ctx.state);
+  console.log(ctx.state.user);
   ctx.body = await Thing.findAll({
     include: [{
       model: Category,
