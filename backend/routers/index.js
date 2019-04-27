@@ -10,7 +10,38 @@ const {
   Thing,
   User,
   Category,
+  Application,
 } = require('../models');
+
+router.get('/api/applicationOutbox', async (ctx, next) => {
+  const currentUserId = ctx.state.user.id;
+
+  ctx.body = await Application.findAll({
+    // include: [{
+    //   model: Thing,
+    //   where: {},
+    // }],
+    where: {
+      idUserAuthor: currentUserId,
+    },
+  });
+});
+
+router.post('/api/exchangething', async (ctx) => {
+  const { idThingOffered, idThingDesired, idUserAnswer } = ctx.request.body;
+  const idUserAuthor = ctx.state.user.id;
+
+  await Application.create({
+    idApplicationOutbox: 1,
+    idUserAuthor,
+    idThingOffered,
+    idApplicationInbox: 1,
+    idUserAnswer,
+    idThingDesired,
+    status: 'pending',
+  });
+  ctx.body = 'Application is created.';
+});
 
 router.post('/api/addthingtomarket', async (ctx) => {
   const thingId = ctx.request.body.id;
@@ -31,7 +62,6 @@ router.post('/api/addthingtomarket', async (ctx) => {
 
 router.post('/api/removethingfrommarket', async (ctx) => {
   const thingId = ctx.request.body.id;
-  // console.log(thingId);
 
   await Thing.update(
     {
@@ -60,125 +90,36 @@ router.post('/api/addnewthing', async (ctx) => {
   ctx.body = 'Thing is added.';
 });
 
-// eslint-disable-next-line consistent-return
-router.post('/api/registration', async (ctx) => {
-  if (ctx.isAuthenticated()) {
-    return ctx.redirect('/');
-  }
-  const { email } = ctx.request.body;
-  const userFromDB = await User.findOne({ where: { email } });
-
-  if (!userFromDB) {
-    await User.create(ctx.request.body);
-
-    await passport.authenticate('local', {}, async (err, newUser) => {
-      // console.log('4');
-      ctx.login(newUser, (err) => {
-        // console.log('5');
-        if (err) {
-          ctx.throw(401, err.message);
-        }
-        ctx.status = 200;
-        ctx.body = newUser;
-      });
-    })(ctx);
-    // ctx.body = 'User is added.';
-  } else {
-    ctx.throw(401, 'This email has been used for registration. Please use another email.');
-  }
-});
-
 // работает
 router.get('/api/things', async (ctx, next) => {
   ctx.body = await Thing.findAll({
     include: [{
       model: User,
-      attributes: [],
+      // attributes: [],
       where: {},
     }],
     where: {
       onMarket: true,
     },
   });
-  // console.log(ctx.body);
 });
 
 router.get('/api/userthings', async (ctx, next) => {
-  // const currentUserId = ctx.state.user.id;
-  console.log(ctx.state);
-  console.log(ctx.state.user);
+  const currentUserId = ctx.state.user.id;
+
   ctx.body = await Thing.findAll({
     include: [{
       model: Category,
-      // as: 'category',
-      // attributes: [],
       where: {},
     }],
     where: {
-      userId: 1,
+      userId: currentUserId,
     },
-  // console.log(ctx.body);
   });
-});
-
-// const myThings = await Thing.findAll({
-//   include: [{
-//     model: User,
-//     attributes: [],
-//     where: {
-//       Id: user.id,
-//     },
-//     through: {
-//       where: {
-//         for_exchange: true,
-//       },
-//     },
-//   }],
-// });
-
-// тестим
-router.get('/api/me', (ctx) => {
-  if (ctx.isUnauthenticated()) {
-    ctx.throw(401, 'Unauthenticated');
-  }
-  ctx.status = 200;
-  ctx.body = ctx.state.user;
-});
-
-// eslint-disable-next-line consistent-return
-router.post('/api/login', async (ctx) => {
-  // console.log('0');
-  if (ctx.isAuthenticated()) {
-    return ctx.redirect('/');
-  }
-
-  await passport.authenticate('local', {}, async (err, user) => {
-    // console.log('4');
-    if (!user) {
-      ctx.throw(401, 'Incorrect login/password');
-    }
-
-    ctx.login(user, (err) => {
-      // console.log('5');
-      if (err) {
-        ctx.throw(401, err.message);
-      }
-      ctx.status = 200;
-      ctx.body = user;
-    });
-  })(ctx);
-});
-
-router.post('/api/logout', async (ctx) => {
-  await ctx.logout();
-  // ctx.state.user
-
-  return ctx.redirect('/');
 });
 
 router.get('/api/category', async (ctx, next) => {
   ctx.body = await Category.findAll();
-  // console.log(ctx.body);
 });
 
 // sequelize.sync({ force: true }).then(async () => {
@@ -201,12 +142,85 @@ router.get('/api/category', async (ctx, next) => {
 //   });
 // });
 
+// sequelize.sync({ force: false }).then(async () => {
+//   const application = await Application.create({
+//     idApplicationOutbox: 1,
+//     idUserAuthor: 1,
+//     idThingOffered: 1,
+//     idApplicationInbox: 1,
+//     idUserAnswer: 2,
+//     idThingDesired: 4,
+//     status: 'pending',
+//   });
+// });
+
 sequelize.sync({ force: false })
   .then(async () => {
     await Category.create({ name: 'dresses' });
     await Category.create({ name: 'skirts' });
     await Category.create({ name: 'blouses' });
   });
+
+// eslint-disable-next-line consistent-return
+router.post('/api/registration', async (ctx) => {
+  if (ctx.isAuthenticated()) {
+    return ctx.redirect('/');
+  }
+  const { email } = ctx.request.body;
+  const userFromDB = await User.findOne({ where: { email } });
+
+  if (!userFromDB) {
+    await User.create(ctx.request.body);
+
+    await passport.authenticate('local', {}, async (err, newUser) => {
+      ctx.login(newUser, (err) => {
+        if (err) {
+          ctx.throw(401, err.message);
+        }
+        ctx.status = 200;
+        ctx.body = newUser;
+      });
+    })(ctx);
+  } else {
+    ctx.throw(401, 'This email has been used for registration. Please use another email.');
+  }
+});
+
+// тестим
+router.get('/api/me', (ctx) => {
+  if (ctx.isUnauthenticated()) {
+    ctx.throw(401, 'Unauthenticated');
+  }
+  ctx.status = 200;
+  ctx.body = ctx.state.user;
+});
+
+// eslint-disable-next-line consistent-return
+router.post('/api/login', async (ctx) => {
+  if (ctx.isAuthenticated()) {
+    return ctx.redirect('/');
+  }
+
+  await passport.authenticate('local', {}, async (err, user) => {
+    if (!user) {
+      ctx.throw(401, 'Incorrect login/password');
+    }
+
+    ctx.login(user, (err) => {
+      if (err) {
+        ctx.throw(401, err.message);
+      }
+      ctx.status = 200;
+      ctx.body = user;
+    });
+  })(ctx);
+});
+
+router.post('/api/logout', async (ctx) => {
+  await ctx.logout();
+
+  return ctx.redirect('/');
+});
 
 module.exports = {
   router,
