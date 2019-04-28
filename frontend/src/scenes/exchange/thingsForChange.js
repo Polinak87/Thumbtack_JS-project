@@ -7,7 +7,9 @@ export default class ThingsForChange extends React.Component {
     super(props);
     this.state = {
       value: new Map(),
+      showInfoMessage: false,
     }
+    this.updateData = this.updateData.bind(this);
   }
 
   componentDidMount() {
@@ -22,6 +24,11 @@ export default class ThingsForChange extends React.Component {
       });
   }
 
+  updateData(showInfoMessage) {
+    this.setState({ showInfoMessage: showInfoMessage });
+    console.log(this.state.showInfoMessage);
+  };
+
   render() {
     let cardList = [];
     for (let thing of this.state.value.values()) {
@@ -34,15 +41,39 @@ export default class ThingsForChange extends React.Component {
             categoryName={thing.Category.name}
             onMarket={thing.onMarket}
             onMarketAt={thing.onMarketAt}
-            updateData={this.updateData}/>
+            updateData={this.updateData} />
         </div>
       )
     };
 
+    let infoMessage;
+    if(this.state.showInfoMessage){
+      infoMessage = (
+        <>
+        <div className="modal is-active">
+          <div className="modal-background"></div>
+          <div className="modal-content">
+          <article className="message is-info is-medium">
+            <div className="message-header">
+              <p>Info</p>
+            </div>
+            <div className="message-body">
+              Your application is sent. You can track it in your outbox applications.
+            </div>
+          </article>
+          </div>
+          <button className="modal-close is-large" aria-label="close"></button>
+        </div>
+        </>
+      );
+    } else {
+      infoMessage = null;
+    }
+
     return (
       <>
-        <br/>
-        <section className="hero is-primary">
+        <br />
+        <section className="hero is-info">
           <div className="hero-body">
             <div className="container">
               <h1 className="title">Choose thing you offer for exchange</h1>
@@ -54,6 +85,7 @@ export default class ThingsForChange extends React.Component {
             {cardList}
           </div>
         </section>
+          {infoMessage}
       </>
     );
   }

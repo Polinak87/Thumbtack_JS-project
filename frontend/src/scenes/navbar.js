@@ -38,9 +38,9 @@ export default function NavBar(props) {
             Log in
           </Link>
           <div className="navbar-item has-dropdown is-hoverable">
-            <Link to="/" className="navbar-link">
+            <div className="navbar-link">
               Applications
-            </Link>
+            </div>
             <div className="navbar-dropdown">
               <Link to="/" className="navbar-item">
                 inbox

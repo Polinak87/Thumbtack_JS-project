@@ -27,6 +27,7 @@ const config = {
       },
       {
         test: /\.(css|scss)$/,
+        exclude: /node_modules/,
         use: [
           MiniCssExtractPlugin.loader, // from js to own file.css
           "css-loader", // @import

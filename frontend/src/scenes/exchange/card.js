@@ -20,7 +20,9 @@ export default class Card extends React.Component {
           onMarket={onMarket}
           onMarketAt={onMarketAt}
           updateData={updateData} />
-        <ButtonChoose id={id}/>
+        <ButtonChoose
+          id={id}
+          updateData={updateData}/>
       </div >
     );
   }

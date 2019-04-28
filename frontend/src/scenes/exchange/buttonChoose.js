@@ -15,6 +15,9 @@ export default class ButtonChoose extends React.Component {
     axios.post('/api/exchangething', { idThingOffered, idThingDesired, idUserAnswer })
     .then((response) => {
       console.log(response.data);
+      if (response.data === 'Application is created.') {
+        this.props.updateData(true);
+      }
     });
   }
 
