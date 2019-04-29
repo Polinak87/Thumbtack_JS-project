@@ -4,16 +4,10 @@ const Sequelize = require('sequelize');
 
 module.exports = (sequelize) => {
   const Application = sequelize.define('Application', {
-    idApplicationOutbox: {
-      type: Sequelize.INTEGER(50),
-    },
     idUserAuthor: {
       type: Sequelize.INTEGER(50),
     },
     idThingOffered: {
-      type: Sequelize.INTEGER(50),
-    },
-    idApplicationInbox: {
       type: Sequelize.INTEGER(50),
     },
     idUserAnswer: {

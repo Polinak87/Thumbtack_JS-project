@@ -12,7 +12,7 @@ export default class ButtonChoose extends React.Component {
     const idThingOffered = this.props.id;
     const idThingDesired = 1; // !!!
     const idUserAnswer = 1;   // !!!
-    axios.post('/api/exchangething', { idThingOffered, idThingDesired, idUserAnswer })
+    axios.post('/api/createapplication', { idThingOffered, idThingDesired, idUserAnswer })
     .then((response) => {
       console.log(response.data);
       if (response.data === 'Application is created.') {

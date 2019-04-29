@@ -13,41 +13,51 @@ const {
   Application,
 } = require('../models');
 
-router.get('/api/applicationOutbox', async (ctx, next) => {
+router.get('/api/userthings', async (ctx, next) => {
   const currentUserId = ctx.state.user.id;
 
-  ctx.body = await Application.findAll({
+  ctx.body = await Thing.findAll({
     include: [{
-      model: Thing,
-      as: 'ThingOffered',
-      where: {
-      },
-    }, {
-      model: Thing,
-      as: 'ThingDesired',
-      where: {
-      },
+      model: Category,
     }],
     where: {
-      idUserAuthor: currentUserId,
+      userId: currentUserId,
     },
   });
+  ctx.status = 200;
 });
 
-router.post('/api/exchangething', async (ctx) => {
-  const { idThingOffered, idThingDesired, idUserAnswer } = ctx.request.body;
-  const idUserAuthor = ctx.state.user.id;
-
-  await Application.create({
-    idApplicationOutbox: 1,
-    idUserAuthor,
-    idThingOffered,
-    idApplicationInbox: 1,
-    idUserAnswer,
-    idThingDesired,
-    status: 'pending',
+router.get('/api/marketthings', async (ctx, next) => {
+  ctx.body = await Thing.findAll({
+    include: [{
+      model: User,
+    }, {
+      model: Category,
+    }],
+    where: {
+      onMarket: true,
+    },
   });
-  ctx.body = 'Application is created.';
+  ctx.status = 200;
+});
+
+router.get('/api/category', async (ctx, next) => {
+  ctx.body = await Category.findAll();
+  ctx.status = 200;
+});
+
+router.post('/api/addnewthing', async (ctx) => {
+  const { name, description, categoryId } = ctx.request.body;
+  const userId = ctx.state.user.id;
+
+  await Thing.create({
+    name,
+    description,
+    categoryId,
+    userId,
+  });
+  ctx.body = 'Thing is added.';
+  ctx.status = 200;
 });
 
 router.post('/api/addthingtomarket', async (ctx) => {
@@ -65,6 +75,7 @@ router.post('/api/addthingtomarket', async (ctx) => {
     onMarket: true,
     onMarketAt: date,
   };
+  ctx.status = 200;
 });
 
 router.post('/api/removethingfrommarket', async (ctx) => {
@@ -81,68 +92,77 @@ router.post('/api/removethingfrommarket', async (ctx) => {
     onMarket: false,
     onMarketAt: null,
   };
+  ctx.status = 200;
 });
 
-router.post('/api/addnewthing', async (ctx) => {
-  const { name, description, categoryId } = ctx.request.body;
-  const userId = ctx.state.user.id;
+router.post('/api/createapplication', async (ctx) => {
+  const { idThingOffered, idThingDesired, idUserAnswer } = ctx.request.body;
+  const idUserAuthor = ctx.state.user.id;
 
-  await Thing.create({
-    name,
-    description,
-    categoryId,
-    userId,
+  await Application.create({
+    idUserAuthor,
+    idThingOffered,
+    idUserAnswer,
+    idThingDesired,
+    status: 'pending',
   });
-  ctx.body = 'Thing is added.';
+  ctx.body = 'Application is created.';
+  ctx.status = 200;
 });
 
-router.get('/api/things', async (ctx, next) => {
-  ctx.body = await Thing.findAll({
-    include: [{
-      model: User,
-      where: {},
-    }],
-    where: {
-      onMarket: true,
-    },
-  });
-});
-
-router.get('/api/userthings', async (ctx, next) => {
+router.get('/api/applicationOutbox', async (ctx, next) => {
   const currentUserId = ctx.state.user.id;
 
-  ctx.body = await Thing.findAll({
+  ctx.body = await Application.findAll({
     include: [{
-      model: Category,
-      where: {},
+      model: Thing,
+      as: 'ThingOffered',
+    }, {
+      model: Thing,
+      as: 'ThingDesired',
     }],
     where: {
-      userId: currentUserId,
+      idUserAuthor: currentUserId,
     },
   });
+  ctx.status = 200;
 });
 
-router.get('/api/category', async (ctx, next) => {
-  ctx.body = await Category.findAll();
+router.get('/api/applicationInbox', async (ctx, next) => {
+  const currentUserId = ctx.state.user.id;
+
+  ctx.body = await Application.findAll({
+    include: [{
+      model: Thing,
+      as: 'ThingOffered',
+    }, {
+      model: Thing,
+      as: 'ThingDesired',
+    }],
+    where: {
+      idUserAnswer: currentUserId,
+    },
+  });
+  ctx.status = 200;
 });
 
 sequelize.sync({ force: false }).then(async () => {
   await Category.create({ name: 'dresses' });
   await Category.create({ name: 'skirts' });
   await Category.create({ name: 'blouses' });
-  const user1 = await User.create({
+  await User.create({
     firstName: 'Polina',
     lastName: 'Kozlova',
     email: 'polinacheez@gmail.com',
     password: 'ggg',
   });
-  const user2 = await User.create({
+  await User.create({
     firstName: 'Anna',
     lastName: 'Mitrofanova',
     email: 'mitroshka@mail.com',
     password: 'ggg',
   });
-  const thing1 = await Thing.create({
+  await Thing.create({
     name: 'summer dress',
     description: 'pretty',
     categoryId: '1',
@@ -150,7 +170,7 @@ sequelize.sync({ force: false }).then(async () => {
     onMarket: false,
     onMarketAt: null,
   });
-  const thing2 = await Thing.create({
+  await Thing.create({
     name: 'summer dress',
     description: 'light',
     categoryId: '1',
@@ -158,7 +178,7 @@ sequelize.sync({ force: false }).then(async () => {
     onMarket: false,
     onMarketAt: null,
   });
-  const application = await Application.create({
+  await Application.create({
     idApplicationOutbox: 1,
     idUserAuthor: 1,
     idThingOffered: 1,

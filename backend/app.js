@@ -8,7 +8,7 @@ const bunyan = require('bunyan');
 const koaLogger = require('koa-bunyan');
 const koaBody = require('koa-body');
 const session = require('koa-generic-session');
-const SequelizeSessionStore = require('koa-generic-session-sequelize'); // прочитала
+const SequelizeSessionStore = require('koa-generic-session-sequelize');
 const send = require('koa-send');
 const path = require('path');
 const { sequelize } = require('./models');
@@ -26,8 +26,6 @@ app.use(serve('public'));
 app.use(koaBody());
 app.keys = ['secret'];
 
-// sequelize.sync({ force: true }).then(async () => {
-// // session middleware allows using ctx.session to set or get the sessions
 app.use(session({
   store: new SequelizeSessionStore(
     sequelize, {
@@ -38,13 +36,6 @@ app.use(session({
 
 app.use(passport.initialize());
 app.use(passport.session());
-//   app.use(router.routes());
-//   app.use(router.allowedMethods());
-
-//   app.listen(port, () => {
-//     console.log(`Server is started on ${port} port`);
-//   });
-// });
 
 app.use(router.routes());
 app.use(router.allowedMethods());
