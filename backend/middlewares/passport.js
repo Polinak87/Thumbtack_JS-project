@@ -13,18 +13,14 @@ const options = {
 };
 
 passport.use('local', new LocalStrategy(options, async (email, password, done) => {
-  // console.log('1');
-  // console.log(email);
   const user = await User.findOne({
     where: {
       email,
       password,
     },
   });
-  // console.log('2');
 
   if (user) {
-    // console.log('3');
     return done(null, {
       email,
       password,

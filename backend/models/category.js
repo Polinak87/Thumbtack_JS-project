@@ -12,11 +12,5 @@ module.exports = (sequelize) => {
     tableName: 'category',
   });
 
-  // Thing.associate = function (models) {
-  //   Thing.belongsToMany(models.Driver, {
-  //     through: models.DriverCar
-  //   });
-  // };
-
   return Category;
 };

@@ -17,10 +17,17 @@ router.get('/api/applicationOutbox', async (ctx, next) => {
   const currentUserId = ctx.state.user.id;
 
   ctx.body = await Application.findAll({
-    // include: [{
-    //   model: Thing,
-    //   where: {},
-    // }],
+    include: [{
+      model: Thing,
+      as: 'ThingOffered',
+      where: {
+      },
+    }, {
+      model: Thing,
+      as: 'ThingDesired',
+      where: {
+      },
+    }],
     where: {
       idUserAuthor: currentUserId,
     },
@@ -76,7 +83,6 @@ router.post('/api/removethingfrommarket', async (ctx) => {
   };
 });
 
-// работает
 router.post('/api/addnewthing', async (ctx) => {
   const { name, description, categoryId } = ctx.request.body;
   const userId = ctx.state.user.id;
@@ -90,12 +96,10 @@ router.post('/api/addnewthing', async (ctx) => {
   ctx.body = 'Thing is added.';
 });
 
-// работает
 router.get('/api/things', async (ctx, next) => {
   ctx.body = await Thing.findAll({
     include: [{
       model: User,
-      // attributes: [],
       where: {},
     }],
     where: {
@@ -122,44 +126,48 @@ router.get('/api/category', async (ctx, next) => {
   ctx.body = await Category.findAll();
 });
 
-// sequelize.sync({ force: true }).then(async () => {
-//   const user = await User.create({
-//     firstName: 'Ivan',
-//     lastName: 'Ivan',
-//     email: 'Ivan',
-//     password: 'Ivanov',
-//   });
-// });
-
-// sequelize.sync({ force: true }).then(async () => {
-//   const thing = await Thing.create({
-//     name: 'summer dress',
-//     description: 'pretty',
-//     categoryId: '1',
-//     userId: '1',
-//     onMarket: true,
-//     onMarketAt: new Date(),
-//   });
-// });
-
-// sequelize.sync({ force: false }).then(async () => {
-//   const application = await Application.create({
-//     idApplicationOutbox: 1,
-//     idUserAuthor: 1,
-//     idThingOffered: 1,
-//     idApplicationInbox: 1,
-//     idUserAnswer: 2,
-//     idThingDesired: 4,
-//     status: 'pending',
-//   });
-// });
-
-sequelize.sync({ force: false })
-  .then(async () => {
-    await Category.create({ name: 'dresses' });
-    await Category.create({ name: 'skirts' });
-    await Category.create({ name: 'blouses' });
+sequelize.sync({ force: false }).then(async () => {
+  await Category.create({ name: 'dresses' });
+  await Category.create({ name: 'skirts' });
+  await Category.create({ name: 'blouses' });
+  const user1 = await User.create({
+    firstName: 'Polina',
+    lastName: 'Kozlova',
+    email: 'polinacheez@gmail.com',
+    password: 'ggg',
   });
+  const user2 = await User.create({
+    firstName: 'Anna',
+    lastName: 'Mitrofanova',
+    email: 'mitroshka@mail.com',
+    password: 'ggg',
+  });
+  const thing1 = await Thing.create({
+    name: 'summer dress',
+    description: 'pretty',
+    categoryId: '1',
+    userId: '1',
+    onMarket: false,
+    onMarketAt: null,
+  });
+  const thing2 = await Thing.create({
+    name: 'summer dress',
+    description: 'light',
+    categoryId: '1',
+    userId: '2',
+    onMarket: false,
+    onMarketAt: null,
+  });
+  const application = await Application.create({
+    idApplicationOutbox: 1,
+    idUserAuthor: 1,
+    idThingOffered: 1,
+    idApplicationInbox: 1,
+    idUserAnswer: 2,
+    idThingDesired: 2,
+    status: 'pending',
+  });
+});
 
 // eslint-disable-next-line consistent-return
 router.post('/api/registration', async (ctx) => {
@@ -184,15 +192,6 @@ router.post('/api/registration', async (ctx) => {
   } else {
     ctx.throw(401, 'This email has been used for registration. Please use another email.');
   }
-});
-
-// тестим
-router.get('/api/me', (ctx) => {
-  if (ctx.isUnauthenticated()) {
-    ctx.throw(401, 'Unauthenticated');
-  }
-  ctx.status = 200;
-  ctx.body = ctx.state.user;
 });
 
 // eslint-disable-next-line consistent-return

@@ -30,10 +30,14 @@ module.exports = (sequelize) => {
   Thing.associate = function (models) {
     Thing.belongsTo(models.User);
     Thing.belongsTo(models.Category);
-    // Thing.belongsToMany(models.Application, { as: 'Tasks', through: 'worker_tasks', foreignKey: 'userId' });
-    // Thing.belongsToMany(models.Driver, {
-    //   through: models.DriverCar
-    // });
+    Thing.hasOne(models.Application, {
+      as: 'ThingOffered',
+      foreignKey: 'idThingOffered',
+    });
+    Thing.hasOne(models.Application, {
+      as: 'ThingDesired',
+      foreignKey: 'idThingDesired',
+    });
   };
 
   return Thing;
