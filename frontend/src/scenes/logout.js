@@ -1,5 +1,7 @@
 import React from 'react';
 import axios from 'axios';
+import store from '../store/index';
+import { deleteUser } from '../store/actions/user';
 
 export default class Logout extends React.Component {
   constructor(props) {
@@ -12,8 +14,12 @@ export default class Logout extends React.Component {
 
   handleClick() {
     axios.post('/api/logout')
-      .then((response) => console.log(response));
-  }
+      .then((response) => {
+      console.log(response);
+        store.dispatch(deleteUser());
+      console.log(store.getState().user);
+      });
+    }
 
   render() {
     return (

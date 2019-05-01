@@ -1,12 +1,22 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Logout from './logout'
+import store from '../store';
 
 export default function NavBar(props) {
   if(props.user === null){
     return null;
   }
-  
+
+  let userName;
+  if(store.getState().user.firstName) {
+    userName = store.getState().user.firstName.toString() + ' ' + store.getState().user.lastName.toString();
+    console.log(userName);
+  } else {
+    userName= null;
+  }
+
+
   return(
     <nav className="navbar" role="navigation" aria-label="main navigation">
       {/* <div className="navbar-brand">
@@ -52,6 +62,9 @@ export default function NavBar(props) {
           </div>
         </div>
         <div className="navbar-end">
+          <div className="navbar-item">
+            <p>{userName}</p>
+          </div>
           <div className="navbar-item">
             <Logout/>
           </div>
