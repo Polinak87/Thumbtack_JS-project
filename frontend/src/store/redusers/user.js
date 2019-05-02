@@ -6,7 +6,7 @@ const user = (state = {}, action) => {
     case ADD_USER:
       return (
         {
-          ...action.user,
+          ...action.payload,
         });
       // return [
       //   ...state,
@@ -14,12 +14,11 @@ const user = (state = {}, action) => {
       //       ...action.user,
       //     }];
     case DELETE_USER:
-      return {
-        ...state, user: null,
-          };
+      return Object.assign({}, { ...action.payload });
     default:
       return state
   }
 }
 
 export default user;
+

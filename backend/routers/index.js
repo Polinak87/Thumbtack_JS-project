@@ -192,7 +192,7 @@ sequelize.sync({ force: false }).then(async () => {
 // eslint-disable-next-line consistent-return
 router.post('/api/registration', async (ctx) => {
   if (ctx.isAuthenticated()) {
-    return ctx.redirect('/');
+    return ctx.redirect('/profile');
   }
   const { email } = ctx.request.body;
   const userFromDB = await User.findOne({ where: { email } });
@@ -217,7 +217,7 @@ router.post('/api/registration', async (ctx) => {
 // eslint-disable-next-line consistent-return
 router.post('/api/login', async (ctx) => {
   if (ctx.isAuthenticated()) {
-    return ctx.redirect('/');
+    return ctx.redirect('/profile');
   }
 
   await passport.authenticate('local', {}, async (err, user) => {
@@ -238,7 +238,7 @@ router.post('/api/login', async (ctx) => {
 router.post('/api/logout', async (ctx) => {
   await ctx.logout();
 
-  return ctx.redirect('/');
+  return ctx.redirect('/home');
 });
 
 module.exports = {

@@ -9,16 +9,32 @@ import Logout from './logout';
 import RegistrationForm from './form/registration-form';
 import NavBar from './navbar';
 import ApplicationOutbox from './application/outbox/applicationOutbox'
+import store from '../store';
+import HomePage from './homePage';
+const _ = require('lodash');
 
 function MainRouter(props) {
-  const user = {name: "Ivan"};
-  if (user === null && props.location.pathname !== "/registration"){
-    props.history.push("/registration");
-    return null;
-  }
+
+  let userName;
+  console.log(_.isEmpty(store.getState().user));
+  if(_.isEmpty(store.getState().user)) {
+    userName = null;
+  } else {
+    userName = store.getState().user.firstName.toString() + ' ' + store.getState().user.lastName.toString();
+  };
+
+  if (userName === null && props.location.pathname !== "/login") {
+    if(userName === null && props.location.pathname !== "/home") {
+      if(userName === null && props.location.pathname !== "/registration") {
+      props.history.push("/home");
+      return null;
+      }
+    }
+  };
+
   return (
     <>
-      <NavBar user={{name: "Ivan"}}/>
+      <NavBar user={{name: userName}}/>
 
       <div>
         <Route exact path="/profile" component={Profile} />
@@ -29,6 +45,7 @@ function MainRouter(props) {
         <Route path="/logout" component={Logout} />
         <Route path="/registration" component={RegistrationForm} />
         <Route path="/applicationOutbox" component={ApplicationOutbox} />
+        <Route path="/home" component={HomePage} />
       </div>
     </>
   );

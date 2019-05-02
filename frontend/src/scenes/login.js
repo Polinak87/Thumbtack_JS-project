@@ -32,6 +32,7 @@ export default class Login extends React.Component {
         console.log(response);
         if (response && response.status === 200) {
           store.dispatch(addUser(response.data));
+          this.props.history.push("/profile");
         }
         console.log(store.getState().user);
         // this.setState({ value: response.data })

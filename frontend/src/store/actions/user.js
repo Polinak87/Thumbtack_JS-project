@@ -3,10 +3,10 @@ export const DELETE_USER ='DELETE_USER';
 
 export const addUser = user => ({ // user = response.data
   type: ADD_USER,
-  user,
+  payload: user,
 });
 
 export const deleteUser = user => ({ // user = response.data
   type: DELETE_USER,
-  user,
+  payload: {},
 });

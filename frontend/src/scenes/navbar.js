@@ -1,21 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Logout from './logout'
-import store from '../store';
 
 export default function NavBar(props) {
-  if(props.user === null){
-    return null;
-  }
+  // console.log(props.user);
+  // if(props.user.name === null){
+  //   return null;
+  // }
 
-  let userName;
-  if(store.getState().user.firstName) {
-    userName = store.getState().user.firstName.toString() + ' ' + store.getState().user.lastName.toString();
-    console.log(userName);
-  } else {
-    userName= null;
-  }
-
+  const { user } = props;
 
   return(
     <nav className="navbar" role="navigation" aria-label="main navigation">
@@ -41,12 +34,15 @@ export default function NavBar(props) {
           <Link to="/market" className="navbar-item">
             Market
           </Link>
-          <Link to="/registration" className="navbar-item">
+          {/* <Link to="/registration" className="navbar-item">
             Registration
           </Link>
           <Link to="/login" className="navbar-item">
             Log in
           </Link>
+          <Link to="/home" className="navbar-item">
+            Home
+          </Link> */}
           <div className="navbar-item has-dropdown is-hoverable">
             <div className="navbar-link">
               Applications
@@ -63,7 +59,7 @@ export default function NavBar(props) {
         </div>
         <div className="navbar-end">
           <div className="navbar-item">
-            <p>{userName}</p>
+            <p>{user.name}</p>
           </div>
           <div className="navbar-item">
             <Logout/>
