@@ -8,7 +8,7 @@ export default class Card extends React.Component {
   }
 
   render() {
-    const { id, name, description, categoryName, onMarket, onMarketAt, updateData } = this.props;
+    const { id, name, description, categoryName, onMarket, onMarketAt, updateData, userId } = this.props;
 
     return (
       <div className="card">
@@ -20,7 +20,9 @@ export default class Card extends React.Component {
           onMarket={onMarket}
           onMarketAt={onMarketAt}
           updateData={updateData} />
-        <ButtonExchange/>
+        <ButtonExchange
+          id={id}
+          userId={userId}/>
       </div >
     );
   }

@@ -117,9 +117,15 @@ router.get('/api/applicationOutbox', async (ctx, next) => {
     include: [{
       model: Thing,
       as: 'ThingOffered',
+      include: [{
+        model: Category,
+      }],
     }, {
       model: Thing,
       as: 'ThingDesired',
+      include: [{
+        model: Category,
+      }],
     }],
     where: {
       idUserAuthor: currentUserId,

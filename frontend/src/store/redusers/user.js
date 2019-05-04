@@ -6,7 +6,7 @@ const user = (state = {}, action) => {
     case ADD_USER:
       return (
         {
-          ...action.payload,
+          ...action.user,
         });
       // return [
       //   ...state,
@@ -14,7 +14,8 @@ const user = (state = {}, action) => {
       //       ...action.user,
       //     }];
     case DELETE_USER:
-      return Object.assign({}, { ...action.payload });
+      // return Object.assign({}, { ...action.payload }); //работает, если есть только поле user
+      return {};
     default:
       return state
   }

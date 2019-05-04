@@ -15,7 +15,6 @@ export default class Market extends React.Component {
     axios.get('/api/marketthings')
       .then((response) => {
         var map = this.state.value;
-        // console.log(response.data);
         response.data.forEach(function (thing) {
           map.set(thing.id, thing)
         });
@@ -46,6 +45,7 @@ export default class Market extends React.Component {
             categoryName={thing.Category.name}
             onMarket={thing.onMarket}
             onMarketAt={thing.onMarketAt}
+            userId={thing.userId}
             updateData={this.updateData}/>
         </div>
       )

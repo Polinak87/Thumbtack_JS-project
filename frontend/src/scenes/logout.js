@@ -26,22 +26,7 @@ export default class Logout extends React.Component {
       });
     }
 
-    // handleClick() {
-    //   event.preventDefault();
-    //   const { email, password } = this.state;
-    //   console.log(email, password);
-    //   axios.post('/api/login', { email, password })
-    //     .then((response) => {
-    //       console.log(response);
-    //       if (response && response.status === 200) {
-    //         store.dispatch(addUser(response.data));
-    //         this.props.history.push("/profile");
-    //       }
-    //     });
-    // }
-
   render() {
-    console.log(this.props.history);
 
     return (
       <button className="button is-light" onClick={this.handleClick}>Log out</button>
