@@ -9,6 +9,7 @@ export default class ApplicationOutbox extends React.Component {
     this.state = {
       value: new Map(),
     }
+    this.updateData = this.updateData.bind(this);
   }
 
   componentDidMount() {
@@ -23,22 +24,28 @@ export default class ApplicationOutbox extends React.Component {
       });
   }
 
+  updateData(id, status) {
+    let { value } = this.state;
+    let application = value.get(id);
+    application.status = status;
+    value.set(id, application);
+    this.setState({ value });
+    console.log(this.state.value);
+  };
+
   render() {
-    // const status = 'pending';
-    // const idAnswer = '1';
-    // const nameAnswer = 'summer dress';
-    // const descriptionAnswer = 'pretty'
-    // const categoryNameAnswer = 'dresses'
-    // const idAuthor = '2';
-    // const nameAuthor = 'little blouse';
-    // const descriptionAuthor = 'pretty';
-    // const categoryNameAuthor = 'blouses';
 
     let cardList = [];
     for (let application of this.state.value.values()) {
       const { id, ThingDesired, ThingOffered, status } = application;
+      const button = () => {
+        if(status == "pending") {
+          return <ButtonCancel id={id} updateData={this.updateData}/>
+        }
+        return <></>
+      }
       cardList.push(
-        <div className="column is-one-quarter" key={id}>
+        <div className="column is-one-third" key={id}>
           <div className="card" >
             <div className="card-content">
               <h6 className="title">
@@ -69,7 +76,7 @@ export default class ApplicationOutbox extends React.Component {
                 </div>
               </div>
             </footer>
-            <ButtonCancel />
+            {button()}
           </div>
         </div>
       )

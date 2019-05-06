@@ -1,6 +1,9 @@
 import React from 'react';
 import axios from 'axios';
 import Card from './card';
+import { Link } from 'react-router-dom';
+import store from '../../store/index';
+import { deleteThingForExchange } from '../../store/actions/thingForExchange';
 
 export default class ThingsForChange extends React.Component {
   constructor(props) {
@@ -10,10 +13,10 @@ export default class ThingsForChange extends React.Component {
       showInfoMessage: false,
     }
     this.updateData = this.updateData.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   componentDidMount() {
-    // console.log(this.props.id);
     axios.get('/api/userthings')
       .then((response) => {
         var map = this.state.value;
@@ -28,6 +31,11 @@ export default class ThingsForChange extends React.Component {
     this.setState({ showInfoMessage: showInfoMessage });
     console.log(this.state.showInfoMessage);
   };
+
+  handleClick() {
+    event.preventDefault();
+    store.dispatch(deleteThingForExchange());
+  }
 
   render() {
     let cardList = [];
@@ -47,28 +55,33 @@ export default class ThingsForChange extends React.Component {
     };
 
     let infoMessage;
-    if(this.state.showInfoMessage){
+    if (this.state.showInfoMessage) {
       infoMessage = (
         <>
-        <div className="modal is-active">
-          <div className="modal-background"></div>
-          <div className="modal-content">
-          <article className="message is-info is-medium">
-            <div className="message-header">
-              <p>Info</p>
-            </div>
-            <div className="message-body">
-              Your application is sent. You can track it in your outbox applications.
-            </div>
-          </article>
+          <div className="modal is-active">
+            <div className="modal-background"></div>
+              <div className="modal-content">
+                <article className="message is-info is-medium">
+                  <div className="message-header">
+                    <p>Info</p>
+                    <Link to="/market" button className="delete" onClick={this.handleClick}></Link>
+                  </div>
+                  <div className="message-body">
+                    Your application is sent. You can track it in your outbox applications.
+                  </div>
+                  <div>
+                    {/* <Link to="/market" button className="button is-success is-medium is-centered is-focused">To market</Link> */}
+                  </div>
+                </article>
+              </div>
           </div>
-          <button className="modal-close is-large" aria-label="close"></button>
-        </div>
         </>
       );
     } else {
       infoMessage = null;
     }
+
+    // onClick={this.handleClick} => работает, но в браузере ошибка
 
     return (
       <>
@@ -85,7 +98,7 @@ export default class ThingsForChange extends React.Component {
             {cardList}
           </div>
         </section>
-          {infoMessage}
+        {infoMessage}
       </>
     );
   }

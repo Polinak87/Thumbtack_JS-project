@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import store from '../../store/index';
-import { addThingForExchange } from '../../store/actions/thingForExchange'
+import { addThingForExchange } from '../../store/actions/thingForExchange';
 
 export default class ButtonExchange extends React.Component {
   constructor(props) {

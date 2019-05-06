@@ -110,6 +110,76 @@ router.post('/api/createapplication', async (ctx) => {
   ctx.status = 200;
 });
 
+router.post('/api/cancelapplication', async (ctx) => {
+  const { id } = ctx.request.body;
+
+  await Application.update(
+    {
+      status: 'canceled',
+    },
+    { where: { id } },
+  );
+
+  ctx.body = {
+    status: 'canceled',
+  };
+  ctx.status = 200;
+});
+
+router.post('/api/rejectapplication', async (ctx) => {
+  const { id } = ctx.request.body;
+
+  await Application.update(
+    {
+      status: 'rejected',
+    },
+    { where: { id } },
+  );
+
+  ctx.body = {
+    status: 'rejected',
+  };
+  ctx.status = 200;
+});
+
+router.post('/api/compliteapplication', async (ctx) => {
+  const { id } = ctx.request.body;
+
+  await Application.update(
+    {
+      status: 'complited',
+    },
+    { where: { id } },
+  );
+
+  const currentApplication = await Application.findAll({
+    where: {
+      id,
+    },
+  });
+
+  const { idUserAuthor, idThingOffered, idUserAnswer, idThingDesired } = currentApplication;
+
+  await Thing.update(
+    {
+      userId: idUserAuthor,
+    },
+    { where: { id: idThingOffered } },
+  );
+
+  await Thing.update(
+    {
+      userId: idUserAnswer,
+    },
+    { where: { id: idThingDesired } },
+  );
+
+  ctx.body = {
+    status: 'complited',
+  };
+  ctx.status = 200;
+});
+
 router.get('/api/applicationOutbox', async (ctx, next) => {
   const currentUserId = ctx.state.user.id;
 
