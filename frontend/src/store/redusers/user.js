@@ -8,13 +8,7 @@ const user = (state = {}, action) => {
         {
           ...action.user,
         });
-      // return [
-      //   ...state,
-      //     {
-      //       ...action.user,
-      //     }];
     case DELETE_USER:
-      // return Object.assign({}, { ...action.payload }); //работает, если есть только поле user
       return {};
     default:
       return state

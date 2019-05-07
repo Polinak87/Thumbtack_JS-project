@@ -43,7 +43,6 @@ export default class Market extends React.Component {
             name={thing.name}
             description={thing.description}
             categoryName={thing.Category.name}
-            onMarket={thing.onMarket}
             onMarketAt={thing.onMarketAt}
             userId={thing.userId}
             updateData={this.updateData}/>

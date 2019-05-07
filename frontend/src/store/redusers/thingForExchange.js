@@ -6,7 +6,6 @@ const thingForExchange = (state = {}, action) => {
   switch (action.type) {
     case ADD_THING_FOR_EXCHANGE:
       return (
-        // id: action.thingId,
         {
           ...action.thingForExchange,
         });

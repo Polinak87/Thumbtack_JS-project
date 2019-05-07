@@ -1,7 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import ThingInfo from '../../../components/thingInfo';
-import ButtonCancel from './buttonCancel';
+import ApplicationCard from './applicationCard';
 
 export default class ApplicationOutbox extends React.Component {
   constructor(props) {
@@ -36,48 +35,12 @@ export default class ApplicationOutbox extends React.Component {
   render() {
 
     let cardList = [];
+
     for (let application of this.state.value.values()) {
-      const { id, ThingDesired, ThingOffered, status } = application;
-      const button = () => {
-        if(status == "pending") {
-          return <ButtonCancel id={id} updateData={this.updateData}/>
-        }
-        return <></>
-      }
+      const { id } = application;
       cardList.push(
         <div className="column is-one-third" key={id}>
-          <div className="card" >
-            <div className="card-content">
-              <h6 className="title">
-                Status of application: {status}
-              </h6>
-            </div>
-            <footer className="card-footer">
-              <div className="card-footer-item">
-                <div className="card-is-full">
-                  <p>Thing you want to have</p>
-                  <br />
-                  <ThingInfo
-                    id={ThingDesired.id}
-                    name={ThingDesired.name}
-                    description={ThingDesired.description}
-                    categoryName={ThingDesired.Category.name} />
-                </div>
-              </div>
-              <div className="card-footer-item">
-                <div className="card-is-full">
-                  <p>Thing you want to change</p>
-                  <br />
-                  <ThingInfo
-                    id={ThingOffered.id}
-                    name={ThingOffered.name}
-                    description={ThingOffered.description}
-                    categoryName={ThingOffered.Category.name} />
-                </div>
-              </div>
-            </footer>
-            {button()}
-          </div>
+        <ApplicationCard application={application} updateData={this.updateData}/>
         </div>
       )
     };

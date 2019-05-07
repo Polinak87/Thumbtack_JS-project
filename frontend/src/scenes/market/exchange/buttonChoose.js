@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import store from '../../store/index';
+import store from '../../../store/index';
 
 export default class ButtonChoose extends React.Component {
   constructor(props) {
@@ -12,8 +12,6 @@ export default class ButtonChoose extends React.Component {
     event.preventDefault();
     const idThingOffered = this.props.id;
     const { idThingDesired, idUserAnswer } = store.getState().thingForExchange;
-    // const idThingDesired = 1; // !!!
-    // const idUserAnswer = 1;   // !!!
     axios.post('/api/createapplication', { idThingOffered, idThingDesired, idUserAnswer })
     .then((response) => {
       console.log(response.data);

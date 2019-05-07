@@ -65,22 +65,22 @@ export default class Login extends React.Component {
                   <form>
                     <div className="field">
                       <div className="control1">
-                        <input className="input is-large" type="text" onChange={this.handleChangeFirstName} value={this.state.firstName} placeholder="First name" />
+                        <input className="input is-large" type="text" required onChange={this.handleChangeFirstName} value={this.state.firstName} placeholder="First name" />
                       </div>
                     </div>
                     <div className="field">
                       <div className="control2">
-                        <input className="input is-large" type="text" onChange={this.handleChangeLastName} value={this.state.lastName} placeholder="Last name" />
+                        <input className="input is-large" type="text" required onChange={this.handleChangeLastName} value={this.state.lastName} placeholder="Last name" />
                       </div>
                     </div>
                     <div className="field">
                       <div className="control3">
-                        <input className="input is-large" type="email" placeholder="Email" onChange={this.handleChangeEmail} value={this.state.email} />
+                        <input className="input is-large" type="email" required placeholder="Email" onChange={this.handleChangeEmail} value={this.state.email} />
                       </div>
                     </div>
                     <div className="field">
                       <div className="control4">
-                        <input className="input is-large" type="password" onChange={this.handleChangePassword} value={this.state.password} placeholder="Password" />
+                        <input className="input is-large" type="password" required onChange={this.handleChangePassword} value={this.state.password} placeholder="Password" />
                       </div>
                     </div>
                     <button className="button is-block is-success is-large is-fullwidth" onClick={this.handleClick}>Register</button>

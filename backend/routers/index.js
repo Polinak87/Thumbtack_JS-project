@@ -6,7 +6,7 @@ const passport = require('../middlewares/passport');
 const router = new Router();
 
 const {
-  sequelize,
+  // sequelize,
   Thing,
   User,
   Category,

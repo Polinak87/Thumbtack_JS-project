@@ -2,10 +2,10 @@ import React from 'react';
 import axios from 'axios';
 import Card from './card';
 import { Link } from 'react-router-dom';
-import store from '../../store/index';
-import { deleteThingForExchange } from '../../store/actions/thingForExchange';
+import store from '../../../store/index';
+import { deleteThingForExchange } from '../../../store/actions/thingForExchange';
 
-export default class ThingsForChange extends React.Component {
+export default class ThingsForExchange extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -29,7 +29,6 @@ export default class ThingsForChange extends React.Component {
 
   updateData(showInfoMessage) {
     this.setState({ showInfoMessage: showInfoMessage });
-    console.log(this.state.showInfoMessage);
   };
 
   handleClick() {
@@ -60,28 +59,25 @@ export default class ThingsForChange extends React.Component {
         <>
           <div className="modal is-active">
             <div className="modal-background"></div>
-              <div className="modal-content">
-                <article className="message is-info is-medium">
-                  <div className="message-header">
-                    <p>Info</p>
-                    <Link to="/market" button className="delete" onClick={this.handleClick}></Link>
+            <div className="modal-content">
+              <article className="message is-info is-medium">
+                <div className="message-header">
+                  <p>Info</p>
+                  <Link to="/market" button className="delete" onClick={this.handleClick}></Link>
+                </div>
+                <div className="message-body">
+                  Your application is sent. You can track it in your outbox applications.
                   </div>
-                  <div className="message-body">
-                    Your application is sent. You can track it in your outbox applications.
-                  </div>
-                  <div>
-                    {/* <Link to="/market" button className="button is-success is-medium is-centered is-focused">To market</Link> */}
-                  </div>
-                </article>
-              </div>
+                <div>
+                </div>
+              </article>
+            </div>
           </div>
         </>
       );
     } else {
       infoMessage = null;
     }
-
-    // onClick={this.handleClick} => работает, но в браузере ошибка
 
     return (
       <>

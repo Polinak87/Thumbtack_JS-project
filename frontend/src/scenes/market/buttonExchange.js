@@ -22,7 +22,7 @@ export default class ButtonExchange extends React.Component {
   render() {
     return (
       <>
-        <Link to="/thingsforchange" className="button is-block is-success is-large is-fullwidth" onClick={this.handleClick} >Exchange</Link>
+        <Link to="/thingsforexchange" className="button is-block is-success is-large is-fullwidth" onClick={this.handleClick} >Exchange</Link>
       </>
     );
   }

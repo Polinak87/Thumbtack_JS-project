@@ -7,7 +7,10 @@ class AddNewThingForm extends React.Component {
     this.state = {
       name: '',
       description: '',
-      categoryId: '1',
+      categoryId: '1',// используется как значение по умолчанию, 
+                      // т.к. если в селекторе пользователь хочет выбрать первое значение, 
+                      // то фактически он не переключает селектор и handleChangeCategory не подхатывает значение поля, 
+                      // если пользователь выбирает любую категорию кроме первой, то handleChangeCategory заменяет еденицу на выбранное значение
       categoryList: [],
     }
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import ThingInfo from '../../components/thingInfo';
+import ThingInfo from '../../../components/thingInfo';
 import ButtonChoose from './buttonChoose';
 
 export default class Card extends React.Component {
