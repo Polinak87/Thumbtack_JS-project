@@ -12,5 +12,9 @@ module.exports = (sequelize) => {
     tableName: 'category',
   });
 
+  Category.associate = function (models) {
+    Category.hasMany(models.Thing);
+  };
+
   return Category;
 };

@@ -1,7 +1,9 @@
 'use strict';
 
 const Sequelize = require('sequelize');
-const { db } = require('../config');
+// const { db } = require('../config');
+const env = process.env.NODE_ENV || 'development';
+const { db } = require('../config')[env];
 
 const sequelize = new Sequelize(db.name, db.username, db.password, {
   host: db.host,
@@ -9,17 +11,16 @@ const sequelize = new Sequelize(db.name, db.username, db.password, {
   dialect: db.dialect,
 });
 
-const Thing = require('./thing')(sequelize);
 const User = require('./user')(sequelize);
 const Category = require('./category')(sequelize);
+const Thing = require('./thing')(sequelize);
 const Application = require('./application')(sequelize);
 
 const models = {
-  [Thing.name]: Thing,
   [User.name]: User,
   [Category.name]: Category,
+  [Thing.name]: Thing,
   [Application.name]: Application,
-
 };
 
 Object.keys(models).forEach((modelName) => {

@@ -21,5 +21,9 @@ module.exports = (sequelize) => {
     tableName: 'users',
   });
 
+  User.associate = function (models) {
+    User.hasMany(models.Thing);
+  };
+
   return User;
 };

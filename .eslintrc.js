@@ -8,6 +8,9 @@ module.exports = {
     "sourceType": "script",
   },
   "globals": {
+    "test": false,
+    "afterAll": false,
+    "beforeAll": false,
     "describe": false,
     "expect": false,
     "it": false,
