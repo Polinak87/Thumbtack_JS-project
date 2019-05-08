@@ -8,7 +8,8 @@ import AddNewThingForm from './addNewThing';
 import Logout from './navbar/logout';
 import RegistrationForm from './homePage/registration';
 import NavBar from './navbar/navbar';
-import ApplicationOutbox from './application/outbox/applicationOutbox'
+import ApplicationOutbox from './application/outbox/applicationOutbox';
+import ApplicationInbox from './application/inbox/applicatonInbox';
 import store from '../store';
 import HomePage from './homePage/homePage';
 const _ = require('lodash');
@@ -42,7 +43,8 @@ function MainRouter(props) {
         <Route path="/login" component={Login} />
         <Route path="/logout" component={Logout} />
         <Route path="/registration" component={RegistrationForm} />
-        <Route path="/applicationOutbox" component={ApplicationOutbox} />
+        <Route path="/applicationoutbox" component={ApplicationOutbox} />
+        <Route path="/applicationinbox" component={ApplicationInbox} />
         <Route path="/home" component={HomePage} />
       </div>
     </>

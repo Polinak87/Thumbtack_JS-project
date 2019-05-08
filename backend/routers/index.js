@@ -142,34 +142,37 @@ router.post('/api/rejectapplication', async (ctx) => {
   ctx.status = 200;
 });
 
-router.post('/api/compliteapplication', async (ctx) => {
+router.post('/api/completeapplication', async (ctx) => {
   const { id } = ctx.request.body;
 
   await Application.update(
     {
-      status: 'complited',
+      status: 'completed',
     },
     { where: { id } },
   );
 
-  const currentApplication = await Application.findAll({
-    where: {
-      id,
+  const currentApplication = await Application.findOne(
+    {
+      where: { id },
     },
-  });
+  );
 
+  console.log(currentApplication);
   const { idUserAuthor, idThingOffered, idUserAnswer, idThingDesired } = currentApplication;
+
+  console.log(idUserAuthor, idThingOffered, idUserAnswer, idThingDesired);
 
   await Thing.update(
     {
-      userId: idUserAuthor,
+      userId: idUserAnswer,
     },
     { where: { id: idThingOffered } },
   );
 
   await Thing.update(
     {
-      userId: idUserAnswer,
+      userId: idUserAuthor,
     },
     { where: { id: idThingDesired } },
   );
@@ -180,7 +183,7 @@ router.post('/api/compliteapplication', async (ctx) => {
   ctx.status = 200;
 });
 
-router.get('/api/applicationOutbox', async (ctx, next) => {
+router.get('/api/applicationoutbox', async (ctx, next) => {
   const currentUserId = ctx.state.user.id;
 
   ctx.body = await Application.findAll({
@@ -204,16 +207,22 @@ router.get('/api/applicationOutbox', async (ctx, next) => {
   ctx.status = 200;
 });
 
-router.get('/api/applicationInbox', async (ctx, next) => {
+router.get('/api/applicationinbox', async (ctx, next) => {
   const currentUserId = ctx.state.user.id;
 
   ctx.body = await Application.findAll({
     include: [{
       model: Thing,
       as: 'ThingOffered',
+      include: [{
+        model: Category,
+      }],
     }, {
       model: Thing,
       as: 'ThingDesired',
+      include: [{
+        model: Category,
+      }],
     }],
     where: {
       idUserAnswer: currentUserId,

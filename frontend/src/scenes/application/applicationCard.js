@@ -1,6 +1,8 @@
 import React from 'react';
-import ThingInfo from '../../../components/thingInfo';
-import ButtonCancel from './buttonCancel';
+import ThingInfo from '../../components/thingInfo';
+import ButtonCancel from './outbox/buttonCancel';
+import ButtonComplete from './inbox/buttonComplete';
+import ButtonReject from './inbox/buttonReject';
 
 
 export default class ApplicationCard extends React.Component {
@@ -9,13 +11,27 @@ export default class ApplicationCard extends React.Component {
   }
 
   render() {
+    const{ titleRight, titleLeft, applicationType } = this.props;
     const { id, ThingDesired, ThingOffered, status } = this.props.application;
+
     const button = () => {
-      if(status == "pending") {
-        return <ButtonCancel id={id} updateData={this.props.updateData}/>
-      }
-      return <></>
+      switch (status) {
+      case "pending":
+        if(applicationType === 'outbox'){
+          return <ButtonCancel id={id} updateData={this.props.updateData}/>
+        } else {
+          return (
+            <div>
+              <ButtonComplete id={id} updateData={this.props.updateData}/>
+              <br/>
+              <ButtonReject id={id} updateData={this.props.updateData}/>
+            </div>
+          )
+        }
+      default: 
+        return <></>
     }
+  }
 
     return (
       <div className="card" >
@@ -27,7 +43,7 @@ export default class ApplicationCard extends React.Component {
         <footer className="card-footer">
           <div className="card-footer-item">
             <div className="card-is-full">
-              <p>Thing you want to have</p>
+              <p>{titleLeft}</p>
               <br />
               <ThingInfo
                 id={ThingDesired.id}
@@ -38,7 +54,7 @@ export default class ApplicationCard extends React.Component {
           </div>
           <div className="card-footer-item">
             <div className="card-is-full">
-              <p>Thing you want to change</p>
+              <p>{titleRight}</p>
               <br />
               <ThingInfo
                 id={ThingOffered.id}
