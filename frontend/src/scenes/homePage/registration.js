@@ -64,23 +64,23 @@ export default class Login extends React.Component {
                   </figure>
                   <form>
                     <div className="field">
-                      <div className="control1">
-                        <input className="input is-large" type="text" required onChange={this.handleChangeFirstName} value={this.state.firstName} placeholder="First name" />
+                      <div className="control">
+                        <input className="input is-large" type="text" required placeholder="First name" onChange={this.handleChangeFirstName} value={this.state.firstName}  />
                       </div>
                     </div>
                     <div className="field">
-                      <div className="control2">
-                        <input className="input is-large" type="text" required onChange={this.handleChangeLastName} value={this.state.lastName} placeholder="Last name" />
+                      <div className="control">
+                        <input className="input is-large" type="text" required placeholder="Last name" onChange={this.handleChangeLastName} value={this.state.lastName}  />
                       </div>
                     </div>
                     <div className="field">
-                      <div className="control3">
+                      <div className="control">
                         <input className="input is-large" type="email" required placeholder="Email" onChange={this.handleChangeEmail} value={this.state.email} />
                       </div>
                     </div>
                     <div className="field">
-                      <div className="control4">
-                        <input className="input is-large" type="password" required onChange={this.handleChangePassword} value={this.state.password} placeholder="Password" />
+                      <div className="control">
+                        <input className="input is-large" type="password" required placeholder="Password" onChange={this.handleChangePassword} value={this.state.password} placeholder="Password" />
                       </div>
                     </div>
                     <button className="button is-block is-success is-large is-fullwidth" onClick={this.handleClick}>Register</button>

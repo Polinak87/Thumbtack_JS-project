@@ -14,10 +14,6 @@ class AddNewThingForm extends React.Component {
       categoryList: [],
     }
 
-    this.barabashka1 = React.createRef();
-    this.barabashka2 = React.createRef();
-    this.barabashka3 = React.createRef();
-
     this.handleChangeName = this.handleChangeName.bind(this);
     this.handleChangeDescription = this.handleChangeDescription.bind(this);
     this.handleChangeCategory = this.handleChangeCategory.bind(this);
@@ -46,9 +42,16 @@ class AddNewThingForm extends React.Component {
   handleSubmit(event) {
     event.preventDefault();
     const { name, description, categoryId } = this.state;
-    console.log(name, description, categoryId);
     axios.post('/api/addnewthing', { name, description, categoryId }).then((response) => {
-      console.log(response);
+      if (response.status = 200) {
+        this.setState(
+          { 
+            name: '',
+            description: '',
+            categoryId: '1',
+          }
+        );
+      }
     });
   }
 
@@ -75,11 +78,11 @@ class AddNewThingForm extends React.Component {
         <br/>
         <div className="column is-one-quarter">
           <form className="" onSubmit={this.handleSubmit}>
-            <input className="input" type="text" placeholder="Name" onChange={this.handleChangeName} value={this.state.name} ref={this.barabashka1} />
-            <input className="input" type="text" placeholder="Description" onChange={this.handleChangeDescription} value={this.state.description} ref={this.barabashka2} />
-            <div className="control">
-              <div className="select">
-                <select onChange={this.handleChangeCategory}  value={this.state.categoryId} ref={this.barabashka3}>
+            <input className="input" type="text" required placeholder="Name" onChange={this.handleChangeName} value={this.state.name} />
+            <input className="input" type="text" required placeholder="Description" onChange={this.handleChangeDescription} value={this.state.description} />
+            <div className="control is-expanded">
+              <div className="select is-fullwidth">
+                <select onChange={this.handleChangeCategory}  value={this.state.categoryId} >
                   {categoryOptons}
                 </select>
               </div>
