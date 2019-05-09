@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import ApplicationCard from '../applicationCard';
+import FilterByStatus from '../filterByStatus';
 
 export default class ApplicationOutbox extends React.Component {
   constructor(props) {
@@ -9,6 +10,7 @@ export default class ApplicationOutbox extends React.Component {
       value: new Map(),
     }
     this.updateData = this.updateData.bind(this);
+    this.updateValue = this.updateValue.bind(this);
   }
 
   componentDidMount() {
@@ -21,7 +23,7 @@ export default class ApplicationOutbox extends React.Component {
         });
         this.setState({ value: map });
       });
-  }
+  };
 
   updateData(id, status) {
     let { value } = this.state;
@@ -32,20 +34,29 @@ export default class ApplicationOutbox extends React.Component {
     console.log(this.state.value);
   };
 
+  updateValue(filteredValue) {
+    this.setState({ value: filteredValue });
+    console.log(this.state.value);
+  };
+
   render() {
     const applicationType = 'outbox';
+    const pageTitle = 'Your outbox applications';
     const titleLeft = 'Thing you want to have';
     const titleRight = 'Thing you want to change';
+    const urlBase = '/api/applicationoutbox';
+    const urlForFilter = '/api/applicationoutboxfiltered';
 
     let cardList = [];
     for (let application of this.state.value.values()) {
       const { id } = application;
       cardList.push(
         <div className="column is-one-third" key={id}>
-        <ApplicationCard application={application} applicationType={applicationType} titleLeft={titleLeft} titleRight={titleRight} updateData={this.updateData}/>
+          <ApplicationCard application={application} applicationType={applicationType} titleLeft={titleLeft} titleRight={titleRight} updateData={this.updateData} />
         </div>
       )
     };
+
     return (
       <div>
         <br />
@@ -53,8 +64,15 @@ export default class ApplicationOutbox extends React.Component {
           <div className="hero-body">
             <div className="container">
               <h1 className="title">
-                Your outbox applications
+                {pageTitle}
               </h1>
+            </div>
+          </div>
+        </section>
+        <section className="section">
+          <div className="columns is-centered">
+            <div className="column is-narrow is-centered">
+            <FilterByStatus updateValue={this.updateValue} urlBase={urlBase} urlForFilter={urlForFilter}/>
             </div>
           </div>
         </section>

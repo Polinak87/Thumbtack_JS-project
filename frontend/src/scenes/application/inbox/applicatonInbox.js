@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import ApplicationCard from '../applicationCard';
+import FilterByStatus from '../filterByStatus';
 
 export default class ApplicationInbox extends React.Component {
   constructor(props) {
@@ -9,6 +10,7 @@ export default class ApplicationInbox extends React.Component {
       value: new Map(),
     }
     this.updateData = this.updateData.bind(this);
+    this.updateValue = this.updateValue.bind(this);
   }
 
   componentDidMount() {
@@ -21,7 +23,7 @@ export default class ApplicationInbox extends React.Component {
         });
         this.setState({ value: map });
       });
-  }
+  };
 
   updateData(id, status) {
     let { value } = this.state;
@@ -32,10 +34,18 @@ export default class ApplicationInbox extends React.Component {
     console.log(this.state.value);
   };
 
+  updateValue(filteredValue) {
+    this.setState({ value: filteredValue });
+    console.log(this.state.value);
+  };
+
   render() {
     const applicationType = 'inbox';
+    const pageTitle = 'Your inbox applications';
     const titleLeft = 'Thing you have now';
     const titleRight = 'Thing you are offered to get';
+    const urlBase = '/api/applicationinbox';
+    const urlForFilter = '/api/applicationinboxfiltered';
 
     let cardList = [];
     for (let application of this.state.value.values()) {
@@ -53,8 +63,15 @@ export default class ApplicationInbox extends React.Component {
           <div className="hero-body">
             <div className="container">
               <h1 className="title">
-                Your inbox applications
+                {pageTitle}
               </h1>
+            </div>
+          </div>
+        </section>
+        <section className="section">
+          <div className="columns is-centered">
+            <div className="column is-narrow is-centered">
+            <FilterByStatus updateValue={this.updateValue} urlBase={urlBase} urlForFilter={urlForFilter}/>
             </div>
           </div>
         </section>

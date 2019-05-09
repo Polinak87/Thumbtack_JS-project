@@ -145,42 +145,99 @@ router.post('/api/rejectapplication', async (ctx) => {
 router.post('/api/completeapplication', async (ctx) => {
   const { id } = ctx.request.body;
 
-  await Application.update(
-    {
-      status: 'completed',
-    },
-    { where: { id } },
-  );
-
   const currentApplication = await Application.findOne(
     {
       where: { id },
     },
   );
 
-  console.log(currentApplication);
   const { idUserAuthor, idThingOffered, idUserAnswer, idThingDesired } = currentApplication;
 
-  console.log(idUserAuthor, idThingOffered, idUserAnswer, idThingDesired);
-
-  await Thing.update(
+  const ThingOffered = await Thing.findOne(
     {
-      userId: idUserAnswer,
+      where: { id: idThingOffered },
     },
-    { where: { id: idThingOffered } },
   );
 
-  await Thing.update(
+  const ThingDesired = await Thing.findOne(
     {
-      userId: idUserAuthor,
+      where: { id: idThingDesired },
     },
-    { where: { id: idThingDesired } },
   );
 
-  ctx.body = {
-    status: 'complited',
-  };
-  ctx.status = 200;
+  let condition;
+
+  if ((ThingOffered.userId === idUserAuthor) && (ThingDesired.userId === idUserAnswer)) {
+    condition = 'haveToComplete';
+  }
+  if (ThingOffered.userId !== idUserAuthor) {
+    condition = 'haveToCancel';
+  }
+  if (ThingDesired.userId !== idUserAnswer) {
+    condition = 'haveToReject';
+  }
+
+  switch (condition) {
+    case 'haveToComplete':
+      await Application.update(
+        {
+          status: 'completed',
+        },
+        { where: { id } },
+      );
+
+      await Thing.update(
+        {
+          userId: idUserAnswer,
+        },
+        { where: { id: idThingOffered } },
+      );
+
+      await Thing.update(
+        {
+          userId: idUserAuthor,
+        },
+        { where: { id: idThingDesired } },
+      );
+
+      ctx.body = {
+        status: 'complited',
+      };
+      ctx.status = 200;
+      break;
+
+    case 'haveToCancel':
+      await Application.update(
+        {
+          status: 'canceled',
+        },
+        { where: { id } },
+      );
+      ctx.body = {
+        status: 'Very sorry, the other user has already exchanged the thing. Application is automatically canceled.',
+      };
+      ctx.status = 200;
+      break;
+
+    case 'haveToReject':
+      await Application.update(
+        {
+          status: 'rejected',
+        },
+        { where: { id } },
+      );
+      ctx.body = {
+        status: 'Ops, you have already exchanged this thing. Application is automatically rejected.',
+      };
+      ctx.status = 200;
+      break;
+
+    default:
+    {
+      ctx.status = 200;
+      break;
+    }
+  }
 });
 
 router.get('/api/applicationoutbox', async (ctx, next) => {
@@ -207,6 +264,34 @@ router.get('/api/applicationoutbox', async (ctx, next) => {
   ctx.status = 200;
 });
 
+router.post('/api/applicationoutboxfiltered', async (ctx, next) => {
+  const currentUserId = ctx.state.user.id;
+  const statusForFilter = ctx.request.body.params.status;
+
+  console.log(statusForFilter);
+
+  ctx.body = await Application.findAll({
+    include: [{
+      model: Thing,
+      as: 'ThingOffered',
+      include: [{
+        model: Category,
+      }],
+    }, {
+      model: Thing,
+      as: 'ThingDesired',
+      include: [{
+        model: Category,
+      }],
+    }],
+    where: {
+      idUserAuthor: currentUserId,
+      status: statusForFilter,
+    },
+  });
+  ctx.status = 200;
+});
+
 router.get('/api/applicationinbox', async (ctx, next) => {
   const currentUserId = ctx.state.user.id;
 
@@ -226,6 +311,32 @@ router.get('/api/applicationinbox', async (ctx, next) => {
     }],
     where: {
       idUserAnswer: currentUserId,
+    },
+  });
+  ctx.status = 200;
+});
+
+router.post('/api/applicationinboxfiltered', async (ctx, next) => {
+  const currentUserId = ctx.state.user.id;
+  const statusForFilter = ctx.request.body.params.status;
+
+  ctx.body = await Application.findAll({
+    include: [{
+      model: Thing,
+      as: 'ThingOffered',
+      include: [{
+        model: Category,
+      }],
+    }, {
+      model: Thing,
+      as: 'ThingDesired',
+      include: [{
+        model: Category,
+      }],
+    }],
+    where: {
+      idUserAnswer: currentUserId,
+      status: statusForFilter,
     },
   });
   ctx.status = 200;
