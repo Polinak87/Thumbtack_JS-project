@@ -10,7 +10,7 @@ export default class Login extends React.Component {
       email: '',
       password: '',
     }
-    this.handleClick = this.handleClick.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChangeEmail = this.handleChangeEmail.bind(this);
     this.handleChangePassword = this.handleChangePassword.bind(this);
   }
@@ -23,7 +23,7 @@ export default class Login extends React.Component {
     this.setState({ password: event.target.value });
   }
 
-  handleClick() {
+  handleSubmit(event) {
     event.preventDefault();
     const { email, password } = this.state;
     axios.post('/api/login', { email, password })
@@ -48,18 +48,18 @@ export default class Login extends React.Component {
                   <figure className="avatar">
                     <img src="https://placehold.it/128x128" />
                   </figure>
-                  <form>
+                  <form className="" onSubmit={this.handleSubmit}>
                     <div className="field">
                       <div className="control">
-                        <input className="input is-large" type="email" placeholder="Your Email" onChange={this.handleChangeEmail} value={this.state.email} autoFocus="" />
+                        <input className="input is-large" type="email" placeholder="Your Email" required autoFocus onChange={this.handleChangeEmail} value={this.state.email} />
                       </div>
                     </div>
                     <div className="field">
                       <div className="control">
-                        <input className="input is-large" type="password" onChange={this.handleChangePassword} value={this.state.password} placeholder="Your Password" />
+                        <input className="input is-large" type="password" placeholder="Your Password" required onChange={this.handleChangePassword} value={this.state.password} />
                       </div>
                     </div>
-                    <button className="button is-block is-success is-large is-fullwidth" onClick={this.handleClick}>Login</button>
+                    <input className="button is-block is-success is-large is-fullwidth" type="submit" value="Log in"></input>
                   </form>
                 </div>
               </div>

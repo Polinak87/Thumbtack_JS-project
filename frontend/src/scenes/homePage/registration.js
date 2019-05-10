@@ -12,7 +12,7 @@ export default class Login extends React.Component {
       email: '',
       password: '',
     }
-    this.handleClick = this.handleClick.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChangeFirstName = this.handleChangeFirstName.bind(this);
     this.handleChangeLastName = this.handleChangeLastName.bind(this);
     this.handleChangeEmail = this.handleChangeEmail.bind(this);
@@ -35,7 +35,7 @@ export default class Login extends React.Component {
     this.setState({ password: event.target.value });
   }
 
-  handleClick() {
+  handleSubmit(event) {
     event.preventDefault();
     const { firstName, lastName, email, password } = this.state;
     console.log(firstName, lastName, email, password);
@@ -62,28 +62,28 @@ export default class Login extends React.Component {
                   <figure className="avatar">
                     <img src="https://placehold.it/128x128" />
                   </figure>
-                  <form>
+                  <form className="" onSubmit={this.handleSubmit}>
                     <div className="field">
                       <div className="control">
-                        <input className="input is-large" type="text" required placeholder="First name" onChange={this.handleChangeFirstName} value={this.state.firstName}  />
+                        <input className="input is-large" type="text" required placeholder="First name" autoFocus onChange={this.handleChangeFirstName} value={this.state.firstName}/>
                       </div>
                     </div>
                     <div className="field">
                       <div className="control">
-                        <input className="input is-large" type="text" required placeholder="Last name" onChange={this.handleChangeLastName} value={this.state.lastName}  />
+                        <input className="input is-large" type="text" required placeholder="Last name" onChange={this.handleChangeLastName} value={this.state.lastName}/>
                       </div>
                     </div>
                     <div className="field">
                       <div className="control">
-                        <input className="input is-large" type="email" required placeholder="Email" onChange={this.handleChangeEmail} value={this.state.email} />
+                        <input className="input is-large" type="email" required placeholder="Email" onChange={this.handleChangeEmail} value={this.state.email}/>
                       </div>
                     </div>
                     <div className="field">
                       <div className="control">
-                        <input className="input is-large" type="password" required placeholder="Password" onChange={this.handleChangePassword} value={this.state.password} placeholder="Password" />
+                        <input className="input is-large" type="password" required placeholder="Password" placeholder="Password" onChange={this.handleChangePassword} value={this.state.password}/>
                       </div>
                     </div>
-                    <button className="button is-block is-success is-large is-fullwidth" onClick={this.handleClick}>Register</button>
+                    <input className="button is-block is-success is-large is-fullwidth" type="submit" value="Register"></input>
                   </form>
                 </div>
               </div>

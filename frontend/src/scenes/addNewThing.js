@@ -8,9 +8,9 @@ class AddNewThingForm extends React.Component {
       name: '',
       description: '',
       categoryId: '1',// используется как значение по умолчанию, 
-                      // т.к. если в селекторе пользователь хочет выбрать первое значение, 
-                      // то фактически он не переключает селектор и handleChangeCategory не подхатывает значение поля, 
-                      // если пользователь выбирает любую категорию кроме первой, то handleChangeCategory заменяет еденицу на выбранное значение
+      // т.к. если в селекторе пользователь хочет выбрать первое значение, 
+      // то фактически он не переключает селектор и handleChangeCategory не подхатывает значение поля, 
+      // если пользователь выбирает любую категорию кроме первой, то handleChangeCategory заменяет еденицу на выбранное значение
       categoryList: [],
     }
 
@@ -22,9 +22,9 @@ class AddNewThingForm extends React.Component {
 
   componentDidMount() {
     axios.get('/api/category')
-    .then((response) => {
-      this.setState({ categoryList: response.data })
-    });
+      .then((response) => {
+        this.setState({ categoryList: response.data })
+      });
   }
 
   handleChangeName(event) {
@@ -45,7 +45,7 @@ class AddNewThingForm extends React.Component {
     axios.post('/api/addnewthing', { name, description, categoryId }).then((response) => {
       if (response.status = 200) {
         this.setState(
-          { 
+          {
             name: '',
             description: '',
             categoryId: '1',
@@ -65,7 +65,7 @@ class AddNewThingForm extends React.Component {
 
     return (
       <div>
-        <br/>
+        <br />
         <section className="hero is-primary">
           <div className="hero-body">
             <div className="container">
@@ -75,20 +75,33 @@ class AddNewThingForm extends React.Component {
             </div>
           </div>
         </section>
-        <br/>
+        <br />
         <div className="column is-one-quarter">
           <form className="" onSubmit={this.handleSubmit}>
-            <input className="input" type="text" required placeholder="Name" onChange={this.handleChangeName} value={this.state.name} />
-            <input className="input" type="text" required placeholder="Description" onChange={this.handleChangeDescription} value={this.state.description} />
-            <div className="control is-expanded">
-              <div className="select is-fullwidth">
-                <select onChange={this.handleChangeCategory}  value={this.state.categoryId} >
-                  {categoryOptons}
-                </select>
+            <div className="field">
+              <div className="control">
+                <input className="input" type="text" required placeholder="Name" autoFocus onChange={this.handleChangeName} value={this.state.name} />
               </div>
             </div>
-            <br/>
-            <input className="button is-block is-success is-large is-fullwidth" type="submit" value="Add"></input>
+            <div className="field">
+              <div className="control">
+                <input className="input" type="text" required placeholder="Description" onChange={this.handleChangeDescription} value={this.state.description} />
+              </div>
+            </div>
+            <div className="field">
+              <div className="control is-expanded">
+                <div className="select is-fullwidth">
+                  <select onChange={this.handleChangeCategory} value={this.state.categoryId} >
+                    {categoryOptons}
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div className="field">
+              <div className="control">
+                <input className="button is-block is-success is-large is-fullwidth" type="submit" value="Add"></input>
+              </div>
+            </div>
           </form>
         </div>
       </div>
