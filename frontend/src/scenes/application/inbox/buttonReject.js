@@ -14,13 +14,18 @@ export default class ButtonReject extends React.Component {
     .then((response) => {
       console.log(response.data);
       this.props.updateData(id, response.data.status);
+      if (response.data.message!== '') {
+        const message = response.data.message;
+        const showMessage = true;
+        this.props.updateMessage(message, showMessage);
+      }
     });
   }
 
   render() {
     return (
       <>
-        <input className="button is-block is-danger is-large is-fullwidth" onClick={this.handleClick} type="submit" value="Reject application"></input>
+        <button className="button is-block is-danger is-large is-fullwidth" onClick={this.handleClick} >Reject application</button>
       </>
     );
   }

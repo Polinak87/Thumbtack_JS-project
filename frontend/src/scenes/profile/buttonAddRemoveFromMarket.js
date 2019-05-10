@@ -30,9 +30,9 @@ export default class ButtonAddRemoveFromMarket extends React.Component {
     const { onMarket } = this.props;
     let button;
     if (onMarket) {
-      button = <input className="button is-block is-danger is-large is-fullwidth" onClick={this.handleClickRemove} type="submit" value="Remove from market"></input>;
+      button = <button className="button is-block is-danger is-large is-fullwidth" onClick={this.handleClickRemove} >Remove from market</button>;
     } else {
-      button = <input className="button is-block is-success is-large is-fullwidth" onClick={this.handleClickAdd} type="submit" value="Add to market"></input>;
+      button = <button className="button is-block is-success is-large is-fullwidth" onClick={this.handleClickAdd} >Add to market</button>;
     }
 
     return (

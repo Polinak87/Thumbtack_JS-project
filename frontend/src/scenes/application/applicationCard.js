@@ -11,20 +11,29 @@ export default class ApplicationCard extends React.Component {
   }
 
   render() {
-    const{ titleRight, titleLeft, applicationType } = this.props;
+    const{ titleRight, titleLeft, applicationType, updateMessage, updateData } = this.props;
     const { id, ThingDesired, ThingOffered, status } = this.props.application;
 
     const button = () => {
       switch (status) {
       case "pending":
         if(applicationType === 'outbox'){
-          return <ButtonCancel id={id} updateData={this.props.updateData}/>
+          return <ButtonCancel 
+                  id={id}
+                  updateData={updateData}
+                  updateMessage={updateMessage}/>
         } else {
           return (
             <div>
-              <ButtonComplete id={id} updateData={this.props.updateData}/>
+              <ButtonComplete 
+                id={id}
+                updateData={updateData}
+                updateMessage={updateMessage}/>
               <br/>
-              <ButtonReject id={id} updateData={this.props.updateData}/>
+              <ButtonReject
+                id={id} 
+                updateData={updateData}
+                updateMessage={updateMessage}/>
             </div>
           )
         }

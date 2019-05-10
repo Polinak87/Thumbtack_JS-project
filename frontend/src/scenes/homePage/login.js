@@ -59,7 +59,7 @@ export default class Login extends React.Component {
                         <input className="input is-large" type="password" placeholder="Your Password" required onChange={this.handleChangePassword} value={this.state.password} />
                       </div>
                     </div>
-                    <input className="button is-block is-success is-large is-fullwidth" type="submit" value="Log in"></input>
+                    <input className="button is-block is-success is-large is-fullwidth" type="submit" value="Log in"/>
                   </form>
                 </div>
               </div>

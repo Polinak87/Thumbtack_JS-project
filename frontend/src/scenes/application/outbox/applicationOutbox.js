@@ -2,15 +2,20 @@ import React from 'react';
 import axios from 'axios';
 import ApplicationCard from '../applicationCard';
 import FilterByStatus from '../filterByStatus';
+import Infomessage from '../../../components/infoMessage';
 
 export default class ApplicationOutbox extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       value: new Map(),
+      message: '',
+      showMessage: false,
     }
     this.updateData = this.updateData.bind(this);
     this.updateValue = this.updateValue.bind(this);
+    this.updateMessage = this.updateMessage.bind(this);
+    // this.handleClick = this.handleClick.bind(this);
   }
 
   componentDidMount() {
@@ -39,6 +44,12 @@ export default class ApplicationOutbox extends React.Component {
     console.log(this.state.value);
   };
 
+  updateMessage(message, showMessage) {
+    this.setState({ message });
+    this.setState({ showMessage });
+    console.log(this.state.message);
+  };
+
   render() {
     const applicationType = 'outbox';
     const pageTitle = 'Your outbox applications';
@@ -46,16 +57,30 @@ export default class ApplicationOutbox extends React.Component {
     const titleRight = 'Thing you want to change';
     const urlBase = '/api/applicationoutbox';
     const urlForFilter = '/api/applicationoutboxfiltered';
+    const urlForRedirect = '/applicationoutbox';
 
     let cardList = [];
     for (let application of this.state.value.values()) {
       const { id } = application;
       cardList.push(
         <div className="column is-one-third" key={id}>
-          <ApplicationCard application={application} applicationType={applicationType} titleLeft={titleLeft} titleRight={titleRight} updateData={this.updateData} />
+          <ApplicationCard
+            application={application}
+            applicationType={applicationType}
+            titleLeft={titleLeft}
+            titleRight={titleRight}
+            updateData={this.updateData} 
+            updateMessage={this.updateMessage}/>
         </div>
       )
     };
+
+    let message;
+    if (this.state.showMessage) {
+      message = <Infomessage updateMessage={this.updateMessage} message={ this.state.message} urlForRedirect={urlForRedirect}/>
+    } else {
+      message = null;
+    }
 
     return (
       <div>
@@ -72,7 +97,10 @@ export default class ApplicationOutbox extends React.Component {
         <section className="section">
           <div className="columns is-centered">
             <div className="column is-narrow is-centered">
-            <FilterByStatus updateValue={this.updateValue} urlBase={urlBase} urlForFilter={urlForFilter}/>
+            <FilterByStatus 
+              updateValue={this.updateValue}
+              urlBase={urlBase}
+              urlForFilter={urlForFilter}/>
             </div>
           </div>
         </section>
@@ -81,6 +109,7 @@ export default class ApplicationOutbox extends React.Component {
             {cardList}
           </div>
         </section>
+        {message}
       </div >
     )
   }

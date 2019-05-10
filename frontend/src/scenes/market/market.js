@@ -9,7 +9,6 @@ export default class Market extends React.Component {
     this.state = {
       value: new Map(),
     }
-    // this.updateData = this.updateData.bind(this);
   }
 
   componentDidMount() {
@@ -23,16 +22,6 @@ export default class Market extends React.Component {
       });
       console.log(this.state.value);
   }
-
-  // updateData(id, onMarket, onMarketAt) {
-  //   let { value } = this.state;
-  //   let thing = value.get(id);
-  //   thing.onMarket = onMarket;
-  //   thing.onMarketAt = onMarketAt;
-  //   value.set(id, thing);
-  //   this.setState({ value });
-  //   console.log(this.state.value);
-  // };
 
   render() {
     let currentUserId = store.getState().user.id;

@@ -11,16 +11,30 @@ export default class ButtonComplete extends React.Component {
     event.preventDefault();
     const id = this.props.id;
     axios.post('/api/completeapplication', { id })
+    // .then((response) => {
+    //   console.log(response.data);
+    //   this.props.updateData(id, response.data.status);
+    // });
     .then((response) => {
-      console.log(response.data);
-      this.props.updateData(id, response.data.status);
+      if (response.status === 200) {
+        console.log(response.data);
+        let arrayForUpdate = response.data;
+        for (let i = 0; i < arrayForUpdate.length; i++) {
+          const { id, status, message } = arrayForUpdate[i];
+          this.props.updateData(id, status);
+          if (message!== '') {
+            const showMessage = true;
+            this.props.updateMessage(message, showMessage);
+          }
+        }
+      }
     });
   }
 
   render() {
     return (
       <>
-        <input className="button is-block is-danger is-large is-fullwidth" onClick={this.handleClick} type="submit" value="Complete application"></input>
+        <button className="button is-block is-success is-large is-fullwidth" onClick={this.handleClick} >Complete application</button>
       </>
     );
   }

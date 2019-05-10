@@ -113,33 +113,63 @@ router.post('/api/createapplication', async (ctx) => {
 router.post('/api/cancelapplication', async (ctx) => {
   const { id } = ctx.request.body;
 
-  await Application.update(
+  const currentApplication = await Application.findOne(
     {
-      status: 'canceled',
+      where: { id },
     },
-    { where: { id } },
   );
 
-  ctx.body = {
-    status: 'canceled',
-  };
-  ctx.status = 200;
+  if (currentApplication.status === 'pending') {
+    await Application.update(
+      {
+        status: 'canceled',
+      },
+      { where: { id } },
+    );
+
+    ctx.body = {
+      status: 'canceled',
+      message: '',
+    };
+    ctx.status = 200;
+  } else {
+    ctx.body = {
+      status: currentApplication.status,
+      message: 'Ops, another user has just answered on your application for exchange this thing.',
+    };
+    ctx.status = 200;
+  }
 });
 
 router.post('/api/rejectapplication', async (ctx) => {
   const { id } = ctx.request.body;
 
-  await Application.update(
+  const currentApplication = await Application.findOne(
     {
-      status: 'rejected',
+      where: { id },
     },
-    { where: { id } },
   );
 
-  ctx.body = {
-    status: 'rejected',
-  };
-  ctx.status = 200;
+  if (currentApplication.status === 'pending') {
+    await Application.update(
+      {
+        status: 'rejected',
+      },
+      { where: { id } },
+    );
+
+    ctx.body = {
+      status: 'rejected',
+      message: '',
+    };
+    ctx.status = 200;
+  } else {
+    ctx.body = {
+      status: currentApplication.status,
+      message: 'Ops, the other user has just canceled the application.',
+    };
+    ctx.status = 200;
+  }
 });
 
 router.post('/api/completeapplication', async (ctx) => {
@@ -151,39 +181,34 @@ router.post('/api/completeapplication', async (ctx) => {
     },
   );
 
-  const { idUserAuthor, idThingOffered, idUserAnswer, idThingDesired } = currentApplication;
+  const {
+    idUserAuthor,
+    idThingOffered,
+    idUserAnswer,
+    idThingDesired,
+    status,
+  } = currentApplication;
 
-  const ThingOffered = await Thing.findOne(
-    {
-      where: { id: idThingOffered },
-    },
-  );
+  let ApplicationsForReject;
+  let ApplicationsForCancel;
 
-  const ThingDesired = await Thing.findOne(
-    {
-      where: { id: idThingDesired },
-    },
-  );
+  ctx.body = [];
 
-  let condition;
-
-  if ((ThingOffered.userId === idUserAuthor) && (ThingDesired.userId === idUserAnswer)) {
-    condition = 'haveToComplete';
-  }
-  if (ThingOffered.userId !== idUserAuthor) {
-    condition = 'haveToCancel';
-  }
-  if (ThingDesired.userId !== idUserAnswer) {
-    condition = 'haveToReject';
-  }
-
-  switch (condition) {
-    case 'haveToComplete':
+  switch (status) {
+    case 'pending':
       await Application.update(
         {
           status: 'completed',
         },
         { where: { id } },
+      );
+
+      await ctx.body.push(
+        {
+          id,
+          status: 'completed',
+          message: '',
+        },
       );
 
       await Thing.update(
@@ -200,35 +225,84 @@ router.post('/api/completeapplication', async (ctx) => {
         { where: { id: idThingDesired } },
       );
 
-      ctx.body = {
-        status: 'complited',
-      };
+      await Application.findAll(
+        {
+          where: {
+            idThingOffered,
+            status: 'pending',
+          },
+        },
+      ).then((applications) => {
+        ApplicationsForCancel = applications;
+      });
+
+      await Application.findAll(
+        {
+          where: {
+            idThingDesired,
+            status: 'pending',
+          },
+        },
+      ).then((applications) => {
+        ApplicationsForReject = applications;
+      });
+
+      for (let i = 0; i < ApplicationsForReject.length; i++) {
+        await Application.update(
+          {
+            status: 'rejected',
+          },
+          { where: { id: ApplicationsForReject[i].dataValues.id } },
+        );
+        await ctx.body.push(
+          {
+            id: ApplicationsForReject[i].dataValues.id,
+            status: 'rejected',
+            message: '',
+          },
+        );
+      }
+
+      for (let i = 0; i < ApplicationsForCancel.length; i++) {
+        await Application.update(
+          {
+            status: 'canceled',
+          },
+          { where: { id: ApplicationsForCancel[i].dataValues.id } },
+        );
+        if (ApplicationsForCancel[i].dataValues.idUserAnswer === ctx.state.user.id) {
+          await ctx.body.push(
+            {
+              id: ApplicationsForCancel[i].dataValues.id,
+              status: 'canceled',
+              message: '',
+            },
+          );
+        }
+      }
+
       ctx.status = 200;
       break;
 
-    case 'haveToCancel':
-      await Application.update(
+    case 'canceled':
+      await ctx.body.push(
         {
+          id,
           status: 'canceled',
+          message: 'Very sorry, the other user has just canceled the application.',
         },
-        { where: { id } },
       );
-      ctx.body = {
-        status: 'Very sorry, the other user has already exchanged the thing. Application is automatically canceled.',
-      };
       ctx.status = 200;
       break;
 
-    case 'haveToReject':
-      await Application.update(
+    case 'rejected':
+      await ctx.body.push(
         {
+          id,
           status: 'rejected',
+          message: 'Ops, another user has just accepted your application for exchange this thing. This application is automatically canceled.',
         },
-        { where: { id } },
       );
-      ctx.body = {
-        status: 'Ops, you have already exchanged this thing. Application is automatically rejected.',
-      };
       ctx.status = 200;
       break;
 

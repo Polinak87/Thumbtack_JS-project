@@ -17,7 +17,7 @@ export default class Card extends React.Component {
       if (currentUserId === userId) {
         return <></>
       } return <ButtonExchange id={id} userId={userId} />
-      }
+    }
 
     return (
       <div className="card">

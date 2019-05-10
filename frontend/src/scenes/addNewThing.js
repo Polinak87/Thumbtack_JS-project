@@ -99,7 +99,7 @@ class AddNewThingForm extends React.Component {
             </div>
             <div className="field">
               <div className="control">
-                <input className="button is-block is-success is-large is-fullwidth" type="submit" value="Add"></input>
+                <input className="button is-block is-success is-large is-fullwidth" type="submit" value="Add" />
               </div>
             </div>
           </form>

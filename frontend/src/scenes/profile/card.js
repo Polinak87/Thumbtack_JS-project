@@ -21,9 +21,9 @@ export default class Card extends React.Component {
           onMarketAt={onMarketAt}
           updateData={updateData} />
         <ButtonAddRemoveFromMarket
-        id={id}
-        onMarket={onMarket}
-        updateData={updateData} />
+          id={id}
+          onMarket={onMarket}
+          updateData={updateData} />
       </div >
     );
   }
