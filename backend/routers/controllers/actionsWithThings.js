@@ -6,13 +6,12 @@ const addNewThing = async (ctx) => {
   const { name, description, categoryId } = ctx.request.body;
   const userId = ctx.state.user.id;
 
-  await Thing.create({
+  ctx.body = await Thing.create({
     name,
     description,
     categoryId,
     userId,
   });
-  ctx.body = 'Thing is added.';
   ctx.status = 200;
 };
 

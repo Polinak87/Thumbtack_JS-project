@@ -1,12 +1,17 @@
 'use strict';
 
 const {
+  sequelize,
   Thing,
   User,
+  Category,
   Application,
 } = require('../models');
 
-User.sync({ force: true }).then(async () => {
+sequelize.sync({ force: true }).then(async () => {
+  await Category.create({ name: 'dresses' });
+  await Category.create({ name: 'skirts' });
+  await Category.create({ name: 'blouses' });
   await User.create({
     firstName: 'Polina',
     lastName: 'Kozlova',
@@ -19,9 +24,6 @@ User.sync({ force: true }).then(async () => {
     email: 'mitroshka@mail.com',
     password: 'ggg',
   });
-});
-
-Thing.sync({ force: true }).then(async () => {
   await Thing.create({
     name: 'summer dress',
     description: 'pretty',
@@ -38,9 +40,6 @@ Thing.sync({ force: true }).then(async () => {
     onMarket: false,
     onMarketAt: null,
   });
-});
-
-Application.sync({ force: true }).then(async () => {
   await Application.create({
     idApplicationOutbox: 1,
     idUserAuthor: 1,
