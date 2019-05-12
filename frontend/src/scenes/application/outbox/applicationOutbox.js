@@ -19,7 +19,7 @@ export default class ApplicationOutbox extends React.Component {
   }
 
   componentDidMount() {
-    axios.get('/api/applicationoutbox')
+    axios.get('/api/applicationsoutbox')
       .then((response) => {
         console.log(response.data);
         var map = this.state.value;
@@ -55,9 +55,9 @@ export default class ApplicationOutbox extends React.Component {
     const pageTitle = 'Your outbox applications';
     const titleLeft = 'Thing you want to have';
     const titleRight = 'Thing you want to change';
-    const urlBase = '/api/applicationoutbox';
-    const urlForFilter = '/api/applicationoutboxfiltered';
-    const urlForRedirect = '/applicationoutbox';
+    const urlBase = '/api/applicationsoutbox';
+    const urlForFilter = '/api/applicationsoutboxfiltered';
+    const urlForRedirect = '/applicationsoutbox';
 
     let cardList = [];
     for (let application of this.state.value.values()) {

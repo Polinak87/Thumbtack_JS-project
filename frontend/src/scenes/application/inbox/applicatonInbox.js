@@ -21,7 +21,7 @@ export default class ApplicationInbox extends React.Component {
   }
 
   componentDidMount() {
-    axios.get('/api/applicationinbox')
+    axios.get('/api/applicationsinbox')
       .then((response) => {
         console.log(response.data);
         var map = this.state.value;
@@ -57,9 +57,9 @@ export default class ApplicationInbox extends React.Component {
     const pageTitle = 'Your inbox applications';
     const titleLeft = 'Thing you have now';
     const titleRight = 'Thing you are offered to get';
-    const urlBase = '/api/applicationinbox';
-    const urlForFilter = '/api/applicationinboxfiltered';
-    const urlForRedirect = '/applicationinbox';
+    const urlBase = '/api/applicationsinbox';
+    const urlForFilter = '/api/applicationsinboxfiltered';
+    const urlForRedirect = '/applicationsinbox';
 
     let cardList = [];
     for (let application of this.state.value.values()) {

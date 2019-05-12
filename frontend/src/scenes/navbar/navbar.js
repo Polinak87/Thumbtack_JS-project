@@ -28,10 +28,10 @@ export default function NavBar(props) {
               Applications
             </div>
             <div className="navbar-dropdown">
-              <Link to="/applicationinbox"  className="navbar-item">
+              <Link to="/applicationsinbox"  className="navbar-item">
                 inbox
               </Link>
-              <Link to="/applicationoutbox" className="navbar-item">
+              <Link to="/applicationsoutbox" className="navbar-item">
                 outbox
               </Link>
             </div>

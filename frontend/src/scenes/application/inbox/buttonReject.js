@@ -10,7 +10,7 @@ export default class ButtonReject extends React.Component {
   handleClick() {
     event.preventDefault();
     const id = this.props.id;
-    axios.post('/api/rejectapplication', { id })
+    axios.put('/api/rejectapplication', { id })
     .then((response) => {
       console.log(response.data);
       this.props.updateData(id, response.data.status);

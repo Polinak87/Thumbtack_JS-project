@@ -43,8 +43,8 @@ function MainRouter(props) {
         <Route path="/login" component={Login} />
         <Route path="/logout" component={Logout} />
         <Route path="/registration" component={RegistrationForm} />
-        <Route path="/applicationoutbox" component={ApplicationOutbox} />
-        <Route path="/applicationinbox" component={ApplicationInbox} />
+        <Route path="/applicationsoutbox" component={ApplicationOutbox} />
+        <Route path="/applicationsinbox" component={ApplicationInbox} />
         <Route path="/home" component={HomePage} />
       </div>
     </>
