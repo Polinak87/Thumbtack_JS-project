@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import Logout from './logout'
 
 export default function NavBar(props) {
-  console.log(props.user);
   if (props.user.name === null) {
     return null;
   }

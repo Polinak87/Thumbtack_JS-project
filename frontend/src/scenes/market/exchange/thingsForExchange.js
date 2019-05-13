@@ -1,7 +1,8 @@
 import React from 'react';
 import axios from 'axios';
-import Card from './card';
 import { Link } from 'react-router-dom';
+import Card from './card';
+import Hero from '../../../components/hero';
 import store from '../../../store/index';
 import { deleteThingForExchange } from '../../../store/actions/thingForExchange';
 
@@ -79,16 +80,13 @@ export default class ThingsForExchange extends React.Component {
       infoMessage = null;
     }
 
+    const heroText = 'Choose thing for exchange';
+    const heroType = "hero is-info";
+
     return (
       <>
         <br />
-        <section className="hero is-info">
-          <div className="hero-body">
-            <div className="container">
-              <h1 className="title">Choose thing you offer for exchange</h1>
-            </div>
-          </div>
-        </section>
+        <Hero heroText={heroText} heroType={heroType}/>
         <section className="section">
           <div className="columns is-multiline">
             {cardList}

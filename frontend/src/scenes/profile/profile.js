@@ -1,6 +1,9 @@
 import React from 'react';
 import axios from 'axios';
 import Card from './card';
+import Hero from '../../components/hero';
+import store from '../../store/index';
+import { addUserThings } from '../../store/actions/userThings';
 
 export default class Profile extends React.Component {
   constructor(props) {
@@ -15,12 +18,12 @@ export default class Profile extends React.Component {
     axios.get('/api/userthings')
       .then((response) => {
         var map = this.state.value;
-        console.log(response.data);
         response.data.forEach(function (thing) {
-          map.set(thing.id, thing)
+          map.set(thing.id, thing);
+          // store.dispatch(addUserThings(thing));
         });
-        this.setState({ value: map });
-      });
+        this.setState({ value: map }); //!!!
+      })
   }
 
   updateData(id, onMarket, onMarketAt) {
@@ -50,18 +53,13 @@ export default class Profile extends React.Component {
       )
     };
 
+    const heroText = 'Your inventory';
+    const heroType = "hero is-primary";
+
     return (
       <>
         <br/>
-        <section className="hero is-primary">
-          <div className="hero-body">
-            <div className="container">
-              <h1 className="title">
-                Your inventory
-              </h1>
-            </div>
-          </div>
-        </section>
+        <Hero heroText={heroText} heroType={heroType}/>
         <section className="section">
           <div className="columns is-multiline">
             {cardList}

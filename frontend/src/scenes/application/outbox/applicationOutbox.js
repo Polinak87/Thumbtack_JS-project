@@ -3,6 +3,7 @@ import axios from 'axios';
 import ApplicationCard from '../applicationCard';
 import FilterByStatus from '../filterByStatus';
 import Infomessage from '../../../components/infoMessage';
+import Hero from '../../../components/hero';
 
 export default class ApplicationOutbox extends React.Component {
   constructor(props) {
@@ -82,18 +83,13 @@ export default class ApplicationOutbox extends React.Component {
       message = null;
     }
 
+    const heroText = 'Your outbox applications';
+    const heroType = "hero is-primary";
+
     return (
       <div>
         <br />
-        <section className="hero is-primary">
-          <div className="hero-body">
-            <div className="container">
-              <h1 className="title">
-                {pageTitle}
-              </h1>
-            </div>
-          </div>
-        </section>
+        <Hero heroText={heroText} heroType={heroType}/>
         <section className="section">
           <div className="columns is-centered">
             <div className="column is-narrow is-centered">

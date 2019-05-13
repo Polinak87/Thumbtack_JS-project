@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import Hero from '../components/hero';
 
 class AddNewThingForm extends React.Component {
   constructor(props) {
@@ -63,18 +64,13 @@ class AddNewThingForm extends React.Component {
       );
     });
 
+    const heroText = 'Add new thing to your inventory';
+    const heroType = "hero is-primary";
+
     return (
       <div>
         <br />
-        <section className="hero is-primary">
-          <div className="hero-body">
-            <div className="container">
-              <h1 className="title">
-                Add new thing to your inventory
-              </h1>
-            </div>
-          </div>
-        </section>
+        <Hero heroText={heroText} heroType={heroType}/>
         <br />
         <div className="column is-one-quarter">
           <form className="" onSubmit={this.handleSubmit}>
