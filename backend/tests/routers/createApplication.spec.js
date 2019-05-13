@@ -39,38 +39,38 @@ describe('Actions with things', () => {
     });
 
     await Thing.create({
-      name: 'summer dress',
-      description: 'light',
-      categoryId: 1,
-      userId: 1,
-      onMarket: false,
-      onMarketAt: null,
-    });
-
-    await Thing.create({
       name: 'gold ring',
-      description: 'modern style',
-      categoryId: 2,
-      userId: 1,
-      onMarket: false,
-      onMarketAt: null,
-    });
-
-    await Thing.create({
-      name: 'silver ring',
       description: 'modern style',
       categoryId: 2,
       userId: 2,
       onMarket: false,
       onMarketAt: null,
     });
+
+    // await Thing.create({
+    //   name: 'summer dress',
+    //   description: 'light',
+    //   categoryId: 1,
+    //   userId: 1,
+    //   onMarket: false,
+    //   onMarketAt: null,
+    // });
+
+    // await Thing.create({
+    //   name: 'silver ring',
+    //   description: 'modern style',
+    //   categoryId: 2,
+    //   userId: 2,
+    //   onMarket: false,
+    //   onMarketAt: null,
+    // });
   });
 
   afterAll(async () => {
     await sequelize.close();
   });
 
-  test('Get things for market', async () => {
+  test('Create application', async () => {
     const agent = await request.agent(this.app);
 
     await agent
@@ -86,26 +86,37 @@ describe('Actions with things', () => {
 
     await agent
       .post('/api/addthingtomarket')
-      .send({ id: 3 });
+      .send({ id: 2 });
+
+    // await agent
+    //   .post('/api/addthingtomarket')
+    //   .send({ id: 3 });
+
+    // await agent
+    //   .post('/api/addthingtomarket')
+    //   .send({ id: 4 });
 
     const response = await agent
-      .get('/api/marketthings');
+      .post('/api/createapplication')
+      .send({
+        idThingOffered: 1,
+        idThingDesired: 2,
+        idUserAnswer: 2,
+      });
 
-    const array = response.body;
+    const {
+      idUserAuthor,
+      idThingOffered,
+      idUserAnswer,
+      idThingDesired,
+      status,
+    } = response.body;
 
     expect(response.statusCode).toBe(200);
-    expect(response.body).toHaveLength(2);
-    expect(array[0].name).toBe('winter dress');
-    expect(array[1].name).toBe('gold ring');
-    expect(array[0].description).toBe('pretty');
-    expect(array[1].description).toBe('modern style');
-    expect(array[0].categoryId).toBe(1);
-    expect(array[1].categoryId).toBe(2);
-    expect(array[0].userId).toBe(1);
-    expect(array[1].userId).toBe(1);
-    expect(array[0].onMarket).toBe(true);
-    expect(array[1].onMarket).toBe(true);
-    expect(array[0].onMarketAt).toBeDefined();
-    expect(array[1].onMarketAt).toBeDefined();
+    expect(idUserAuthor).toBe(1);
+    expect(idThingOffered).toBe(1);
+    expect(idUserAnswer).toBe(2);
+    expect(idThingDesired).toBe(2);
+    expect(status).toBe('pending');
   });
 });

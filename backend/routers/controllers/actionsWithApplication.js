@@ -9,14 +9,13 @@ const createApplication = async (ctx) => {
   const { idThingOffered, idThingDesired, idUserAnswer } = ctx.request.body;
   const idUserAuthor = ctx.state.user.id;
 
-  await Application.create({
+  ctx.body = await Application.create({
     idUserAuthor,
     idThingOffered,
     idUserAnswer,
     idThingDesired,
     status: 'pending',
   });
-  ctx.body = 'Application is created.';
   ctx.status = 200;
 };
 

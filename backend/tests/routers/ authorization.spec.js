@@ -29,35 +29,67 @@ describe('Users', () => {
     const response = await agent
       .post('/api/registration')
       .send({
-        firstName: 'Polina',
+        firstName: 'Masha',
         lastName: 'Kozlova',
-        email: 'polinak87@mail.ru',
+        email: 'masha@mail.ru',
         password: 'ggg',
       });
 
     await expect(response.statusCode).toBe(200);
 
     await expect(response.body).toEqual({
-      firstName: 'Polina',
+      firstName: 'Masha',
       id: 1,
       lastName: 'Kozlova',
     });
   });
 
-  test('log out', async () => {
+  test('logout', async () => {
     const agent = await request.agent(this.app);
 
     await agent
-      .post('/login')
+      .post('/api/registration')
       .send({
-        email: 'polinak87@mail.ru',
+        firstName: 'Nik',
+        lastName: 'Kozlov',
+        email: 'Nik@mail.ru',
         password: 'ggg',
       });
 
     const response = await agent
-      .get('/logout');
+      .post('/api/logout');
 
     expect(response.statusCode).toBe(200);
+  });
+
+  test('login', async () => {
+    const agent = await request.agent(this.app);
+
+    await agent
+      .post('/api/registration')
+      .send({
+        firstName: 'John',
+        lastName: 'Kozlov',
+        email: 'john@mail.ru',
+        password: 'ggg',
+      });
+
+    await agent
+      .post('/api/logout');
+
+    const response = await agent
+      .post('/api/login')
+      .send({
+        email: 'john@mail.ru',
+        password: 'ggg',
+      });
+
+    expect(response.statusCode).toBe(200);
+    await expect(response.body).toEqual({
+      firstName: 'John',
+      id: 3,
+      lastName: 'Kozlov',
+    });
   });
 
   test('when authenticated', async () => {

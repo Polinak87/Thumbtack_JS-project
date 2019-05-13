@@ -21,7 +21,7 @@ sequelize.sync({ force: true }).then(async () => {
   await User.create({
     firstName: 'Anna',
     lastName: 'Mitrofanova',
-    email: 'mitroshka@mail.com',
+    email: 'mitroshka@mail.ru',
     password: 'ggg',
   });
   await Thing.create({
