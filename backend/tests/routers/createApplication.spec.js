@@ -46,24 +46,6 @@ describe('Actions with things', () => {
       onMarket: false,
       onMarketAt: null,
     });
-
-    // await Thing.create({
-    //   name: 'summer dress',
-    //   description: 'light',
-    //   categoryId: 1,
-    //   userId: 1,
-    //   onMarket: false,
-    //   onMarketAt: null,
-    // });
-
-    // await Thing.create({
-    //   name: 'silver ring',
-    //   description: 'modern style',
-    //   categoryId: 2,
-    //   userId: 2,
-    //   onMarket: false,
-    //   onMarketAt: null,
-    // });
   });
 
   afterAll(async () => {
@@ -87,14 +69,6 @@ describe('Actions with things', () => {
     await agent
       .post('/api/addthingtomarket')
       .send({ id: 2 });
-
-    // await agent
-    //   .post('/api/addthingtomarket')
-    //   .send({ id: 3 });
-
-    // await agent
-    //   .post('/api/addthingtomarket')
-    //   .send({ id: 4 });
 
     const response = await agent
       .post('/api/createapplication')

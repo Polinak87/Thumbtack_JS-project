@@ -59,7 +59,7 @@ router.put('/api/completeapplication', completeApplication);
 router.get('/api/applicationsoutbox', applicationsOutbox);
 router.post('/api/applicationsoutboxfiltered', applicationsOutboxFiltered);
 router.get('/api/applicationsinbox', applicationsInbox);
-router.post('/api/applicationinsboxfiltered', applicationsInboxFiltered);
+router.post('/api/applicationsinboxfiltered', applicationsInboxFiltered);
 
 module.exports = {
   router,

@@ -72,9 +72,9 @@ describe('Actions with applications', () => {
     await agent1
       .post('/api/createapplication')
       .send({
-        idThingOffered: 2,
-        idThingDesired: 1,
-        idUserAnswer: 1,
+        idThingOffered: 1,
+        idThingDesired: 2,
+        idUserAnswer: 2,
       });
 
     await agent1
@@ -135,29 +135,67 @@ describe('Actions with applications', () => {
     });
 
     test('Complete application', async () => {
-      const agent = await request.agent(this.app);
+      const agent1 = await request.agent(this.app);
+      const agent2 = await request.agent(this.app);
 
-      await agent
+      await agent2
         .post('/api/login')
         .send({
           email: 'mitroshka@mail.ru',
           password: 'ggg',
         });
 
-      const response = await agent
+      const applicationResponse = await agent2
         .put('/api/completeapplication')
         .send({
           id: 1,
         });
 
-      const array = response.body;
-      const { id, status, message } = array[0];
+      const applicationArray = applicationResponse.body;
+      const { id, status, message } = applicationArray[0];
 
-      expect(response.statusCode).toBe(200);
-      expect(array).toHaveLength(1);
+      expect(applicationResponse.statusCode).toBe(200);
+      expect(applicationArray).toHaveLength(1);
       expect(id).toBe(1);
       expect(status).toBe('completed');
       expect(message).toBe('');
+
+      await agent1
+        .post('/api/login')
+        .send({
+          email: 'polinak87@mail.ru',
+          password: 'ggg',
+        });
+
+      const thingResponseForFirstUser = await agent1
+        .get('/api/userthings');
+
+      const thingArrayOfFirstUser = thingResponseForFirstUser.body;
+
+      expect(thingResponseForFirstUser.statusCode).toBe(200);
+      expect(thingArrayOfFirstUser).toHaveLength(1);
+      expect(thingArrayOfFirstUser[0].id).toBe(2);
+      expect(thingArrayOfFirstUser[0].name).toBe('gold ring');
+      expect(thingArrayOfFirstUser[0].description).toBe('modern style');
+      expect(thingArrayOfFirstUser[0].categoryId).toBe(2);
+      expect(thingArrayOfFirstUser[0].userId).toBe(1);
+      expect(thingArrayOfFirstUser[0].onMarket).toBe(true);
+      //      expect(onMarketAt).toBe();
+
+      const thingResponseForSecondtUser = await agent2
+        .get('/api/userthings');
+
+      const thingArrayOfSecondtUser = thingResponseForSecondtUser.body;
+
+      expect(thingResponseForSecondtUser.statusCode).toBe(200);
+      expect(thingArrayOfSecondtUser).toHaveLength(1);
+      expect(thingArrayOfSecondtUser[0].id).toBe(1);
+      expect(thingArrayOfSecondtUser[0].name).toBe('winter dress');
+      expect(thingArrayOfSecondtUser[0].description).toBe('pretty');
+      expect(thingArrayOfSecondtUser[0].categoryId).toBe(1);
+      expect(thingArrayOfSecondtUser[0].userId).toBe(2);
+      expect(thingArrayOfSecondtUser[0].onMarket).toBe(true);
+      //      expect(onMarketAt).toBe();
     });
   });
 
