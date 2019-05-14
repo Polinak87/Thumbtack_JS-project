@@ -15,7 +15,6 @@ class Profile extends React.Component {
   componentDidMount() {
     axios.get('/api/userthings')
       .then((response) => {
-        // store.dispatch(addUserThings(response.data));
         let map = this.props.value;
         response.data.forEach(function (thing) {
           map.set(thing.id, thing);
