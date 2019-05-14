@@ -1,15 +1,17 @@
 import React from 'react';
 import axios from 'axios';
+import { connect } from 'react-redux';
 import ApplicationCard from '../applicationCard';
 import FilterByStatus from '../filterByStatus';
 import Infomessage from '../../../components/infoMessage';
 import Hero from '../../../components/hero';
+import store from '../../../store/index';
+import { addOutboxApplications } from '../../../store/actions/outboxApplications';
 
-export default class ApplicationOutbox extends React.Component {
+class ApplicationOutbox extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      value: new Map(),
       message: '',
       showMessage: false,
     }
@@ -23,26 +25,24 @@ export default class ApplicationOutbox extends React.Component {
     axios.get('/api/applicationsoutbox')
       .then((response) => {
         console.log(response.data);
-        var map = this.state.value;
+        let map = this.props.value;
         response.data.forEach(function (thing) {
           map.set(thing.id, thing)
         });
-        this.setState({ value: map });
+        store.dispatch(addOutboxApplications(map));
       });
   };
 
   updateData(id, status) {
-    let { value } = this.state;
+    let { value } = this.props;
     let application = value.get(id);
     application.status = status;
     value.set(id, application);
-    this.setState({ value });
-    console.log(this.state.value);
+    store.dispatch(addOutboxApplications(value));
   };
 
   updateValue(filteredValue) {
-    this.setState({ value: filteredValue });
-    console.log(this.state.value);
+    store.dispatch(addOutboxApplications(filteredValue));
   };
 
   updateMessage(message, showMessage) {
@@ -61,7 +61,7 @@ export default class ApplicationOutbox extends React.Component {
     const urlForRedirect = '/applicationsoutbox';
 
     let cardList = [];
-    for (let application of this.state.value.values()) {
+    for (let application of this.props.value.values()) {
       const { id } = application;
       cardList.push(
         <div className="column is-one-third" key={id}>
@@ -110,3 +110,10 @@ export default class ApplicationOutbox extends React.Component {
     )
   }
 }
+
+const mapStateToProps = state => ({
+  value: state.outboxApplications,
+});
+
+export default connect(mapStateToProps)(ApplicationOutbox);
+

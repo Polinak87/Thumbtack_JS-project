@@ -1,33 +1,31 @@
 import React from 'react';
 import axios from 'axios';
+import { connect } from 'react-redux';
 import Card from './card'
 import Hero from '../../components/hero';
 import store from '../../store/index';
+import { addMarketThings } from '../../store/actions/marketThings';
 
-export default class Market extends React.Component {
+class Market extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      value: new Map(),
-    }
   }
 
   componentDidMount() {
     axios.get('/api/marketthings')
       .then((response) => {
-        var map = this.state.value;
+        let map = this.props.value;
         response.data.forEach(function (thing) {
           map.set(thing.id, thing)
         });
-        this.setState({ value: map });
+        store.dispatch(addMarketThings(map));
       });
-      console.log(this.state.value);
   }
 
   render() {
     let currentUserId = store.getState().user.id;
     let cardList = [];
-    for (let thing of this.state.value.values()) {
+    for (let thing of this.props.value.values()) {
       cardList.push(
         <div className="column is-one-quarter" key={thing.id}>
           <Card
@@ -59,3 +57,9 @@ export default class Market extends React.Component {
     );
   }
 }
+
+const mapStateToProps = state => ({
+  value: state.marketThings,
+});
+
+export default connect(mapStateToProps)(Market);

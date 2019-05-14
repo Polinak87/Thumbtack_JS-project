@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios';
 import { BrowserRouter as Router, Route, Redirect, withRouter } from "react-router-dom";
 import Profile from './profile/profile';
 import Market from './market/market';
@@ -11,6 +12,7 @@ import NavBar from './navbar/navbar';
 import ApplicationOutbox from './application/outbox/applicationOutbox';
 import ApplicationInbox from './application/inbox/applicatonInbox';
 import store from '../store';
+import { addUser } from '../store/actions/user';
 import HomePage from './homePage/homePage';
 const _ = require('lodash');
 
@@ -18,6 +20,15 @@ function MainRouter(props) {
   let userName;
 
   if(_.isEmpty(store.getState().user)) {
+    // axios.get('/api/getcurrentuser')
+    // .then((response) => {
+    //   if (response && response.status === 200) {
+    //   store.dispatch(addUser(response.data));
+    //   userName = store.getState().user.firstName.toString() + ' ' + store.getState().user.lastName.toString();
+    //   } else {
+    //     userName = 'zzzzzzzzzzzzzzz';
+    //   }
+    // });
     userName = null;
   } else {
     userName = store.getState().user.firstName.toString() + ' ' + store.getState().user.lastName.toString();

@@ -1,16 +1,17 @@
 import React from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 import Card from './card';
 import Hero from '../../../components/hero';
 import store from '../../../store/index';
 import { deleteThingForExchange } from '../../../store/actions/thingForExchange';
+import { addUserThings } from '../../../store/actions/userThings';
 
-export default class ThingsForExchange extends React.Component {
+class ThingsForExchange extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      value: new Map(),
       showInfoMessage: false,
     }
     this.updateData = this.updateData.bind(this);
@@ -20,11 +21,11 @@ export default class ThingsForExchange extends React.Component {
   componentDidMount() {
     axios.get('/api/userthings')
       .then((response) => {
-        var map = this.state.value;
+        let map = this.props.value;
         response.data.forEach(function (thing) {
           map.set(thing.id, thing)
         });
-        this.setState({ value: map });
+        store.dispatch(addUserThings(map));
       });
   }
 
@@ -39,7 +40,7 @@ export default class ThingsForExchange extends React.Component {
 
   render() {
     let cardList = [];
-    for (let thing of this.state.value.values()) {
+    for (let thing of this.props.value.values()) {
       cardList.push(
         <div className="column is-one-quarter" key={thing.id}>
           <Card
@@ -97,3 +98,9 @@ export default class ThingsForExchange extends React.Component {
     );
   }
 }
+
+const mapStateToProps = state => ({
+  value: state.userThings,
+});
+
+export default connect(mapStateToProps)(ThingsForExchange);

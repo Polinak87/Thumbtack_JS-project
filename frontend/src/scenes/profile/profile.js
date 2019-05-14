@@ -1,10 +1,11 @@
 import React from 'react';
 import axios from 'axios';
+import { connect } from 'react-redux';
 import Card from './card';
 import Hero from '../../components/hero';
 import store from '../../store/index';
 import { addUserThings } from '../../store/actions/userThings';
-import { connect } from 'react-redux';
+
 
 class Profile extends React.Component {
   constructor(props) {
