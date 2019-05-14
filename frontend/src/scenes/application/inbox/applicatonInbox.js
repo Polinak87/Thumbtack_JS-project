@@ -7,25 +7,21 @@ import Infomessage from '../../../components/infoMessage';
 import Hero from '../../../components/hero';
 import store from '../../../store/index';
 import { addInboxApplications } from '../../../store/actions/inboxApplications';
+import { deleteMessage } from '../../../store/actions/message';
 
 class ApplicationInbox extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      message: '',
-      showMessage: false,
-    }
     this.updateData = this.updateData.bind(this);
     this.updateValue = this.updateValue.bind(this);
-    this.updateMessage = this.updateMessage.bind(this);
-    // this.handleClick = this.handleClick.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   componentDidMount() {
     axios.get('/api/applicationsinbox')
       .then((response) => {
         console.log(response.data);
-        let map = this.props.value;
+        let map = new Map();
         response.data.forEach(function (thing) {
           map.set(thing.id, thing)
         });
@@ -45,11 +41,10 @@ class ApplicationInbox extends React.Component {
     store.dispatch(addInboxApplications(filteredValue));
   };
 
-  updateMessage(message, showMessage) {
-    this.setState({ message });
-    this.setState({ showMessage });
-    console.log(this.state.message);
-  };
+  handleClick() {
+    event.preventDefault();
+    store.dispatch(deleteMessage());
+  }
 
   render() {
     const applicationType = 'inbox';
@@ -70,17 +65,19 @@ class ApplicationInbox extends React.Component {
             applicationType={applicationType}
             titleLeft={titleLeft}
             titleRight={titleRight}
-            updateData={this.updateData}
-            updateMessage={this.updateMessage} />
+            updateData={this.updateData}/>
         </div>
       )
     };
 
-    let message;
-    if (this.state.showMessage) {
-      message = <Infomessage updateMessage={this.updateMessage} message={ this.state.message} urlForRedirect={urlForRedirect}/>
+    let infoMessage;
+    if(_.isEmpty(this.props.message)) {
+      infoMessage = null;
     } else {
-      message = null;
+      infoMessage = <Infomessage 
+                      messageText={ this.props.message.messageText }
+                      urlForRedirect={urlForRedirect}
+                      handleClick={this.handleClick}/>
     }
     const heroText = 'Your inbox applications';
     const heroType = "hero is-primary";
@@ -104,7 +101,7 @@ class ApplicationInbox extends React.Component {
             {cardList}
           </div>
         </section>
-        {message}
+        {infoMessage}
       </div >
     )
   }
@@ -112,6 +109,7 @@ class ApplicationInbox extends React.Component {
 
 const mapStateToProps = state => ({
   value: state.inboxApplications,
+  message: state.message,
 });
 
 export default connect(mapStateToProps)(ApplicationInbox);

@@ -123,6 +123,8 @@ const completeApplication = async (ctx) => {
       await Thing.update(
         {
           userId: idUserAnswer,
+          onMarket: 'false',
+          onMarketAt: null,
         },
         { where: { id: idThingOffered } },
       );
@@ -130,6 +132,8 @@ const completeApplication = async (ctx) => {
       await Thing.update(
         {
           userId: idUserAuthor,
+          onMarket: 'false',
+          onMarketAt: null,
         },
         { where: { id: idThingDesired } },
       );

@@ -7,21 +7,19 @@ import Hero from '../../../components/hero';
 import store from '../../../store/index';
 import { deleteThingForExchange } from '../../../store/actions/thingForExchange';
 import { addUserThings } from '../../../store/actions/userThings';
+import { deleteMessage } from '../../../store/actions/message';
+import Infomessage from '../../../components/infoMessage';
 
 class ThingsForExchange extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      showInfoMessage: false,
-    }
-    this.updateData = this.updateData.bind(this);
     this.handleClick = this.handleClick.bind(this);
   }
 
   componentDidMount() {
     axios.get('/api/userthings')
       .then((response) => {
-        let map = this.props.value;
+        let map = new Map();
         response.data.forEach(function (thing) {
           map.set(thing.id, thing)
         });
@@ -29,13 +27,10 @@ class ThingsForExchange extends React.Component {
       });
   }
 
-  updateData(showInfoMessage) {
-    this.setState({ showInfoMessage: showInfoMessage });
-  };
-
   handleClick() {
     event.preventDefault();
     store.dispatch(deleteThingForExchange());
+    store.dispatch(deleteMessage());
   }
 
   render() {
@@ -55,30 +50,13 @@ class ThingsForExchange extends React.Component {
       )
     };
 
+    const urlForRedirect = '/market';
     let infoMessage;
-    if (this.state.showInfoMessage) {
-      infoMessage = (
-        <>
-          <div className="modal is-active">
-            <div className="modal-background"></div>
-            <div className="modal-content">
-              <article className="message is-info is-medium">
-                <div className="message-header">
-                  <p>Info</p>
-                  <Link to="/market" button className="delete" onClick={this.handleClick}></Link>
-                </div>
-                <div className="message-body">
-                  Your application is sent. You can track it in your outbox applications.
-                  </div>
-                <div>
-                </div>
-              </article>
-            </div>
-          </div>
-        </>
-      );
-    } else {
+    
+    if(_.isEmpty(this.props.message)) {
       infoMessage = null;
+    } else {
+      infoMessage = <Infomessage messageText={ this.props.message.messageText } urlForRedirect={urlForRedirect} handleClick={this.handleClick}/>
     }
 
     const heroText = 'Choose thing for exchange';
@@ -101,6 +79,7 @@ class ThingsForExchange extends React.Component {
 
 const mapStateToProps = state => ({
   value: state.userThings,
+  message: state.message,
 });
 
 export default connect(mapStateToProps)(ThingsForExchange);

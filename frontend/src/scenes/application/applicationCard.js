@@ -11,7 +11,7 @@ export default class ApplicationCard extends React.Component {
   }
 
   render() {
-    const{ titleRight, titleLeft, applicationType, updateMessage, updateData } = this.props;
+    const{ titleRight, titleLeft, applicationType, updateData } = this.props;
     const { id, ThingDesired, ThingOffered, status } = this.props.application;
 
     const button = () => {
@@ -20,20 +20,17 @@ export default class ApplicationCard extends React.Component {
         if(applicationType === 'outbox'){
           return <ButtonCancel 
                   id={id}
-                  updateData={updateData}
-                  updateMessage={updateMessage}/>
+                  updateData={updateData}/>
         } else {
           return (
             <div>
               <ButtonComplete 
                 id={id}
-                updateData={updateData}
-                updateMessage={updateMessage}/>
+                updateData={updateData}/>
               <br/>
               <ButtonReject
                 id={id} 
-                updateData={updateData}
-                updateMessage={updateMessage}/>
+                updateData={updateData}/>
             </div>
           )
         }

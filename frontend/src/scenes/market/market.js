@@ -14,7 +14,7 @@ class Market extends React.Component {
   componentDidMount() {
     axios.get('/api/marketthings')
       .then((response) => {
-        let map = this.props.value;
+        let map = new Map();
         response.data.forEach(function (thing) {
           map.set(thing.id, thing)
         });

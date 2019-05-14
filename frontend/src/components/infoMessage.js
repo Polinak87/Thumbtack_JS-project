@@ -4,14 +4,6 @@ import { Link } from 'react-router-dom';
 export default class Infomessage extends React.Component {
   constructor(props) {
     super(props);
-    this.handleClick = this.handleClick.bind(this);
-  }
-
-  handleClick() {
-    event.preventDefault();
-    const message = '';
-    const showMessage = false;
-    this.props.updateMessage(message, showMessage)
   }
 
   render() {
@@ -23,10 +15,10 @@ export default class Infomessage extends React.Component {
             <article className="message is-info is-medium">
               <div className="message-header">
                 <p>Info</p>
-                <Link to={this.props.urlForRedirect} button className="delete" onClick={this.handleClick}></Link>
+                <Link to={this.props.urlForRedirect} button className="delete" onClick={this.props.handleClick}></Link>
               </div>
               <div className="message-body">
-                {this.props.message}
+                {this.props.messageText}
               </div>
               <div>
               </div>

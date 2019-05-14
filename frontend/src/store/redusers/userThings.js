@@ -8,7 +8,7 @@ const userThings = (state = defaultState, action) => {
   switch (action.type) {
     case ADD_USER_THINGS:
       return (
-        new Map([ ...action.userThings])
+        new Map([...action.userThings])
       )
     case DELETE_USER:
       return defaultState;

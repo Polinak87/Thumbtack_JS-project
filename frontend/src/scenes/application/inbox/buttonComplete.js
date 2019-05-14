@@ -1,5 +1,7 @@
 import React from 'react';
 import axios from 'axios';
+import store from '../../../store/index';
+import { addMessage } from '../../../store/actions/message';
 
 export default class ButtonComplete extends React.Component {
   constructor(props) {
@@ -11,10 +13,6 @@ export default class ButtonComplete extends React.Component {
     event.preventDefault();
     const id = this.props.id;
     axios.put('/api/completeapplication', { id })
-    // .then((response) => {
-    //   console.log(response.data);
-    //   this.props.updateData(id, response.data.status);
-    // });
     .then((response) => {
       if (response.status === 200) {
         console.log(response.data);
@@ -23,8 +21,7 @@ export default class ButtonComplete extends React.Component {
           const { id, status, message } = arrayForUpdate[i];
           this.props.updateData(id, status);
           if (message!== '') {
-            const showMessage = true;
-            this.props.updateMessage(message, showMessage);
+            store.dispatch(addMessage({messageText: message}));
           }
         }
       }

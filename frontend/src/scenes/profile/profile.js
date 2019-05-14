@@ -6,7 +6,6 @@ import Hero from '../../components/hero';
 import store from '../../store/index';
 import { addUserThings } from '../../store/actions/userThings';
 
-
 class Profile extends React.Component {
   constructor(props) {
     super(props);
@@ -16,10 +15,11 @@ class Profile extends React.Component {
   componentDidMount() {
     axios.get('/api/userthings')
       .then((response) => {
-        let map = this.props.value;
+        // let map = this.props.value;
+        let map = new Map();
         response.data.forEach(function (thing) {
           map.set(thing.id, thing);
-        });
+        })
         store.dispatch(addUserThings(map));
       })
   }

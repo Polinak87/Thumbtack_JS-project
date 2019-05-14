@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import store from '../../../store/index';
+import { addMessage } from '../../../store/actions/message';
 
 export default class ButtonChoose extends React.Component {
   constructor(props) {
@@ -16,7 +17,8 @@ export default class ButtonChoose extends React.Component {
     .then((response) => {
       console.log(response.data);
       if (response.status === 200) {
-        this.props.updateData(true);
+        const messageText = ' Your application is sent. You can track it in your outbox applications.';
+        store.dispatch(addMessage({messageText}));
       }
     });
   }

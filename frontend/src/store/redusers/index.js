@@ -5,6 +5,7 @@ import userThings from './userThings';
 import marketThings from './marketThings';
 import outboxApplications from './outboxApplications';
 import inboxApplications from './inboxApplications';
+import message from './message';
 
 export default combineReducers({
   user,
@@ -13,4 +14,5 @@ export default combineReducers({
   marketThings,
   outboxApplications,
   inboxApplications,
+  message,
 });

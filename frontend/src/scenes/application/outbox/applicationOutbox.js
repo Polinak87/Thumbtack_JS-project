@@ -7,25 +7,23 @@ import Infomessage from '../../../components/infoMessage';
 import Hero from '../../../components/hero';
 import store from '../../../store/index';
 import { addOutboxApplications } from '../../../store/actions/outboxApplications';
+import { deleteMessage } from '../../../store/actions/message';
+
+const _ = require('lodash');
 
 class ApplicationOutbox extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      message: '',
-      showMessage: false,
-    }
     this.updateData = this.updateData.bind(this);
     this.updateValue = this.updateValue.bind(this);
-    this.updateMessage = this.updateMessage.bind(this);
-    // this.handleClick = this.handleClick.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   componentDidMount() {
     axios.get('/api/applicationsoutbox')
       .then((response) => {
         console.log(response.data);
-        let map = this.props.value;
+        let map = new Map();
         response.data.forEach(function (thing) {
           map.set(thing.id, thing)
         });
@@ -45,11 +43,10 @@ class ApplicationOutbox extends React.Component {
     store.dispatch(addOutboxApplications(filteredValue));
   };
 
-  updateMessage(message, showMessage) {
-    this.setState({ message });
-    this.setState({ showMessage });
-    console.log(this.state.message);
-  };
+  handleClick() {
+    event.preventDefault();
+    store.dispatch(deleteMessage());
+  }
 
   render() {
     const applicationType = 'outbox';
@@ -70,17 +67,19 @@ class ApplicationOutbox extends React.Component {
             applicationType={applicationType}
             titleLeft={titleLeft}
             titleRight={titleRight}
-            updateData={this.updateData} 
-            updateMessage={this.updateMessage}/>
+            updateData={this.updateData}/>
         </div>
       )
     };
 
-    let message;
-    if (this.state.showMessage) {
-      message = <Infomessage updateMessage={this.updateMessage} message={ this.state.message} urlForRedirect={urlForRedirect}/>
+    let infoMessage;
+    if(_.isEmpty(this.props.message)) {
+      infoMessage = null;
     } else {
-      message = null;
+      infoMessage = <Infomessage 
+                      messageText={ this.props.message.messageText }
+                      urlForRedirect={urlForRedirect}
+                      handleClick={this.handleClick}/>
     }
 
     const heroText = 'Your outbox applications';
@@ -105,7 +104,7 @@ class ApplicationOutbox extends React.Component {
             {cardList}
           </div>
         </section>
-        {message}
+        {infoMessage}
       </div >
     )
   }
@@ -113,6 +112,7 @@ class ApplicationOutbox extends React.Component {
 
 const mapStateToProps = state => ({
   value: state.outboxApplications,
+  message: state.message,
 });
 
 export default connect(mapStateToProps)(ApplicationOutbox);

@@ -1,5 +1,7 @@
 import React from 'react';
 import axios from 'axios';
+import store from '../../../store/index';
+import { addMessage } from '../../../store/actions/message';
 
 export default class ButtonReject extends React.Component {
   constructor(props) {
@@ -15,9 +17,7 @@ export default class ButtonReject extends React.Component {
       console.log(response.data);
       this.props.updateData(id, response.data.status);
       if (response.data.message!== '') {
-        const message = response.data.message;
-        const showMessage = true;
-        this.props.updateMessage(message, showMessage);
+        store.dispatch(addMessage({messageText: response.data.message}));
       }
     });
   }

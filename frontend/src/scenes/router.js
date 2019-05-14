@@ -14,6 +14,7 @@ import ApplicationInbox from './application/inbox/applicatonInbox';
 import store from '../store';
 import { addUser } from '../store/actions/user';
 import HomePage from './homePage/homePage';
+
 const _ = require('lodash');
 
 function MainRouter(props) {
