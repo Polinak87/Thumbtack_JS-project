@@ -1,9 +1,13 @@
 import React from 'react';
 import axios from 'axios';
+import { connect } from 'react-redux';
 import store from '../../store/index';
 import { addUser } from '../../store/actions/user';
+import { addMessage } from '../../store/actions/message';
+import { deleteMessage } from '../../store/actions/message';
+import Infomessage from '../../components/infoMessage';
 
-export default class Login extends React.Component {
+class Login extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -33,10 +37,35 @@ export default class Login extends React.Component {
           store.dispatch(addUser(response.data));
           this.props.history.push("/profile");
         }
+      })
+      .catch(function (error) {
+        if(error.response.status === 401) {
+          store.dispatch(addMessage({messageText: error.response.data}));
+        } else {
+          store.dispatch(addMessage({messageText: 'Something is wrang. Try again or contact technical support.'}));
+        }
       });
   }
 
+  handleClick() {
+    event.preventDefault();
+    store.dispatch(deleteMessage());
+  }
+
   render() {
+
+    let infoMessage;
+    let urlForRedirect = '/login';
+
+    if(_.isEmpty(this.props.message)) {
+      infoMessage = null;
+    } else {
+      infoMessage = <Infomessage 
+                      messageText={ this.props.message.messageText }
+                      urlForRedirect={urlForRedirect}
+                      handleClick={this.handleClick}/>
+    }
+
     return (
       <div>
         <section className="hero is-success is-fullheight">
@@ -66,7 +95,14 @@ export default class Login extends React.Component {
             </div>
           </div>
         </section>
+        {infoMessage}
       </div>
     );
   }
 }
+
+const mapStateToProps = state => ({
+  message: state.message,
+});
+
+export default connect(mapStateToProps)(Login);
