@@ -4,41 +4,38 @@ import Card from './card';
 import Hero from '../../components/hero';
 import store from '../../store/index';
 import { addUserThings } from '../../store/actions/userThings';
+import { connect } from 'react-redux';
 
-export default class Profile extends React.Component {
+class Profile extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      value: new Map(),
-    }
     this.updateData = this.updateData.bind(this);
   }
 
   componentDidMount() {
     axios.get('/api/userthings')
       .then((response) => {
-        var map = this.state.value;
+        // store.dispatch(addUserThings(response.data));
+        let map = this.props.value;
         response.data.forEach(function (thing) {
           map.set(thing.id, thing);
-          // store.dispatch(addUserThings(thing));
         });
-        this.setState({ value: map }); //!!!
+        store.dispatch(addUserThings(map));
       })
   }
 
   updateData(id, onMarket, onMarketAt) {
-    let { value } = this.state;
+    let { value } = this.props;
     let thing = value.get(id);
     thing.onMarket = onMarket;
     thing.onMarketAt = onMarketAt;
     value.set(id, thing);
-    this.setState({ value });
-    console.log(this.state.value);
+    store.dispatch(addUserThings(value));
   };
 
   render() {
     let cardList = [];
-    for (let thing of this.state.value.values()) {
+    for (let thing of this.props.value.values()) {
       cardList.push(
         <div className="column is-one-quarter" key={thing.id}>
           <Card
@@ -69,3 +66,9 @@ export default class Profile extends React.Component {
     );
   }
 }
+
+const mapStateToProps = state => ({
+  value: state.userThings,
+});
+
+export default connect(mapStateToProps)(Profile);
