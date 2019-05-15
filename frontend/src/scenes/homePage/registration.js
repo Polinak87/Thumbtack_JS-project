@@ -43,10 +43,8 @@ class Registration extends React.Component {
   handleSubmit(event) {
     event.preventDefault();
     const { firstName, lastName, email, password } = this.state;
-    console.log(firstName, lastName, email, password);
     axios.post('/api/registration', { firstName, lastName, email, password })
     .then((response) => {
-      console.log(response.data);
       if (response && response.status === 200) {
         store.dispatch(addUser(response.data));
         this.props.history.push("/profile");

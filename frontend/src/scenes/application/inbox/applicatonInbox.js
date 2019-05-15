@@ -20,7 +20,6 @@ class ApplicationInbox extends React.Component {
   componentDidMount() {
     axios.get('/api/applicationsinbox')
       .then((response) => {
-        console.log(response.data);
         let map = new Map();
         response.data.forEach(function (thing) {
           map.set(thing.id, thing)
@@ -48,7 +47,6 @@ class ApplicationInbox extends React.Component {
 
   render() {
     const applicationType = 'inbox';
-    const pageTitle = 'Your inbox applications';
     const titleLeft = 'Thing you have now';
     const titleRight = 'Thing you are offered to get';
     const urlBase = '/api/applicationsinbox';

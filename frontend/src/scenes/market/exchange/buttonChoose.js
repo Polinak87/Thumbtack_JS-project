@@ -15,7 +15,6 @@ export default class ButtonChoose extends React.Component {
     const { idThingDesired, idUserAnswer } = store.getState().thingForExchange;
     axios.post('/api/createapplication', { idThingOffered, idThingDesired, idUserAnswer })
     .then((response) => {
-      console.log(response.data);
       if (response.status === 200) {
         const messageText = ' Your application is sent. You can track it in your outbox applications.';
         store.dispatch(addMessage({messageText}));

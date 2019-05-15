@@ -15,7 +15,6 @@ export default class ButtonComplete extends React.Component {
     axios.put('/api/completeapplication', { id })
     .then((response) => {
       if (response.status === 200) {
-        console.log(response.data);
         let arrayForUpdate = response.data;
         for (let i = 0; i < arrayForUpdate.length; i++) {
           const { id, status, message } = arrayForUpdate[i];

@@ -14,7 +14,6 @@ export default class Logout extends React.Component {
     event.preventDefault();
     axios.post('/api/logout')
       .then((response) => {
-        console.log(response);
         if (response && response.status === 200) {
           store.dispatch(deleteUser());
         }

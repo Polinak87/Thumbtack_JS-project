@@ -3,9 +3,7 @@
 const request = require('supertest');
 const { app } = require('../../app');
 const {
-  User,
   Category,
-  Thing,
   sequelize,
 } = require('../../models');
 
@@ -13,57 +11,80 @@ describe('Actions with things', () => {
   beforeAll(async () => {
     this.app = app.callback();
     await sequelize.sync({ force: true });
-    await User.create({
-      firstName: 'Polina',
-      lastName: 'Kozlova',
-      email: 'polinak87@mail.ru',
-      password: 'ggg',
-    });
-    await User.create({
-      firstName: 'Anna',
-      lastName: 'Mitrofanova',
-      email: 'mitroshka@mail.ru',
-      password: 'ggg',
-    });
 
     await Category.create({ name: 'dresses' });
     await Category.create({ name: 'rings' });
 
-    await Thing.create({
-      name: 'winter dress',
-      description: 'pretty',
-      categoryId: 1,
-      userId: 1,
-      onMarket: false,
-      onMarketAt: null,
-    });
+    const agent1 = await request.agent(this.app);
+    const agent2 = await request.agent(this.app);
 
-    await Thing.create({
-      name: 'summer dress',
-      description: 'light',
-      categoryId: 1,
-      userId: 1,
-      onMarket: false,
-      onMarketAt: null,
-    });
+    await agent1
+      .post('/api/registration')
+      .send({
+        firstName: 'Polina',
+        lastName: 'Kozlova',
+        email: 'polinak87@mail.ru',
+        password: 'ggg',
+      });
 
-    await Thing.create({
-      name: 'gold ring',
-      description: 'modern style',
-      categoryId: 2,
-      userId: 1,
-      onMarket: false,
-      onMarketAt: null,
-    });
+    await agent2
+      .post('/api/registration')
+      .send({
+        firstName: 'Anna',
+        lastName: 'Mitrofanova',
+        email: 'mitroshka@mail.ru',
+        password: 'ggg',
+      });
 
-    await Thing.create({
-      name: 'silver ring',
-      description: 'modern style',
-      categoryId: 2,
-      userId: 2,
-      onMarket: false,
-      onMarketAt: null,
-    });
+    await agent1
+      .post('/api/addnewthing')
+      .send({
+        name: 'winter dress',
+        description: 'pretty',
+        categoryId: 1,
+        userId: 1,
+        onMarket: false,
+        onMarketAt: null,
+      });
+
+    await agent1
+      .post('/api/addnewthing')
+      .send({
+        name: 'summer dress',
+        description: 'light',
+        categoryId: 1,
+        userId: 1,
+        onMarket: false,
+        onMarketAt: null,
+      });
+
+    await agent1
+      .post('/api/addnewthing')
+      .send({
+        name: 'gold ring',
+        description: 'modern style',
+        categoryId: 2,
+        userId: 1,
+        onMarket: false,
+        onMarketAt: null,
+      });
+
+    await agent2
+      .post('/api/addnewthing')
+      .send({
+        name: 'silver ring',
+        description: 'modern style',
+        categoryId: 2,
+        userId: 2,
+        onMarket: false,
+        onMarketAt: null,
+      });
+
+    await agent1
+      .post('/api/logout');
+
+    await agent2
+      .post('/api/logout');
   });
 
   afterAll(async () => {

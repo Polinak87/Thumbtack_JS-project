@@ -34,8 +34,6 @@ const applicationsOutboxFiltered = async (ctx, next) => {
   const currentUserId = ctx.state.user.id;
   const statusForFilter = ctx.request.body.params.status;
 
-  console.log(statusForFilter);
-
   ctx.body = await Application.findAll({
     include: [{
       model: Thing,

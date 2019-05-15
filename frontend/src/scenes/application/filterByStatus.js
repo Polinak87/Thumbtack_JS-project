@@ -21,7 +21,6 @@ export default class FilterByStatus extends React.Component {
 
       axios.get(this.props.urlBase)
       .then((response) => {
-        console.log(response.data);
         var map = new Map();
         response.data.forEach(function (thing) {
           map.set(thing.id, thing)
@@ -42,14 +41,12 @@ export default class FilterByStatus extends React.Component {
       statusForFilter = 'canceled';
     }
     if (statusForFilter !== 'all') {
-      console.log(this.props.urlForFilter);
       axios.post(this.props.urlForFilter, {
         params: {
           status: statusForFilter,
         }
       })
         .then((response) => {
-          console.log(response.data);
           var map = new Map();
           response.data.forEach(function (thing) {
             map.set(thing.id, thing)

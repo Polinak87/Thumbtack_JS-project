@@ -11,17 +11,8 @@ describe('Users', () => {
   });
 
   afterAll(async () => {
-    // await sequelize.drop();
     await sequelize.close();
   });
-
-  // test('when not authenticated', async () => {
-  //   const response = await request(this.app)
-  //     .get('/userthings');
-
-  //   expect(response.statusCode).toBe(401);
-  //   expect(response.text).toBe('Unauthenticated');
-  // });
 
   test('registration', async () => {
     const agent = await request.agent(this.app);

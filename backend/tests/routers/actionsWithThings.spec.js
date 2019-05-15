@@ -3,7 +3,6 @@
 const request = require('supertest');
 const { app } = require('../../app');
 const {
-  User,
   Category,
   sequelize,
 } = require('../../models');
@@ -11,14 +10,23 @@ const {
 describe('Actions with things', () => {
   beforeAll(async () => {
     this.app = app.callback();
+
     await sequelize.sync({ force: true });
-    await User.create({
-      firstName: 'Polina',
-      lastName: 'Kozlova',
-      email: 'polinak87@mail.ru',
-      password: 'ggg',
-    });
     await Category.create({ name: 'bags' });
+
+    const agent = await request.agent(this.app);
+
+    await agent
+      .post('/api/registration')
+      .send({
+        firstName: 'Polina',
+        lastName: 'Kozlova',
+        email: 'polinak87@mail.ru',
+        password: 'ggg',
+      });
+
+    await agent
+      .post('/api/logout');
   });
 
   afterAll(async () => {

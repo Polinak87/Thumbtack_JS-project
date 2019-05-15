@@ -1,7 +1,5 @@
 'use strict';
 
-// const PORT = 3000;
-
 const Koa = require('koa');
 const serve = require('koa-static');
 const bunyan = require('bunyan');
@@ -15,7 +13,6 @@ const { sequelize } = require('./models');
 const { router } = require('./routers/index');
 const passport = require('./middlewares/passport');
 
-// const port = process.env.PORT || PORT;
 const app = new Koa();
 const logger = bunyan.createLogger({ name: 'app' });
 

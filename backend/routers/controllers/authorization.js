@@ -22,7 +22,6 @@ const registration = async (ctx) => {
         ctx.status = 200;
         ctx.body = newUser;
       });
-      console.log(ctx.body);
     })(ctx);
   } else {
     ctx.throw(401, 'This email has been used for registration. Please use another email.');
@@ -56,8 +55,16 @@ const logout = async (ctx) => {
   // return ctx.redirect('/home');
 };
 
+const getCurrentUser = (ctx) => {
+  if (ctx.isUnauthenticated()) {
+    ctx.throw(401, 'Unauthenticated');
+  }
+  ctx.status = 200;
+  ctx.body = ctx.state.user;
+};
+
 module.exports = {
-  // getCurrentUser,
+  getCurrentUser,
   login,
   logout,
   registration,

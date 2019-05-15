@@ -179,8 +179,8 @@ describe('Actions with applications', () => {
       expect(thingArrayOfFirstUser[0].description).toBe('modern style');
       expect(thingArrayOfFirstUser[0].categoryId).toBe(2);
       expect(thingArrayOfFirstUser[0].userId).toBe(1);
-      expect(thingArrayOfFirstUser[0].onMarket).toBe(true);
-      //      expect(onMarketAt).toBe();
+      expect(thingArrayOfFirstUser[0].onMarket).toBe(false);
+      expect(thingArrayOfFirstUser[0].onMarketAt).toBeNull();
 
       const thingResponseForSecondtUser = await agent2
         .get('/api/userthings');
@@ -194,8 +194,8 @@ describe('Actions with applications', () => {
       expect(thingArrayOfSecondtUser[0].description).toBe('pretty');
       expect(thingArrayOfSecondtUser[0].categoryId).toBe(1);
       expect(thingArrayOfSecondtUser[0].userId).toBe(2);
-      expect(thingArrayOfSecondtUser[0].onMarket).toBe(true);
-      //      expect(onMarketAt).toBe();
+      expect(thingArrayOfSecondtUser[0].onMarket).toBe(false);
+      expect(thingArrayOfFirstUser[0].onMarketAt).toBeNull();
     });
   });
 

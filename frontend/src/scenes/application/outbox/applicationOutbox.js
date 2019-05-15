@@ -22,7 +22,6 @@ class ApplicationOutbox extends React.Component {
   componentDidMount() {
     axios.get('/api/applicationsoutbox')
       .then((response) => {
-        console.log(response.data);
         let map = new Map();
         response.data.forEach(function (thing) {
           map.set(thing.id, thing)
@@ -50,7 +49,6 @@ class ApplicationOutbox extends React.Component {
 
   render() {
     const applicationType = 'outbox';
-    const pageTitle = 'Your outbox applications';
     const titleLeft = 'Thing you want to have';
     const titleRight = 'Thing you want to change';
     const urlBase = '/api/applicationsoutbox';

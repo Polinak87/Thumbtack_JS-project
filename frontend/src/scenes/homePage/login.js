@@ -32,7 +32,6 @@ class Login extends React.Component {
     const { email, password } = this.state;
     axios.post('/api/login', { email, password })
       .then((response) => {
-        console.log(response);
         if (response && response.status === 200) {
           store.dispatch(addUser(response.data));
           this.props.history.push("/profile");

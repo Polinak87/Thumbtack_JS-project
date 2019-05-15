@@ -3,7 +3,7 @@
 const Router = require('koa-router');
 
 const {
-  // getCurrentUser,
+  getCurrentUser,
   login,
   logout,
   registration,
@@ -41,6 +41,7 @@ const router = new Router();
 router.post('/api/registration', registration);
 router.post('/api/login', login);
 router.post('/api/logout', logout);
+router.get('/api/getcurrentuser', getCurrentUser);
 
 router.get('/api/category', getCategorys);
 
