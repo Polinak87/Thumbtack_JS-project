@@ -9,7 +9,6 @@ export default class ButtonAddRemoveFromMarket extends React.Component {
   }
 
   handleClickAdd() {
-    event.preventDefault();
     const id = this.props.id;
     axios.post('/api/addthingtomarket', { id })
     .then((response) => {

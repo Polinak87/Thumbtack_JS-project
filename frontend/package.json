@@ -5,12 +5,13 @@
   "main": "index.js",
   "scripts": {
     "eslint": "eslint --color ./",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "axios": "^0.18.0",
+    "jest": "^24.8.0",
     "lodash": "^4.17.11",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
@@ -22,6 +23,7 @@
     "babel-eslint": "^8.2.1",
     "eslint": "^4.17.0",
     "eslint-plugin-react": "^7.6.1",
+    "react-testing-library": "^7.0.0",
     "sass-lint": "^1.13.1"
   }
 }
