@@ -24,8 +24,6 @@ passport.use('local', new LocalStrategy(options, async (email, password, done) =
     return done(null, {
       firstName: user.firstName,
       lastName: user.lastName,
-      // email: user.email,
-      // password: user.password,
       id: user.id,
     });
   }

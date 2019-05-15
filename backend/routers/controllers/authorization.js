@@ -52,7 +52,8 @@ const login = async (ctx) => {
 const logout = async (ctx) => {
   await ctx.logout();
   ctx.status = 200;
-  // return ctx.redirect('/home');
+
+  return ctx.redirect('/home');
 };
 
 const getCurrentUser = (ctx) => {
