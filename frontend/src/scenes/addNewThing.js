@@ -1,6 +1,11 @@
 import React from 'react';
 import axios from 'axios';
+import { connect } from 'react-redux';
 import Hero from '../components/hero';
+import store from '../store/index';
+import { addMessage } from '../store/actions/message';
+import { deleteMessage } from '../store/actions/message';
+import Infomessage from '../components/infoMessage';
 
 class AddNewThingForm extends React.Component {
   constructor(props) {
@@ -19,6 +24,7 @@ class AddNewThingForm extends React.Component {
     this.handleChangeDescription = this.handleChangeDescription.bind(this);
     this.handleChangeCategory = this.handleChangeCategory.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   componentDidMount() {
@@ -52,8 +58,14 @@ class AddNewThingForm extends React.Component {
             categoryId: '1',
           }
         );
+        store.dispatch(addMessage({messageText: 'New thing is added to your inventory.'}));
       }
     });
+  }
+
+  handleClick() {
+    event.preventDefault();
+    store.dispatch(deleteMessage());
   }
 
   render() {
@@ -63,6 +75,18 @@ class AddNewThingForm extends React.Component {
         <option key={cat.id} value={cat.id}>{cat.name} </option>
       );
     });
+
+    let infoMessage;
+    let urlForRedirect = '/addnewthing';
+
+    if(_.isEmpty(this.props.message)) {
+      infoMessage = null;
+    } else {
+      infoMessage = <Infomessage 
+                      messageText={ this.props.message.messageText }
+                      urlForRedirect={urlForRedirect}
+                      handleClick={this.handleClick}/>
+    }
 
     const heroText = 'Add new thing to your inventory';
     const heroType = "hero is-primary";
@@ -100,9 +124,14 @@ class AddNewThingForm extends React.Component {
             </div>
           </form>
         </div>
+        {infoMessage}
       </div>
     );
   };
 }
 
-export default AddNewThingForm;
+const mapStateToProps = state => ({
+  message: state.message,
+});
+
+export default connect(mapStateToProps)(AddNewThingForm);
