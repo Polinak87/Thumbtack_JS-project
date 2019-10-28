@@ -1,11 +1,11 @@
 import React from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
-import Hero from '../components/hero';
-import store from '../store/index';
-import { addMessage } from '../store/actions/message';
-import { deleteMessage } from '../store/actions/message';
-import Infomessage from '../components/infoMessage';
+import Hero from '../../components/Hero';
+import store from '../../store/index';
+import { addMessage } from '../../store/actions/message';
+import { deleteMessage } from '../../store/actions/message';
+import Infomessage from '../../components/infoMessage';
 
 class AddNewThingForm extends React.Component {
   constructor(props) {
@@ -24,7 +24,7 @@ class AddNewThingForm extends React.Component {
     this.handleChangeDescription = this.handleChangeDescription.bind(this);
     this.handleChangeCategory = this.handleChangeCategory.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleClick = this.handleClick.bind(this);
+    this.OnClick = this.OnClick.bind(this);
   }
 
   componentDidMount() {
@@ -63,7 +63,7 @@ class AddNewThingForm extends React.Component {
     });
   }
 
-  handleClick() {
+  OnClick() {
     event.preventDefault();
     store.dispatch(deleteMessage());
   }
@@ -76,25 +76,10 @@ class AddNewThingForm extends React.Component {
       );
     });
 
-    let infoMessage;
-    let urlForRedirect = '/addnewthing';
-
-    if(_.isEmpty(this.props.message)) {
-      infoMessage = null;
-    } else {
-      infoMessage = <Infomessage 
-                      messageText={ this.props.message.messageText }
-                      urlForRedirect={urlForRedirect}
-                      handleClick={this.handleClick}/>
-    }
-
-    const heroText = 'Add new thing to your inventory';
-    const heroType = "hero is-primary";
-
     return (
       <div>
         <br />
-        <Hero heroText={heroText} heroType={heroType}/>
+        <Hero heroText='Add new thing to your inventory' heroType="hero is-primary"/>
         <br />
         <div className="column is-one-quarter">
           <form className="" onSubmit={this.handleSubmit}>
@@ -124,7 +109,12 @@ class AddNewThingForm extends React.Component {
             </div>
           </form>
         </div>
-        {infoMessage}
+        {!_.isEmpty(this.props.message) &&
+        <Infomessage 
+                      messageText={ this.props.message.messageText }
+                      urlForRedirect='/addnewthing'
+                      OnClick={this.OnClick}/>
+        }
       </div>
     );
   };

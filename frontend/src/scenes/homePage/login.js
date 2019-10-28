@@ -17,6 +17,7 @@ class Login extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChangeEmail = this.handleChangeEmail.bind(this);
     this.handleChangePassword = this.handleChangePassword.bind(this);
+    this.OnClick = this.OnClick.bind(this);
   }
 
   handleChangeEmail(event) {
@@ -46,7 +47,7 @@ class Login extends React.Component {
       });
   }
 
-  handleClick() {
+  OnClick() {
     event.preventDefault();
     store.dispatch(deleteMessage());
   }
@@ -62,7 +63,7 @@ class Login extends React.Component {
       infoMessage = <Infomessage 
                       messageText={ this.props.message.messageText }
                       urlForRedirect={urlForRedirect}
-                      handleClick={this.handleClick}/>
+                      OnClick={this.OnClick}/>
     }
 
     return (

@@ -62,7 +62,7 @@ export default class FilterByStatus extends React.Component {
       <>
         <div className="field">
           <div className="control">
-          <label className="radio">
+            <label className="radio">
               <input type="radio" name="filter" defaultChecked ref={this.radioAll} />
               all
             </label>
@@ -81,6 +81,16 @@ export default class FilterByStatus extends React.Component {
             <label className="radio">
               <input type="radio" name="filter" ref={this.radioCanceled} />
               canceled
+            </label>
+          </div>
+          <div>
+            <label className="radio">
+              <input type="radio" name="filter"/>
+              1
+            </label>
+            <label className="radio">
+              <input type="radio" name="filter"/>
+              2
             </label>
           </div>
         </div>

@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import ApplicationCard from '../applicationCard';
 import FilterByStatus from '../filterByStatus';
 import Infomessage from '../../../components/infoMessage';
-import Hero from '../../../components/hero';
+import Hero from '../../../components/Hero';
 import store from '../../../store/index';
 import { addOutboxApplications } from '../../../store/actions/outboxApplications';
 import { deleteMessage } from '../../../store/actions/message';
@@ -16,7 +16,7 @@ class ApplicationOutbox extends React.Component {
     super(props);
     this.updateData = this.updateData.bind(this);
     this.updateValue = this.updateValue.bind(this);
-    this.handleClick = this.handleClick.bind(this);
+    this.OnClick = this.OnClick.bind(this);
   }
 
   componentDidMount() {
@@ -42,7 +42,7 @@ class ApplicationOutbox extends React.Component {
     store.dispatch(addOutboxApplications(filteredValue));
   };
 
-  handleClick() {
+  OnClick() {
     event.preventDefault();
     store.dispatch(deleteMessage());
   }
@@ -77,7 +77,7 @@ class ApplicationOutbox extends React.Component {
       infoMessage = <Infomessage 
                       messageText={ this.props.message.messageText }
                       urlForRedirect={urlForRedirect}
-                      handleClick={this.handleClick}/>
+                      OnClick={this.OnClick}/>
     }
 
     const heroText = 'Your outbox applications';

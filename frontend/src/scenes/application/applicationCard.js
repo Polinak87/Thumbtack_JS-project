@@ -11,33 +11,33 @@ export default class ApplicationCard extends React.Component {
   }
 
   render() {
-    const{ titleRight, titleLeft, applicationType, updateData } = this.props;
+    const { titleRight, titleLeft, applicationType, updateData } = this.props;
     const { id, ThingDesired, ThingOffered, status } = this.props.application;
 
     const button = () => {
       switch (status) {
-      case "pending":
-        if(applicationType === 'outbox'){
-          return <ButtonCancel 
+        case "pending":
+          if (applicationType === 'outbox') {
+            return <ButtonCancel
+              id={id}
+              updateData={updateData} />
+          } else {
+            return (
+              <div>
+                <ButtonComplete
                   id={id}
-                  updateData={updateData}/>
-        } else {
-          return (
-            <div>
-              <ButtonComplete 
-                id={id}
-                updateData={updateData}/>
-              <br/>
-              <ButtonReject
-                id={id} 
-                updateData={updateData}/>
-            </div>
-          )
-        }
-      default: 
-        return <></>
+                  updateData={updateData} />
+                <br />
+                <ButtonReject
+                  id={id}
+                  updateData={updateData} />
+              </div>
+            )
+          }
+        default:
+          return <></>
+      }
     }
-  }
 
     return (
       <div className="card" >
@@ -73,5 +73,32 @@ export default class ApplicationCard extends React.Component {
         {button()}
       </div>
     )
+
+    return (
+      <div className="card" >
+        <div className="card-header"></div>
+        <div className="card-content">
+          <h6 className="title">
+            ...
+        </h6>
+        </div>
+        <footer className="card-footer">
+          {/* <div className="card-footer-item">
+            <div className="card-is-full">
+              ...
+          </div>
+          </div>
+          <div className="card-footer-item">
+            <div className="card-is-full">
+              ...
+          </div> */}
+          {/* </div> */}
+        </footer>
+        ...
+    </div>
+    )
   }
 }
+
+
+

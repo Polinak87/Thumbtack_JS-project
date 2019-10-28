@@ -4,7 +4,7 @@ import Profile from './profile/profile';
 import Market from './market/market';
 import ThingsForExchange from './market/exchange/thingsForExchange'
 import Login from './homePage/login';
-import AddNewThingForm from './addNewThing';
+import AddNewThingForm from './addNewThing/addNewThing';
 import Logout from './navbar/logout';
 import RegistrationForm from './homePage/registration';
 import NavBar from './navbar/navbar';

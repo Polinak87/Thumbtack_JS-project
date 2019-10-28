@@ -3,7 +3,7 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Card from './card';
-import Hero from '../../../components/hero';
+import Hero from '../../../components/Hero';
 import store from '../../../store/index';
 import { deleteThingForExchange } from '../../../store/actions/thingForExchange';
 import { addUserThings } from '../../../store/actions/userThings';
@@ -13,7 +13,7 @@ import Infomessage from '../../../components/infoMessage';
 class ThingsForExchange extends React.Component {
   constructor(props) {
     super(props);
-    this.handleClick = this.handleClick.bind(this);
+    this.OnClick = this.OnClick.bind(this);
   }
 
   componentDidMount() {
@@ -27,7 +27,7 @@ class ThingsForExchange extends React.Component {
       });
   }
 
-  handleClick() {
+  OnClick() {
     event.preventDefault();
     store.dispatch(deleteThingForExchange());
     store.dispatch(deleteMessage());
@@ -56,7 +56,7 @@ class ThingsForExchange extends React.Component {
     if(_.isEmpty(this.props.message)) {
       infoMessage = null;
     } else {
-      infoMessage = <Infomessage messageText={ this.props.message.messageText } urlForRedirect={urlForRedirect} handleClick={this.handleClick}/>
+      infoMessage = <Infomessage messageText={ this.props.message.messageText } urlForRedirect={urlForRedirect} OnClick={this.OnClick}/>
     }
 
     const heroText = 'Choose thing for exchange';

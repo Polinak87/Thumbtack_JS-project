@@ -21,7 +21,7 @@ class Registration extends React.Component {
     this.handleChangeLastName = this.handleChangeLastName.bind(this);
     this.handleChangeEmail = this.handleChangeEmail.bind(this);
     this.handleChangePassword = this.handleChangePassword.bind(this);
-    this.handleClick = this.handleClick.bind(this);
+    this.OnClick = this.OnClick.bind(this);
   }
 
   handleChangeFirstName(event) {
@@ -59,7 +59,7 @@ class Registration extends React.Component {
     });
   }
 
-  handleClick() {
+  OnClick() {
     event.preventDefault();
     store.dispatch(deleteMessage());
   }
@@ -75,7 +75,7 @@ class Registration extends React.Component {
       infoMessage = <Infomessage 
                       messageText={ this.props.message.messageText }
                       urlForRedirect={urlForRedirect}
-                      handleClick={this.handleClick}/>
+                      OnClick={this.OnClick}/>
     }
 
     return (
