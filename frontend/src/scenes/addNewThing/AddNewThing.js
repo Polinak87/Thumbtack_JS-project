@@ -111,7 +111,7 @@ class AddNewThingForm extends React.Component {
         </div>
         {!_.isEmpty(this.props.message) &&
         <Infomessage 
-                      messageText={ this.props.message.messageText }
+                      text={ this.props.message.messageText }
                       urlForRedirect='/addnewthing'
                       OnClick={this.OnClick}/>
         }

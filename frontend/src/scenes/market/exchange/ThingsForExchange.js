@@ -56,7 +56,7 @@ class ThingsForExchange extends React.Component {
     if(_.isEmpty(this.props.message)) {
       infoMessage = null;
     } else {
-      infoMessage = <Infomessage messageText={ this.props.message.messageText } urlForRedirect={urlForRedirect} OnClick={this.OnClick}/>
+      infoMessage = <Infomessage text={ this.props.message.messageText } urlForRedirect={urlForRedirect} OnClick={this.OnClick}/>
     }
 
     return (

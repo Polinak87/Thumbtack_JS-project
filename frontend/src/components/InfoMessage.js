@@ -14,7 +14,7 @@ export default class Infomessage extends React.Component {
                 <Link to={this.props.urlForRedirect} button className="delete" onClick={this.props.OnClick}></Link>
               </div>
               <div className="message-body">
-                {this.props.messageText}
+                {this.props.text}
               </div>
               <div>
               </div>

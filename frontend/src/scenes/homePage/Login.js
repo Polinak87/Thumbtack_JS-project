@@ -61,7 +61,7 @@ class Login extends React.Component {
       infoMessage = null;
     } else {
       infoMessage = <Infomessage 
-                      messageText={ this.props.message.messageText }
+                      text={ this.props.message.messageText }
                       urlForRedirect={urlForRedirect}
                       OnClick={this.OnClick}/>
     }
