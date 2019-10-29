@@ -4,11 +4,11 @@ export default class Hero extends React.Component {
 
   render() {
     return (
-      <section className={this.props.heroType}>
+      <section className={this.props.type}>
         <div className="hero-body">
           <div className="container">
             <h1 className="title">
-              {this.props.heroText}
+              {this.props.text}
             </h1>
           </div>
         </div>

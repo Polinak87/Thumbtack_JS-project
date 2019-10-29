@@ -1,6 +1,6 @@
 import React from 'react';
-import ThingInfo from '../../../components/thingInfo';
-import ButtonChoose from './buttonChoose';
+import ThingInfo from '../../../components/ThingInfo';
+import ButtonChoose from './ButtonChoose';
 
 export default class Card extends React.Component {
   constructor(props) {

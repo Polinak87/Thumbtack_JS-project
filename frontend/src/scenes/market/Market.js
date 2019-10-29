@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
-import Card from './card'
+import Card from './Card'
 import Hero from '../../components/Hero';
 import store from '../../store/index';
 import { addMarketThings } from '../../store/actions/marketThings';
@@ -47,7 +47,7 @@ class Market extends React.Component {
     return (
       <>
         <br/>
-        <Hero heroText={heroText} heroType={heroType}/>
+        <Hero text='Market' type="hero is-primary"/>
         <section className="section">
           <div className="columns is-multiline">
             {cardList}

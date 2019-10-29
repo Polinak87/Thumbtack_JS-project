@@ -2,13 +2,13 @@ import React from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import Card from './card';
+import Card from './Card';
 import Hero from '../../../components/Hero';
 import store from '../../../store/index';
 import { deleteThingForExchange } from '../../../store/actions/thingForExchange';
 import { addUserThings } from '../../../store/actions/userThings';
 import { deleteMessage } from '../../../store/actions/message';
-import Infomessage from '../../../components/infoMessage';
+import Infomessage from '../../../components/InfoMessage';
 
 class ThingsForExchange extends React.Component {
   constructor(props) {
@@ -59,13 +59,10 @@ class ThingsForExchange extends React.Component {
       infoMessage = <Infomessage messageText={ this.props.message.messageText } urlForRedirect={urlForRedirect} OnClick={this.OnClick}/>
     }
 
-    const heroText = 'Choose thing for exchange';
-    const heroType = "hero is-info";
-
     return (
       <>
         <br />
-        <Hero heroText={heroText} heroType={heroType}/>
+        <Hero text='Choose thing for exchange' type="hero is-info"/>
         <section className="section">
           <div className="columns is-multiline">
             {cardList}

@@ -1,6 +1,6 @@
 import React from 'react';
-import ThingInfo from '../../components/thingInfo';
-import ButtonAddRemoveFromMarket from './buttonAddRemoveFromMarket';
+import ThingInfo from '../../components/ThingInfo';
+import ButtonAddRemoveFromMarket from './ButtonAddRemoveFromMarket';
 
 export default class Card extends React.Component {
   constructor(props) {

@@ -77,13 +77,11 @@ class ApplicationInbox extends React.Component {
                       urlForRedirect={urlForRedirect}
                       OnClick={this.OnClick}/>
     }
-    const heroText = 'Your inbox applications';
-    const heroType = "hero is-primary";
 
     return (
       <div>
         <br />
-        <Hero heroText={heroText} heroType={heroType}/>
+        <Hero text='Your inbox applications' type="hero is-primary"/>
         <section className="section">
           <div className="columns is-centered">
             <div className="column is-narrow is-centered">

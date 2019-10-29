@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Logout from './logout'
+import Logout from './Logout'
 
 export default function NavBar(props) {
   if (props.user.name === null) {

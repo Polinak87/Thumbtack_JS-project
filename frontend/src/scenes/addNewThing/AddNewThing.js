@@ -79,7 +79,7 @@ class AddNewThingForm extends React.Component {
     return (
       <div>
         <br />
-        <Hero heroText='Add new thing to your inventory' heroType="hero is-primary"/>
+        <Hero text='Add new thing to your inventory' type="hero is-primary"/>
         <br />
         <div className="column is-one-quarter">
           <form className="" onSubmit={this.handleSubmit}>

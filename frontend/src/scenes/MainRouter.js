@@ -1,17 +1,17 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Redirect, withRouter } from "react-router-dom";
-import Profile from './profile/profile';
-import Market from './market/market';
-import ThingsForExchange from './market/exchange/thingsForExchange'
-import Login from './homePage/login';
-import AddNewThingForm from './addNewThing/addNewThing';
-import Logout from './navbar/logout';
-import RegistrationForm from './homePage/registration';
-import NavBar from './navbar/navbar';
-import ApplicationOutbox from './application/outbox/applicationOutbox';
-import ApplicationInbox from './application/inbox/applicatonInbox';
+import Profile from './profile/Profile';
+import Market from './market/Market';
+import ThingsForExchange from './market/exchange/ThingsForExchange'
+import Login from './homePage/Login';
+import AddNewThingForm from './addNewThing/AddNewThing';
+import Logout from './navbar/Logout';
+import RegistrationForm from './homePage/Registration';
+import NavBar from './navbar/Navbar';
+import ApplicationOutbox from './application/outbox/ApplicationOutbox';
+import ApplicationInbox from './application/inbox/ApplicatonInbox';
 import store from '../store';
-import HomePage from './homePage/homePage';
+import HomePage from './homePage/HomePage';
 
 const _ = require('lodash');
 

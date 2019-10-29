@@ -49,13 +49,10 @@ class Profile extends React.Component {
       )
     };
 
-    const heroText = 'Your inventory';
-    const heroType = "hero is-primary";
-
     return (
       <>
         <br/>
-        <Hero heroText={heroText} heroType={heroType}/>
+        <Hero text='Your inventory' type="hero is-primary"/>
         <section className="section">
           <div className="columns is-multiline">
             {cardList}
