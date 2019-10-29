@@ -1,17 +1,15 @@
 import React from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
-import ApplicationCard from '../applicationCard';
-import FilterByStatus from '../filterByStatus';
-import Infomessage from '../../../components/infoMessage';
+import ApplicationCard from '../ApplicationCard';
+import FilterByStatus from '../FilterByStatus';
+import Infomessage from '../../../components/InfoMessage';
 import Hero from '../../../components/Hero';
 import store from '../../../store/index';
-import { addOutboxApplications } from '../../../store/actions/outboxApplications';
+import { addInboxApplications } from '../../../store/actions/inboxApplications';
 import { deleteMessage } from '../../../store/actions/message';
 
-const _ = require('lodash');
-
-class ApplicationOutbox extends React.Component {
+class ApplicationInbox extends React.Component {
   constructor(props) {
     super(props);
     this.updateData = this.updateData.bind(this);
@@ -20,13 +18,13 @@ class ApplicationOutbox extends React.Component {
   }
 
   componentDidMount() {
-    axios.get('/api/applicationsoutbox')
+    axios.get('/api/applicationsinbox')
       .then((response) => {
         let map = new Map();
         response.data.forEach(function (thing) {
           map.set(thing.id, thing)
         });
-        store.dispatch(addOutboxApplications(map));
+        store.dispatch(addInboxApplications(map));
       });
   };
 
@@ -35,11 +33,11 @@ class ApplicationOutbox extends React.Component {
     let application = value.get(id);
     application.status = status;
     value.set(id, application);
-    store.dispatch(addOutboxApplications(value));
+    store.dispatch(addInboxApplications(value));
   };
 
   updateValue(filteredValue) {
-    store.dispatch(addOutboxApplications(filteredValue));
+    store.dispatch(addInboxApplications(filteredValue));
   };
 
   OnClick() {
@@ -48,12 +46,12 @@ class ApplicationOutbox extends React.Component {
   }
 
   render() {
-    const applicationType = 'outbox';
-    const titleLeft = 'Thing you want to have';
-    const titleRight = 'Thing you want to change';
-    const urlBase = '/api/applicationsoutbox';
-    const urlForFilter = '/api/applicationsoutboxfiltered';
-    const urlForRedirect = '/applicationsoutbox';
+    const applicationType = 'inbox';
+    const titleLeft = 'Thing you have now';
+    const titleRight = 'Thing you are offered to get';
+    const urlBase = '/api/applicationsinbox';
+    const urlForFilter = '/api/applicationsinboxfiltered';
+    const urlForRedirect = '/applicationsinbox';
 
     let cardList = [];
     for (let application of this.props.value.values()) {
@@ -79,8 +77,7 @@ class ApplicationOutbox extends React.Component {
                       urlForRedirect={urlForRedirect}
                       OnClick={this.OnClick}/>
     }
-
-    const heroText = 'Your outbox applications';
+    const heroText = 'Your inbox applications';
     const heroType = "hero is-primary";
 
     return (
@@ -90,10 +87,10 @@ class ApplicationOutbox extends React.Component {
         <section className="section">
           <div className="columns is-centered">
             <div className="column is-narrow is-centered">
-            <FilterByStatus 
-              updateValue={this.updateValue}
-              urlBase={urlBase}
-              urlForFilter={urlForFilter}/>
+              <FilterByStatus 
+                updateValue={this.updateValue}
+                urlBase={urlBase}
+                urlForFilter={urlForFilter} />
             </div>
           </div>
         </section>
@@ -109,9 +106,8 @@ class ApplicationOutbox extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  value: state.outboxApplications,
+  value: state.inboxApplications,
   message: state.message,
 });
 
-export default connect(mapStateToProps)(ApplicationOutbox);
-
+export default connect(mapStateToProps)(ApplicationInbox);

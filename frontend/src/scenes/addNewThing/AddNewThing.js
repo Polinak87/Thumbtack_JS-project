@@ -5,7 +5,7 @@ import Hero from '../../components/Hero';
 import store from '../../store/index';
 import { addMessage } from '../../store/actions/message';
 import { deleteMessage } from '../../store/actions/message';
-import Infomessage from '../../components/infoMessage';
+import Infomessage from '../../components/InfoMessage';
 
 class AddNewThingForm extends React.Component {
   constructor(props) {

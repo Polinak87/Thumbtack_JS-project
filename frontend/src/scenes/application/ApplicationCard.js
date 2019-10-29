@@ -1,8 +1,8 @@
 import React from 'react';
-import ThingInfo from '../../components/thingInfo';
-import ButtonCancel from './outbox/buttonCancel';
-import ButtonComplete from './inbox/buttonComplete';
-import ButtonReject from './inbox/buttonReject';
+import ThingInfo from '../../components/ThingInfo';
+import ButtonCancel from './outbox/ButtonCancel';
+import ButtonComplete from './inbox/ButtonComplete';
+import ButtonReject from './inbox/ButtonReject';
 
 
 export default class ApplicationCard extends React.Component {

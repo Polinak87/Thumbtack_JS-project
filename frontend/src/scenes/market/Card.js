@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import ThingInfo from '../../components/thingInfo';
-import ButtonExchange from './buttonExchange';
+import ThingInfo from '../../components/ThingInfo';
+import ButtonExchange from './ButtonExchange';
 
 export default class Card extends React.Component {
   constructor(props) {

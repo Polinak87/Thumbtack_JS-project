@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
-import Card from './card';
+import Card from './Card';
 import Hero from '../../components/Hero';
 import store from '../../store/index';
 import { addUserThings } from '../../store/actions/userThings';

@@ -5,7 +5,7 @@ import store from '../../store/index';
 import { addUser } from '../../store/actions/user';
 import { addMessage } from '../../store/actions/message';
 import { deleteMessage } from '../../store/actions/message';
-import Infomessage from '../../components/infoMessage';
+import Infomessage from '../../components/InfoMessage';
 
 class Registration extends React.Component {
   constructor(props) {
