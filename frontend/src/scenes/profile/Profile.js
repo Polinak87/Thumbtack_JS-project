@@ -10,6 +10,7 @@ class Profile extends React.Component {
   constructor(props) {
     super(props);
     this.updateData = this.updateData.bind(this);
+    this.onClick = this.onClick.bind(this);
   }
 
   componentDidMount() {
@@ -30,7 +31,25 @@ class Profile extends React.Component {
     thing.onMarketAt = onMarketAt;
     value.set(id, thing);
     store.dispatch(addUserThings(value));
-  };
+  }
+
+  onClick(id, type) {
+    event.preventDefault();
+    if (type=='Add to market') {
+      axios.post('/api/addthingtomarket', { id })
+      .then((response) => {
+        this.updateData(id, response.data.onMarket, response.data.onMarketAt);
+      });
+      console.log('click add');
+    };
+    if (type=='Remove from market'){
+      axios.post('/api/removethingfrommarket', { id })
+      .then((response) => {
+        this.updateData(id, response.data.onMarket, response.data.onMarketAt);
+      });
+      console.log('click remove');
+    };
+  }
 
   render() {
     let cardList = [];
@@ -44,7 +63,8 @@ class Profile extends React.Component {
             categoryName={thing.Category.name}
             onMarket={thing.onMarket}
             onMarketAt={thing.onMarketAt}
-            updateData={this.updateData}/>
+            updateData={this.updateData}
+            onClick={this.onClick}/>
         </div>
       )
     };

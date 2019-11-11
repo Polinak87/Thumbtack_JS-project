@@ -13,7 +13,7 @@ import Infomessage from '../../../components/InfoMessage';
 class ThingsForExchange extends React.Component {
   constructor(props) {
     super(props);
-    this.OnClick = this.OnClick.bind(this);
+    this.onClose = this.onClose.bind(this);
   }
 
   componentDidMount() {
@@ -27,7 +27,7 @@ class ThingsForExchange extends React.Component {
       });
   }
 
-  OnClick() {
+  onClose() {
     event.preventDefault();
     store.dispatch(deleteThingForExchange());
     store.dispatch(deleteMessage());
@@ -56,7 +56,7 @@ class ThingsForExchange extends React.Component {
     if(_.isEmpty(this.props.message)) {
       infoMessage = null;
     } else {
-      infoMessage = <Infomessage text={ this.props.message.messageText } urlForRedirect={urlForRedirect} OnClick={this.OnClick}/>
+      infoMessage = <Infomessage text={ this.props.message.messageText } urlForRedirect={urlForRedirect} onClose={this.onClose}/>
     }
 
     return (

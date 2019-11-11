@@ -1,8 +1,6 @@
 import React from 'react';
 import ThingInfo from '../../components/ThingInfo';
-import ButtonCancel from './outbox/ButtonCancel';
-import ButtonComplete from './inbox/ButtonComplete';
-import ButtonReject from './inbox/ButtonReject';
+import Button from '../../components/Button';
 
 
 export default class ApplicationCard extends React.Component {
@@ -11,26 +9,32 @@ export default class ApplicationCard extends React.Component {
   }
 
   render() {
-    const { titleRight, titleLeft, applicationType, updateData } = this.props;
+    const { titleRight, titleLeft, applicationType, updateData, onClick } = this.props;
     const { id, ThingDesired, ThingOffered, status } = this.props.application;
 
     const button = () => {
       switch (status) {
         case "pending":
           if (applicationType === 'outbox') {
-            return <ButtonCancel
+            return <Button
+              type='Cancel application'
               id={id}
-              updateData={updateData} />
+              updateData={updateData} 
+              onClick={onClick} />
           } else {
             return (
               <div>
-                <ButtonComplete
+                <Button
+                  type='Complete application'
                   id={id}
-                  updateData={updateData} />
+                  updateData={updateData}
+                  onClick={onClick} />
                 <br />
-                <ButtonReject
+                <Button
+                  type='Reject application'
                   id={id}
-                  updateData={updateData} />
+                  updateData={updateData}
+                  onClick={onClick} />
               </div>
             )
           }

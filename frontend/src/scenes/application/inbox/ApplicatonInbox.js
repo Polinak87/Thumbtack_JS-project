@@ -14,7 +14,8 @@ class ApplicationInbox extends React.Component {
     super(props);
     this.updateData = this.updateData.bind(this);
     this.updateValue = this.updateValue.bind(this);
-    this.OnClick = this.OnClick.bind(this);
+    this.onClose = this.onClose.bind(this);
+    this.onClick = this.onClick.bind(this);
   }
 
   componentDidMount() {
@@ -40,10 +41,38 @@ class ApplicationInbox extends React.Component {
     store.dispatch(addInboxApplications(filteredValue));
   };
 
-  OnClick() {
+  onClose() {
     event.preventDefault();
     store.dispatch(deleteMessage());
-  }
+  };
+
+  onClick(id, type) {
+    event.preventDefault();
+    if (type=='Complete application'){
+      axios.put('/api/completeapplication', { id })
+      .then((response) => {
+        if (response.status === 200) {
+          let arrayForUpdate = response.data;
+          for (let i = 0; i < arrayForUpdate.length; i++) {
+            const { id, status, message } = arrayForUpdate[i];
+            this.updateData(id, status);
+            if (message!== '') {
+              store.dispatch(addMessage({messageText: message}));
+            }
+          }
+        }
+      });
+    }
+    if (type=='Reject application'){
+      axios.put('/api/rejectapplication', { id })
+      .then((response) => {
+        this.updateData(id, response.data.status);
+        if (response.data.message!== '') {
+          store.dispatch(addMessage({messageText: response.data.message}));
+        }
+      });
+    }
+  };
 
   render() {
     const applicationType = 'inbox';
@@ -63,7 +92,8 @@ class ApplicationInbox extends React.Component {
             applicationType={applicationType}
             titleLeft={titleLeft}
             titleRight={titleRight}
-            updateData={this.updateData}/>
+            updateData={this.updateData}
+            onClick={this.onClick}/>
         </div>
       )
     };
@@ -75,7 +105,7 @@ class ApplicationInbox extends React.Component {
       infoMessage = <Infomessage 
                       text={ this.props.message.messageText }
                       urlForRedirect={urlForRedirect}
-                      OnClick={this.OnClick}/>
+                      onClose={this.onClose}/>
     }
 
     return (

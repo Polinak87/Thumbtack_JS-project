@@ -16,7 +16,8 @@ class ApplicationOutbox extends React.Component {
     super(props);
     this.updateData = this.updateData.bind(this);
     this.updateValue = this.updateValue.bind(this);
-    this.OnClick = this.OnClick.bind(this);
+    this.onClose = this.onClose.bind(this);
+    this.onClick = this.onClick.bind(this);
   }
 
   componentDidMount() {
@@ -42,9 +43,19 @@ class ApplicationOutbox extends React.Component {
     store.dispatch(addOutboxApplications(filteredValue));
   };
 
-  OnClick() {
+  onClose() {
     event.preventDefault();
     store.dispatch(deleteMessage());
+  }
+
+  onClick(id) {
+    axios.put('/api/canceleapplication', { id })
+      .then((response) => {
+        this.updateData(id, response.data.status);
+        if (response.data.message!== '') {
+          store.dispatch(addMessage({messageText: response.data.message}));
+        }
+    });
   }
 
   render() {
@@ -65,7 +76,8 @@ class ApplicationOutbox extends React.Component {
             applicationType={applicationType}
             titleLeft={titleLeft}
             titleRight={titleRight}
-            updateData={this.updateData}/>
+            updateData={this.updateData}
+            onClick={this.onClick} />
         </div>
       )
     };
@@ -77,7 +89,7 @@ class ApplicationOutbox extends React.Component {
       infoMessage = <Infomessage 
                       text={ this.props.message.messageText }
                       urlForRedirect={urlForRedirect}
-                      OnClick={this.OnClick}/>
+                      onClose={this.onClose}/>
     }
 
     return (

@@ -24,7 +24,7 @@ class AddNewThingForm extends React.Component {
     this.handleChangeDescription = this.handleChangeDescription.bind(this);
     this.handleChangeCategory = this.handleChangeCategory.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.OnClick = this.OnClick.bind(this);
+    this.onClose = this.onClose.bind(this);
   }
 
   componentDidMount() {
@@ -63,7 +63,7 @@ class AddNewThingForm extends React.Component {
     });
   }
 
-  OnClick() {
+  onClose() {
     event.preventDefault();
     store.dispatch(deleteMessage());
   }
@@ -113,7 +113,7 @@ class AddNewThingForm extends React.Component {
         <Infomessage 
                       text={ this.props.message.messageText }
                       urlForRedirect='/addnewthing'
-                      OnClick={this.OnClick}/>
+                      onClose={this.onClose}/>
         }
       </div>
     );
