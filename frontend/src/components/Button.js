@@ -22,6 +22,12 @@ export default class Button extends React.Component {
     if (type=='Cancel application'){
       return "button is-block is-danger is-large is-fullwidth";
     };
+    if (type=='Exchange'){
+      return "button is-block is-success is-large is-fullwidth";
+    };
+    if (type=='Choose'){
+      return "button is-block is-success is-large is-fullwidth";
+    };
   };
 
   render() {
@@ -34,4 +40,3 @@ export default class Button extends React.Component {
     );
   }
 }
-

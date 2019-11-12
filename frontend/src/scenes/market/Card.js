@@ -1,7 +1,6 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import ThingInfo from '../../components/ThingInfo';
-import ButtonExchange from './ButtonExchange';
+import Button from '../../components/Button';
 
 export default class Card extends React.Component {
   constructor(props) {
@@ -12,11 +11,11 @@ export default class Card extends React.Component {
   }
 
   render() {
-    const { id, name, description, categoryName, onMarket, onMarketAt, user, userId, currentUserId } = this.props;
+    const { id, name, description, categoryName, onMarket, onMarketAt, user, userId, currentUserId, onClick } = this.props;
     const button = () => {
       if (currentUserId === userId) {
         return <></>
-      } return <ButtonExchange id={id} userId={userId} />
+      } return <Button type='Exchange' id={id} userId={userId} onClick={onClick}/>
     }
 
     return (

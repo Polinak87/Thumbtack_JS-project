@@ -5,11 +5,14 @@ import Card from './Card'
 import Hero from '../../components/Hero';
 import store from '../../store/index';
 import { addMarketThings } from '../../store/actions/marketThings';
+import { addThingForExchange } from '../../store/actions/thingForExchange';
 
 class Market extends React.Component {
   constructor(props) {
     super(props);
+    this.onClick = this.onClick.bind(this);
   }
+  
 
   componentDidMount() {
     axios.get('/api/marketthings')
@@ -21,6 +24,18 @@ class Market extends React.Component {
         store.dispatch(addMarketThings(map));
       });
   }
+
+  onClick(id) {
+    event.preventDefault();
+    const { userId } = this.props;
+    const thingForExchange = {
+      idThingDesired: id,
+      idUserAnswer: userId,
+    };
+    store.dispatch(addThingForExchange(thingForExchange));
+    this.props.history.replace('/thingsforexchange');
+  }
+
 
   render() {
     let currentUserId = store.getState().user.id;
@@ -36,7 +51,8 @@ class Market extends React.Component {
             onMarketAt={thing.onMarketAt}
             user={thing.User}
             userId={thing.userId}
-            currentUserId={currentUserId}/>
+            currentUserId={currentUserId}
+            onClick={this.onClick}/>
         </div>
       )
     };

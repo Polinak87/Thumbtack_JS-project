@@ -7,6 +7,7 @@ import Hero from '../../../components/Hero';
 import store from '../../../store/index';
 import { deleteThingForExchange } from '../../../store/actions/thingForExchange';
 import { addUserThings } from '../../../store/actions/userThings';
+import { addMessage } from '../../../store/actions/message';
 import { deleteMessage } from '../../../store/actions/message';
 import Infomessage from '../../../components/InfoMessage';
 
@@ -14,6 +15,7 @@ class ThingsForExchange extends React.Component {
   constructor(props) {
     super(props);
     this.onClose = this.onClose.bind(this);
+    this.onClick=this.onClick.bind(this);
   }
 
   componentDidMount() {
@@ -33,6 +35,19 @@ class ThingsForExchange extends React.Component {
     store.dispatch(deleteMessage());
   }
 
+  onClick(id) {
+    event.preventDefault();
+    const idThingOffered = id;
+    const { idThingDesired, idUserAnswer } = store.getState().thingForExchange;
+    axios.post('/api/createapplication', { idThingOffered, idThingDesired, idUserAnswer })
+    .then((response) => {
+      if (response.status === 200) {
+        const messageText = ' Your application is sent. You can track it in your outbox applications.';
+        store.dispatch(addMessage({messageText}));
+      }
+    });
+  }
+
   render() {
     let cardList = [];
     for (let thing of this.props.value.values()) {
@@ -45,7 +60,8 @@ class ThingsForExchange extends React.Component {
             categoryName={thing.Category.name}
             onMarket={thing.onMarket}
             onMarketAt={thing.onMarketAt}
-            updateData={this.updateData} />
+            updateData={this.updateData}
+            onClick={this.onClick} />
         </div>
       )
     };
