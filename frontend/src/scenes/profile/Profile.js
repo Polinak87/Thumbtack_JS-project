@@ -53,16 +53,16 @@ class Profile extends React.Component {
 
   render() {
     let cardList = [];
-    for (let thing of this.props.value.values()) {
+    for (let UserThing of this.props.value.values()) {
       cardList.push(
-        <div className="column is-one-quarter" key={thing.id}>
+        <div className="column is-one-quarter" key={UserThing.id}>
           <Card
-            id={thing.id}
-            name={thing.name}
-            description={thing.description}
-            categoryName={thing.Category.name}
-            onMarket={thing.onMarket}
-            onMarketAt={thing.onMarketAt}
+            id={UserThing.Thing.id}
+            name={UserThing.Thing.name}
+            description={UserThing.Thing.description}
+            categoryName={UserThing.Thing.Category.name}
+            onMarket={UserThing.onMarket}
+            onMarketAt={UserThing.onMarketAt}
             updateData={this.updateData}
             onClick={this.onClick}/>
         </div>

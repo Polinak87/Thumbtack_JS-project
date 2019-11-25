@@ -4,14 +4,15 @@ const {
   sequelize,
   Thing,
   User,
-  // Category,
+  Category,
   Application,
+  UserThing,
 } = require('../models');
 
-sequelize.sync({ force: false }).then(async () => {
-  // await Category.create({ name: 'dresses' });
-  // await Category.create({ name: 'skirts' });
-  // await Category.create({ name: 'blouses' });
+sequelize.sync({ force: true }).then(async () => {
+  await Category.create({ name: 'dresses' });
+  await Category.create({ name: 'skirts' });
+  await Category.create({ name: 'blouses' });
   await User.create({
     firstName: 'Polina',
     lastName: 'Kozlova',
@@ -28,25 +29,37 @@ sequelize.sync({ force: false }).then(async () => {
     name: 'summer dress',
     description: 'pretty',
     categoryId: '1',
-    userId: '1',
-    onMarket: false,
-    onMarketAt: null,
   });
   await Thing.create({
     name: 'summer dress',
     description: 'light',
     categoryId: '1',
+  });
+  await Thing.create({
+    name: 'spring dress',
+    description: 'silk',
+    categoryId: '1',
+  });
+  await UserThing.create({
+    userId: '1',
+    thingId: '1',
+    onMarket: 'true',
+  });
+  await UserThing.create({
+    userId: '1',
+    thingId: '2',
+    onMarket: 'false',
+  });
+  await UserThing.create({
     userId: '2',
-    onMarket: false,
-    onMarketAt: null,
+    thingId: '3',
+    onMarket: 'false',
   });
   await Application.create({
-    idApplicationOutbox: 1,
     idUserAuthor: 1,
     idThingOffered: 1,
-    idApplicationInbox: 1,
     idUserAnswer: 2,
-    idThingDesired: 2,
+    idThingDesired: 3,
     status: 'pending',
   });
 });

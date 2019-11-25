@@ -22,7 +22,11 @@ module.exports = (sequelize) => {
   });
 
   User.associate = function (models) {
-    User.hasMany(models.Thing);
+    User.belongsToMany(models.Thing, {
+      // as: 'owner',
+      through: models.UserThing,
+      foreignKey: 'userId',
+    });
   };
 
   return User;

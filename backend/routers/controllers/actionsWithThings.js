@@ -1,17 +1,22 @@
 'use strict';
 
-const { Thing } = require('../../models');
+const { Thing, UserThing } = require('../../models');
 
 const addNewThing = async (ctx) => {
   const { name, description, categoryId } = ctx.request.body;
   const userId = ctx.state.user.id;
 
-  ctx.body = await Thing.create({
+  await Thing.create({
     name,
     description,
     categoryId,
-    userId,
-  });
+  }).then(thing => {
+    UserThing.create({
+      userId,
+      thingId: thing.id,
+    })
+  })
+  ctx.body = Thing;
   ctx.status = 200;
 };
 
@@ -19,7 +24,7 @@ const addThingToMarket = async (ctx) => {
   const thingId = ctx.request.body.id;
   const date = new Date();
 
-  await Thing.update(
+  await UserThing.update(
     {
       onMarket: true,
       onMarketAt: date,
@@ -36,7 +41,7 @@ const addThingToMarket = async (ctx) => {
 const removeThingFromMarket = async (ctx) => {
   const thingId = ctx.request.body.id;
 
-  await Thing.update(
+  await UserThing.update(
     {
       onMarket: false,
       onMarketAt: null,

@@ -13,7 +13,6 @@ class Market extends React.Component {
     this.onClick = this.onClick.bind(this);
   }
   
-
   componentDidMount() {
     axios.get('/api/marketthings')
       .then((response) => {
@@ -22,6 +21,7 @@ class Market extends React.Component {
           map.set(thing.id, thing)
         });
         store.dispatch(addMarketThings(map));
+        console.log(map);
       });
   }
 
@@ -40,17 +40,17 @@ class Market extends React.Component {
   render() {
     let currentUserId = store.getState().user.id;
     let cardList = [];
-    for (let thing of this.props.value.values()) {
+    for (let userThing of this.props.value.values()) {
       cardList.push(
-        <div className="column is-one-quarter" key={thing.id}>
+        <div className="column is-one-quarter" key={userThing.id}>
           <Card
-            id={thing.id}
-            name={thing.name}
-            description={thing.description}
-            categoryName={thing.Category.name}
-            onMarketAt={thing.onMarketAt}
-            user={thing.User}
-            userId={thing.userId}
+            id={userThing.Thing.id}
+            name={userThing.Thing.name}
+            description={userThing.Thing.description}
+            categoryName={userThing.Thing.Category.name}
+            onMarketAt={userThing.onMarketAt}
+            user={userThing.User}
+            userId={userThing.userId}
             currentUserId={currentUserId}
             onClick={this.onClick}/>
         </div>

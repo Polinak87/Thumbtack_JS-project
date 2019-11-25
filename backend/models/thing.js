@@ -10,33 +10,26 @@ module.exports = (sequelize) => {
     description: {
       type: Sequelize.STRING(50),
     },
-    categoryId: {
-      type: Sequelize.INTEGER(50),
-    },
-    userId: {
-      type: Sequelize.INTEGER(50),
-    },
-    onMarket: {
-      type: Sequelize.BOOLEAN,
-    },
-    onMarketAt: {
-      type: Sequelize.DATE,
-    },
+    // categoryId: {
+    //   type: Sequelize.INTEGER(50),
+    // },
   }, {
     underscored: true,
     tableName: 'things',
   });
 
   Thing.associate = function (models) {
-    Thing.belongsTo(models.User);
-    Thing.belongsTo(models.Category);
-    Thing.hasOne(models.Application, {
-      as: 'ThingOffered',
-      foreignKey: 'idThingOffered',
+    Thing.belongsToMany(models.User, {
+      // as: 'baseThing',
+      through: models.UserThing,
+      foreignKey: 'thingId',
     });
-    Thing.hasOne(models.Application, {
-      as: 'ThingDesired',
-      foreignKey: 'idThingDesired',
+    Thing.hasMany(models.UserThing, {
+      // as: 'baseThing',
+      foreignKey: 'thingId',
+    });
+    Thing.belongsTo(models.Category, {
+      foreignKey: 'categoryId',
     });
   };
 

@@ -15,11 +15,13 @@ const User = require('./user')(sequelize);
 const Category = require('./category')(sequelize);
 const Thing = require('./thing')(sequelize);
 const Application = require('./application')(sequelize);
+const UserThing = require('./user_thing')(sequelize);
 
 const models = {
   [User.name]: User,
   [Category.name]: Category,
   [Thing.name]: Thing,
+  [UserThing.name]: UserThing,
   [Application.name]: Application,
 };
 
