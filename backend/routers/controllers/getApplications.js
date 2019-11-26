@@ -4,6 +4,7 @@ const {
   Thing,
   Category,
   Application,
+  UserThing,
 } = require('../../models');
 
 const applicationsOutbox = async (ctx, next) => {
@@ -11,22 +12,29 @@ const applicationsOutbox = async (ctx, next) => {
 
   ctx.body = await Application.findAll({
     include: [{
-      model: Thing,
+      model: UserThing,
       as: 'ThingOffered',
       include: [{
-        model: Category,
+        model: Thing,
+        include: [{
+          model: Category,
+        }],
       }],
     }, {
-      model: Thing,
+      model: UserThing,
       as: 'ThingDesired',
       include: [{
-        model: Category,
+        model: Thing,
+        include: [{
+          model: Category,
+        }],
       }],
     }],
     where: {
       idUserAuthor: currentUserId,
     },
   });
+  console.log(JSON.stringify(ctx.body));
   ctx.status = 200;
 };
 
@@ -36,16 +44,22 @@ const applicationsOutboxFiltered = async (ctx, next) => {
 
   ctx.body = await Application.findAll({
     include: [{
-      model: Thing,
+      model: UserThing,
       as: 'ThingOffered',
       include: [{
-        model: Category,
+        model: Thing,
+        include: [{
+          model: Category,
+        }],
       }],
     }, {
-      model: Thing,
+      model: UserThing,
       as: 'ThingDesired',
       include: [{
-        model: Category,
+        model: Thing,
+        include: [{
+          model: Category,
+        }],
       }],
     }],
     where: {
@@ -61,16 +75,22 @@ const applicationsInbox = async (ctx, next) => {
 
   ctx.body = await Application.findAll({
     include: [{
-      model: Thing,
+      model: UserThing,
       as: 'ThingOffered',
       include: [{
-        model: Category,
+        model: Thing,
+        include: [{
+          model: Category,
+        }],
       }],
     }, {
-      model: Thing,
+      model: UserThing,
       as: 'ThingDesired',
       include: [{
-        model: Category,
+        model: Thing,
+        include: [{
+          model: Category,
+        }],
       }],
     }],
     where: {
@@ -86,16 +106,22 @@ const applicationsInboxFiltered = async (ctx, next) => {
 
   ctx.body = await Application.findAll({
     include: [{
-      model: Thing,
+      model: UserThing,
       as: 'ThingOffered',
       include: [{
-        model: Category,
+        model: Thing,
+        include: [{
+          model: Category,
+        }],
       }],
     }, {
-      model: Thing,
+      model: UserThing,
       as: 'ThingDesired',
       include: [{
-        model: Category,
+        model: Thing,
+        include: [{
+          model: Category,
+        }],
       }],
     }],
     where: {

@@ -10,13 +10,14 @@ const addNewThing = async (ctx) => {
     name,
     description,
     categoryId,
-  }).then(thing => {
+  }).then((thing) => {
     UserThing.create({
       userId,
       thingId: thing.id,
-    })
-  })
-  ctx.body = Thing;
+      onMarket: false,
+    });
+  });
+  // ctx.body = Thing; // make an error
   ctx.status = 200;
 };
 

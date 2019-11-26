@@ -41,6 +41,7 @@ class Profile extends React.Component {
         this.updateData(id, response.data.onMarket, response.data.onMarketAt);
       });
       console.log('click add');
+      console.log(id);
     };
     if (type=='Remove from market'){
       axios.post('/api/removethingfrommarket', { id })
@@ -57,7 +58,7 @@ class Profile extends React.Component {
       cardList.push(
         <div className="column is-one-quarter" key={UserThing.id}>
           <Card
-            id={UserThing.Thing.id}
+            id={UserThing.id}
             name={UserThing.Thing.name}
             description={UserThing.Thing.description}
             categoryName={UserThing.Thing.Category.name}

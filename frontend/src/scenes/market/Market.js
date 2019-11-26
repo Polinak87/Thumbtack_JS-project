@@ -44,7 +44,7 @@ class Market extends React.Component {
       cardList.push(
         <div className="column is-one-quarter" key={userThing.id}>
           <Card
-            id={userThing.Thing.id}
+            id={userThing.id}
             name={userThing.Thing.name}
             description={userThing.Thing.description}
             categoryName={userThing.Thing.Category.name}

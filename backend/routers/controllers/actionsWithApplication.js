@@ -2,7 +2,7 @@
 
 const {
   Application,
-  Thing,
+  UserThing,
 } = require('../../models');
 
 const createApplication = async (ctx) => {
@@ -120,7 +120,7 @@ const completeApplication = async (ctx) => {
         },
       );
 
-      await Thing.update(
+      await UserThing.update(
         {
           userId: idUserAnswer,
           onMarket: 'false',
@@ -129,7 +129,7 @@ const completeApplication = async (ctx) => {
         { where: { id: idThingOffered } },
       );
 
-      await Thing.update(
+      await UserThing.update(
         {
           userId: idUserAuthor,
           onMarket: 'false',

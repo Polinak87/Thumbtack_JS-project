@@ -57,9 +57,9 @@ export default class ApplicationCard extends React.Component {
               <br />
               <ThingInfo
                 id={ThingDesired.id}
-                name={ThingDesired.name}
-                description={ThingDesired.description}
-                categoryName={ThingDesired.Category.name} />
+                name={ThingDesired.Thing.name}
+                description={ThingDesired.Thing.description}
+                categoryName={ThingDesired.Thing.Category.name} />
             </div>
           </div>
           <div className="card-footer-item">
@@ -68,9 +68,9 @@ export default class ApplicationCard extends React.Component {
               <br />
               <ThingInfo
                 id={ThingOffered.id}
-                name={ThingOffered.name}
-                description={ThingOffered.description}
-                categoryName={ThingOffered.Category.name} />
+                name={ThingOffered.Thing.name}
+                description={ThingOffered.Thing.description}
+                categoryName={ThingOffered.Thing.Category.name} />
             </div>
           </div>
         </footer>
