@@ -9,10 +9,10 @@ const {
   UserThing,
 } = require('../models');
 
-sequelize.sync({ force: true }).then(async () => {
-  await Category.create({ name: 'dresses' });
-  await Category.create({ name: 'skirts' });
-  await Category.create({ name: 'blouses' });
+sequelize.sync({ force: false }).then(async () => {
+  // await Category.create({ name: 'dresses' });
+  // await Category.create({ name: 'skirts' });
+  // await Category.create({ name: 'blouses' });
   await User.create({
     firstName: 'Polina',
     lastName: 'Kozlova',

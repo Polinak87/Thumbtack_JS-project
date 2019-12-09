@@ -6,6 +6,8 @@ import marketThings from './marketThings';
 import outboxApplications from './outboxApplications';
 import inboxApplications from './inboxApplications';
 import message from './message';
+import sorting from './sorting';
+import filtration from './filtration';
 
 export default combineReducers({
   user,
@@ -15,4 +17,6 @@ export default combineReducers({
   outboxApplications,
   inboxApplications,
   message,
+  sorting,
+  filtration,
 });

@@ -5,6 +5,7 @@ import Button from '../../components/Button';
 export default class Card extends React.Component {
   constructor(props) {
     super(props);
+        this.onClick = this.onClick.bind(this);
   }
 
   onClick() {
@@ -21,7 +22,7 @@ export default class Card extends React.Component {
     return (
       <div className="card">
         <div className="card-header">
-          <div className="card-header-title has-text-grey is-centered is-italic is-size-3" onClick={this.handleClick}> 
+          <div className="card-header-title has-text-grey is-centered is-italic is-size-3" onClick={this.onClick}> 
             By {user.firstName} {user.lastName}
           </div>
         </div>

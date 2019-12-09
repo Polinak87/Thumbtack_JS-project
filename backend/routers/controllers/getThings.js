@@ -1,5 +1,7 @@
 'use strict';
 
+const urlapi = require('url');
+
 const {
   User,
   Thing,
@@ -27,22 +29,62 @@ const getUserThings = async (ctx, next) => {
 };
 
 const getMarketThings = async (ctx, next) => {
-  ctx.body = await UserThing.findAll({
-    include: [{
-      model: Thing,
-      // as: 'baseThing',
+
+  const query = urlapi.parse(ctx.request.url).query;
+
+  console.log('----------------------------------------------');
+  console.log(urlapi.parse(ctx.request.url));
+  console.log(query);
+  console.log('----------------------------------------------');
+
+  const categoryForFiltration = query.substring((query.indexOf('=') + 1), query.indexOf('&'));
+  const sortingType = query.substring((query.lastIndexOf('=') + 1), query.length);
+
+  console.log(categoryForFiltration, sortingType);
+
+  if (!categoryForFiltration.localeCompare('all')) {
+    ctx.body = await UserThing.findAll({
       include: [{
-        model: Category,
+        model: Thing,
+        // as: 'baseThing',
+        include: [{
+          model: Category,
+        }],
+      }, {
+        model: User,
       }],
-    }, {
-      model: User,
-    }],
-    where: {
-      onMarket: true,
-    },
-  });
+      where: {
+        onMarket: true,
+      },
+      order: [
+        ['created_at', sortingType],
+      ],
+    });
+    ctx.status = 200;
+  } else {
+    ctx.body = await UserThing.findAll({
+      include: [{
+        model: Thing,
+        // as: 'baseThing',
+        where: {
+          categoryId: categoryForFiltration,
+        },
+        include: [{
+          model: Category,
+        }],
+      }, {
+        model: User,
+      }],
+      where: {
+        onMarket: true,
+      },
+      order: [
+        ['created_at', sortingType],
+      ],
+    });
+    ctx.status = 200;
+  }
   console.log(JSON.stringify(ctx.body[0]));
-  ctx.status = 200;
 };
 
 module.exports = {
