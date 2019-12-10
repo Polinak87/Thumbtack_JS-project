@@ -4,24 +4,19 @@ import { connect } from 'react-redux';
 import Card from './Card'
 import Hero from '../../components/Hero';
 import store from '../../store/index';
-import { addMarketThings } from '../../store/actions/marketThings';
+import { addMarketThingsOfOneUser } from '../../store/actions/marketThingsOfOneUser';
 import { addThingForExchange } from '../../store/actions/thingForExchange';
-import FilterByCategory from './FilterByCategory';
-import Sorting from './Sorting';
-import { deleteFiltrationType } from '../../store/actions/filtration';
-import { deleteSortingType } from '../../store/actions/sorting';
 
-class Market extends React.Component {
+class MarketFilteredByUser extends React.Component {
   constructor(props) {
     super(props);
     this.onClick = this.onClick.bind(this);
   }
 
   componentDidMount() {
-    axios.get('/api/marketthings', {
+    axios.get('/api/marketthingsfilteredbyuser', {
       params: {
-        filtrationType: this.props.filtrationType,
-        sortingType: this.props.sortingType,
+        user: this.props.filtrationByUser.id,
       }
     })
       .then((response) => {
@@ -29,15 +24,10 @@ class Market extends React.Component {
         response.data.forEach(function (thing) {
           map.set(thing.id, thing)
         });
-        store.dispatch(addMarketThings(map));
+        store.dispatch(addMarketThingsOfOneUser(map));
+        console.log("map");
         console.log(map);
       });
-  }
-
-  componentWillUnmount() {
-    console.log('unmount');
-    store.dispatch(deleteFiltrationType());
-    store.dispatch(deleteSortingType());
   }
 
   onClick(id) {
@@ -72,20 +62,13 @@ class Market extends React.Component {
       )
     };
 
-    const heroText = 'Market';
-    const heroType = "hero is-primary";
     console.log('props');
     console.log(this.props);
 
     return (
       <>
         <br />
-        <Hero text='Market' type="hero is-primary" />
-        <br />
-        <div className="is-inline-block">
-          <FilterByCategory />
-          <Sorting />
-        </div>
+        <Hero text='Market of User' type="hero is-primary" />
         <br />
         <section className="section">
           <div className="columns is-multiline">
@@ -98,9 +81,8 @@ class Market extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  value: state.marketThings,
-  filtrationType: state.filtration.filtrationType,
-  sortingType: state.sorting.sortingType,
+  value: state.marketThingsOfOneUser,
+  filtrationByUser: state.filtrationByUser,
 });
 
-export default connect(mapStateToProps)(Market);
+export default connect(mapStateToProps)(MarketFilteredByUser);

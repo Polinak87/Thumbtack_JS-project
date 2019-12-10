@@ -10,7 +10,7 @@ const sorting = (state = {sortingType: 'DESC'}, action) => {
           ...action.sortingType,
         });
     case DELETE_SORTINGTYPE:
-      return {};
+      return { sortingType: 'DESC' };
     case DELETE_USER:
       return {};
     default:

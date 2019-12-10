@@ -20,6 +20,7 @@ const {
 const {
   getUserThings,
   getMarketThings,
+  getMarketThingsOfOneUser,
 } = require('./controllers/getThings');
 
 const {
@@ -51,6 +52,7 @@ router.post('/api/removethingfrommarket', removeThingFromMarket);
 
 router.get('/api/userthings', getUserThings);
 router.get('/api/marketthings', getMarketThings);
+router.get('/api/marketthingsfilteredbyuser', getMarketThingsOfOneUser);
 
 router.post('/api/createapplication', createApplication);
 router.put('/api/canceleapplication', canceleApplication);

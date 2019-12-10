@@ -4,7 +4,6 @@ const {
   sequelize,
   Thing,
   User,
-  Category,
   Application,
   UserThing,
 } = require('../models');

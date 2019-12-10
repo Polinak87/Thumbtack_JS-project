@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Redirect, withRouter } from "react-router-dom";
 import Profile from './profile/Profile';
 import Market from './market/Market';
+import MarketFilteredByUser from './market/MarketFilteredByUser';
 import ThingsForExchange from './market/exchange/ThingsForExchange'
 import Login from './homePage/Login';
 import AddNewThingForm from './addNewThing/AddNewThing';
@@ -12,6 +13,7 @@ import ApplicationOutbox from './application/outbox/ApplicationOutbox';
 import ApplicationInbox from './application/inbox/ApplicatonInbox';
 import store from '../store';
 import HomePage from './homePage/HomePage';
+
 
 const _ = require('lodash');
 
@@ -39,6 +41,7 @@ function MainRouter(props) {
       <div>
         <Route exact path="/profile" component={Profile} />
         <Route path="/market" component={Market} />
+        <Route path="/marketthingsfilteredbyuser" component={MarketFilteredByUser} />
         <Route path="/thingsforexchange" component={ThingsForExchange} />
         <Route path="/addnewthing" component={AddNewThingForm} />
         <Route path="/login" component={Login} />

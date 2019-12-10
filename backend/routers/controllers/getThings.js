@@ -1,7 +1,6 @@
 'use strict';
 
 const urlapi = require('url');
-
 const {
   User,
   Thing,
@@ -29,7 +28,6 @@ const getUserThings = async (ctx, next) => {
 };
 
 const getMarketThings = async (ctx, next) => {
-
   const query = urlapi.parse(ctx.request.url).query;
 
   console.log('----------------------------------------------');
@@ -87,7 +85,38 @@ const getMarketThings = async (ctx, next) => {
   console.log(JSON.stringify(ctx.body[0]));
 };
 
+const getMarketThingsOfOneUser = async (ctx, next) => {
+  const query = urlapi.parse(ctx.request.url).query;
+
+  console.log('----------------------------------------------');
+  console.log(urlapi.parse(ctx.request.url));
+  console.log(query);
+  console.log('----------------------------------------------');
+
+  const userForFiltration = query.substring((query.indexOf('=') + 1), query.length);
+
+  ctx.body = await UserThing.findAll({
+    include: [{
+      model: Thing,
+      // as: 'baseThing',
+      include: [{
+        model: Category,
+      }],
+    }, {
+      model: User,
+      where: {
+        id: userForFiltration,
+      },
+    }],
+    where: {
+      onMarket: true,
+    },
+  });
+  ctx.status = 200;
+};
+
 module.exports = {
   getUserThings,
   getMarketThings,
+  getMarketThingsOfOneUser,
 };

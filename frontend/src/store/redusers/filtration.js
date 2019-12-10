@@ -2,7 +2,7 @@ import { ADD_FILTRATIONTYPE } from '../actions/filtration';
 import { DELETE_FILTRATIONTYPE } from '../actions/filtration';
 import { DELETE_USER } from '../actions/user';
 
-const filtration = (state = { filtrationType : 'all' }, action) => {
+const filtration = (state = { filtrationType: 'all' }, action) => {
   switch (action.type) {
     case ADD_FILTRATIONTYPE:
       return (
@@ -10,7 +10,7 @@ const filtration = (state = { filtrationType : 'all' }, action) => {
           ...action.filtrationType,
         });
     case DELETE_FILTRATIONTYPE:
-      return {};
+      return { filtrationType: 'all' };
     case DELETE_USER:
       return {};
     default:

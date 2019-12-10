@@ -1,6 +1,9 @@
 import React from 'react';
 import ThingInfo from '../../components/ThingInfo';
 import Button from '../../components/Button';
+import { Link } from 'react-router-dom';
+import store from '../../store/index';
+import { addFiltrationByUser } from '../../store/actions/filtration';
 
 export default class Card extends React.Component {
   constructor(props) {
@@ -8,7 +11,9 @@ export default class Card extends React.Component {
         this.onClick = this.onClick.bind(this);
   }
 
-  onClick() {
+  onClick(id) {
+    console.log('ура!!!!!')
+    store.dispatch(addFiltrationByUser({ id }));
   }
 
   render() {
@@ -22,9 +27,9 @@ export default class Card extends React.Component {
     return (
       <div className="card">
         <div className="card-header">
-          <div className="card-header-title has-text-grey is-centered is-italic is-size-3" onClick={this.onClick}> 
+          <Link to="/marketthingsfilteredbyuser" className="card-header-title has-text-grey is-centered is-italic is-size-3" onClick={() => this.onClick(user.id)}> 
             By {user.firstName} {user.lastName}
-          </div>
+          </Link>
         </div>
         <ThingInfo
           id={id}
