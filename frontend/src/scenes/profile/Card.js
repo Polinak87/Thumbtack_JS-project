@@ -15,6 +15,8 @@ export default class Card extends React.Component {
     } else {
       button = <Button type='Add to market' updateData={updateData} id={id} onClick={onClick}>Add to market</Button>;
     }
+    // проверить и убрать updateData
+    // button - скоее всего без закрывающего тэга, просто />
 
     return (
       <div className="card">

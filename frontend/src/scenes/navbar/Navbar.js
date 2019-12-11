@@ -1,13 +1,17 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 import Logout from './Logout'
+import User from './User';
+const _ = require('lodash');
 
-export default function NavBar(props) {
-  if (props.user.name === null) {
+function NavBar(props) {
+  console.log('props.user');
+  console.log(props.user);
+
+  if (_.isEmpty(props.user)) {
     return null;
   }
-
-  const { user } = props;
 
   return (
     <nav className="navbar" role="navigation" aria-label="main navigation">
@@ -37,9 +41,7 @@ export default function NavBar(props) {
           </div>
         </div>
         <div className="navbar-end">
-          <div className="navbar-item">
-            <p>{user.name}</p>
-          </div>
+          <User/>
           <div className="navbar-item">
             <Logout />
           </div>
@@ -49,4 +51,9 @@ export default function NavBar(props) {
   )
 }
 
+const mapStateToProps = state => ({
+  user: state.user,
+});
+
+export default connect(mapStateToProps)(NavBar);
 

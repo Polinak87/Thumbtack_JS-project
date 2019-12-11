@@ -28,6 +28,9 @@ export default class Button extends React.Component {
     if (type=='Choose'){
       return "button is-block is-success is-large is-fullwidth";
     };
+    if (type=='Add to inventory') {
+      return "button is-block is-success is-large is-fullwidth";
+    };
   };
 
   render() {

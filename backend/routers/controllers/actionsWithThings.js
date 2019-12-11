@@ -21,6 +21,19 @@ const addNewThing = async (ctx) => {
   ctx.status = 200;
 };
 
+const addThingFromCatalog = async (ctx) => {
+  const { id } = ctx.request.body;
+  const userId = ctx.state.user.id;
+
+  await UserThing.create({
+    userId,
+    thingId: id,
+    onMarket: false,
+  });
+  // ctx.body = Thing; // make an error
+  ctx.status = 200;
+};
+
 const addThingToMarket = async (ctx) => {
   const thingId = ctx.request.body.id;
   const date = new Date();
@@ -58,6 +71,7 @@ const removeThingFromMarket = async (ctx) => {
 
 module.exports = {
   addNewThing,
+  addThingFromCatalog,
   addThingToMarket,
   removeThingFromMarket,
 };

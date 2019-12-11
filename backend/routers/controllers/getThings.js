@@ -115,8 +115,19 @@ const getMarketThingsOfOneUser = async (ctx, next) => {
   ctx.status = 200;
 };
 
+const getCatalogThings = async (ctx, next) => {
+  ctx.body = await Thing.findAll({
+    include: [{
+      model: Category,
+    }],
+  });
+  ctx.status = 200;
+  console.log(ctx.body);
+};
+
 module.exports = {
   getUserThings,
   getMarketThings,
   getMarketThingsOfOneUser,
+  getCatalogThings,
 };

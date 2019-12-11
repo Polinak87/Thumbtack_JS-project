@@ -13,6 +13,7 @@ const { getCategorys } = require('./controllers/getCategorys');
 
 const {
   addNewThing,
+  addThingFromCatalog,
   addThingToMarket,
   removeThingFromMarket,
 } = require('./controllers/actionsWithThings');
@@ -21,6 +22,7 @@ const {
   getUserThings,
   getMarketThings,
   getMarketThingsOfOneUser,
+  getCatalogThings,
 } = require('./controllers/getThings');
 
 const {
@@ -47,12 +49,14 @@ router.get('/api/getcurrentuser', getCurrentUser);
 router.get('/api/category', getCategorys);
 
 router.post('/api/addnewthing', addNewThing);
+router.post('/api/addthingfromcatalog', addThingFromCatalog);
 router.post('/api/addthingtomarket', addThingToMarket);
 router.post('/api/removethingfrommarket', removeThingFromMarket);
 
 router.get('/api/userthings', getUserThings);
 router.get('/api/marketthings', getMarketThings);
 router.get('/api/marketthingsfilteredbyuser', getMarketThingsOfOneUser);
+router.get('/api/catalog', getCatalogThings);
 
 router.post('/api/createapplication', createApplication);
 router.put('/api/canceleapplication', canceleApplication);

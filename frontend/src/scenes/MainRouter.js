@@ -8,36 +8,30 @@ import Login from './homePage/Login';
 import AddNewThingForm from './addNewThing/AddNewThing';
 import Logout from './navbar/Logout';
 import RegistrationForm from './homePage/Registration';
-import NavBar from './navbar/Navbar';
 import ApplicationOutbox from './application/outbox/ApplicationOutbox';
 import ApplicationInbox from './application/inbox/ApplicatonInbox';
 import store from '../store';
 import HomePage from './homePage/HomePage';
+import axios from 'axios';
+import { addUser } from '../store/actions/user';
 
 
 const _ = require('lodash');
 
 function MainRouter(props) {
-  let userName;
-
   if(_.isEmpty(store.getState().user)) {
-    userName = null;
-  } else {
-    userName = store.getState().user.firstName.toString() + ' ' + store.getState().user.lastName.toString();
-  };
-
-  if (userName === null && props.location.pathname !== "/login") {
-    if(userName === null && props.location.pathname !== "/home") {
-      if(userName === null && props.location.pathname !== "/registration") {
-      props.history.push("/home");
-      return null;
+    axios.get('api/getcurrentuser')
+    .then((response) => {
+      store.dispatch(addUser(response.data));
+    })
+    .catch((error) =>  {
+      if (props.location.pathname !== "/login" && props.location.pathname !== "/home" && props.location.pathname !== "/registration" ) {
+        props.history.push("/home");
       }
-    }
-  };
+    });
+  }
 
   return (
-    <>
-      <NavBar user={{name: userName}}/>
       <div>
         <Route exact path="/profile" component={Profile} />
         <Route path="/market" component={Market} />
@@ -51,8 +45,7 @@ function MainRouter(props) {
         <Route path="/applicationsinbox" component={ApplicationInbox} />
         <Route path="/home" component={HomePage} />
       </div>
-    </>
   );
 }
 
-export default withRouter(MainRouter) ;
+export default withRouter(MainRouter);

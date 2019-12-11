@@ -56,12 +56,16 @@ const logout = async (ctx) => {
   return ctx.redirect('/home');
 };
 
-const getCurrentUser = (ctx) => {
+const getCurrentUser = async (ctx) => {
   if (ctx.isUnauthenticated()) {
     ctx.throw(401, 'Unauthenticated');
   }
+  ctx.body = await User.findOne({
+    where: {
+      id: ctx.state.user.id,
+    },
+  });
   ctx.status = 200;
-  ctx.body = ctx.state.user;
 };
 
 module.exports = {

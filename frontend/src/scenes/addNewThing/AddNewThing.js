@@ -6,6 +6,7 @@ import store from '../../store/index';
 import { addMessage } from '../../store/actions/message';
 import { deleteMessage } from '../../store/actions/message';
 import Infomessage from '../../components/InfoMessage';
+import Catalog from './catalog';
 
 class AddNewThingForm extends React.Component {
   constructor(props) {
@@ -115,6 +116,7 @@ class AddNewThingForm extends React.Component {
                       urlForRedirect='/addnewthing'
                       onClose={this.onClose}/>
         }
+        <Catalog/>
       </div>
     );
   };
