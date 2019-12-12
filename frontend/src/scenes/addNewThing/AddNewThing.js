@@ -19,6 +19,7 @@ class AddNewThingForm extends React.Component {
       // то фактически он не переключает селектор и handleChangeCategory не подхатывает значение поля, 
       // если пользователь выбирает любую категорию кроме первой, то handleChangeCategory заменяет еденицу на выбранное значение
       categoryList: [],
+      file:{},
     }
 
     this.handleChangeName = this.handleChangeName.bind(this);
@@ -26,6 +27,7 @@ class AddNewThingForm extends React.Component {
     this.handleChangeCategory = this.handleChangeCategory.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.onClose = this.onClose.bind(this);
+    this.handleChangeFile = this.handleChangeFile.bind(this);
   }
 
   componentDidMount() {
@@ -47,21 +49,32 @@ class AddNewThingForm extends React.Component {
     this.setState({ categoryId: event.target.value });
   }
 
+  handleChangeFile(event) {
+    console.log(event.target.files[0]);
+    // добавить  thing id
+    this.setState({ file: event.target.files[0]})
+  }
+
   handleSubmit(event) {
     event.preventDefault();
-    const { name, description, categoryId } = this.state;
-    axios.post('/api/addnewthing', { name, description, categoryId }).then((response) => {
-      if (response.status = 200) {
-        this.setState(
-          {
-            name: '',
-            description: '',
-            categoryId: '1',
+    const { name, description, categoryId, file } = this.state;
+    axios.post('/api/addnewthing', { name, description, categoryId })
+      .then((response) => {
+        let formData = new FormData();
+        formData.append('file', file);
+        axios.post('api/addimage', formData,
+        {
+          params: {
+            id: '1',
+          },
+          headers: {
+            'Content-Type': 'multipart/form-data'
           }
-        );
-        store.dispatch(addMessage({messageText: 'New thing is added to your inventory.'}));
-      }
-    });
+        })
+          .then((response) => {
+            store.dispatch(addMessage({ messageText: 'New thing is added to your inventory.' }));
+          });
+      });
   }
 
   onClose() {
@@ -80,10 +93,10 @@ class AddNewThingForm extends React.Component {
     return (
       <div>
         <br />
-        <Hero text='Add new thing to your inventory' type="hero is-primary"/>
+        <Hero text='Add new thing to your inventory' type="hero is-primary" />
         <br />
         <div className="column is-one-quarter">
-          <form className="" onSubmit={this.handleSubmit}>
+          <form className="" encType="multipart/form-data" onSubmit={this.handleSubmit}>
             <div className="field">
               <div className="control">
                 <input className="input" type="text" required placeholder="Name" autoFocus onChange={this.handleChangeName} value={this.state.name} />
@@ -105,18 +118,23 @@ class AddNewThingForm extends React.Component {
             </div>
             <div className="field">
               <div className="control">
+                <input className="input" type="file" name="userFile" onChange={this.handleChangeFile} />
+              </div>
+            </div>
+            <div className="field">
+              <div className="control">
                 <input className="button is-block is-success is-large is-fullwidth" type="submit" value="Add" />
               </div>
             </div>
           </form>
         </div>
         {!_.isEmpty(this.props.message) &&
-        <Infomessage 
-                      text={ this.props.message.messageText }
-                      urlForRedirect='/addnewthing'
-                      onClose={this.onClose}/>
+          <Infomessage
+            text={this.props.message.messageText}
+            urlForRedirect='/addnewthing'
+            onClose={this.onClose} />
         }
-        <Catalog/>
+        <Catalog />
       </div>
     );
   };

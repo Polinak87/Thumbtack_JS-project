@@ -16,6 +16,8 @@ const {
   addThingFromCatalog,
   addThingToMarket,
   removeThingFromMarket,
+  uploadThingImage,
+  upload,
 } = require('./controllers/actionsWithThings');
 
 const {
@@ -50,6 +52,8 @@ router.get('/api/category', getCategorys);
 
 router.post('/api/addnewthing', addNewThing);
 router.post('/api/addthingfromcatalog', addThingFromCatalog);
+router.post('/api/addimage', upload.single('file'), uploadThingImage);
+
 router.post('/api/addthingtomarket', addThingToMarket);
 router.post('/api/removethingfrommarket', removeThingFromMarket);
 

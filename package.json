@@ -32,6 +32,7 @@
     "koa-bunyan": "^1.0.2",
     "koa-generic-session": "^2.0.1",
     "koa-generic-session-sequelize": "^2.2.0",
+    "koa-multer": "^1.0.2",
     "koa-passport": "^4.1.1",
     "koa-router": "^7.4.0",
     "koa-send": "^5.0.0",
@@ -41,7 +42,7 @@
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
     "redux-thunk": "^2.3.0",
-    "sequelize": "^5.7.1"
+    "sequelize": "^5.21.2"
   },
   "devDependencies": {
     "@babel/core": "^7.3.4",
