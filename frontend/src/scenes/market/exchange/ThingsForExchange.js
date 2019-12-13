@@ -54,6 +54,7 @@ class ThingsForExchange extends React.Component {
       cardList.push(
         <div className="column is-one-quarter" key={UserThing.id}>
           <Card
+            image={UserThing.Thing.image}
             id={UserThing.id}
             name={UserThing.Thing.name}
             description={UserThing.Thing.description}

@@ -13,6 +13,9 @@ module.exports = (sequelize) => {
     // categoryId: {
     //   type: Sequelize.INTEGER(50),
     // },
+    image: {
+      type: Sequelize.STRING(500),
+    },
   }, {
     underscored: true,
     tableName: 'things',

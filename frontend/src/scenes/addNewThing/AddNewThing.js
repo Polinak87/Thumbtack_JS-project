@@ -118,7 +118,7 @@ class AddNewThingForm extends React.Component {
             </div>
             <div className="field">
               <div className="control">
-                <input className="input" type="file" name="userFile" onChange={this.handleChangeFile} />
+                <input className="input" type="file" required name="userFile" onChange={this.handleChangeFile} />
               </div>
             </div>
             <div className="field">

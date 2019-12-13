@@ -2,6 +2,8 @@
 
 const Router = require('koa-router');
 
+const { upload } = require('../middlewares/multer');
+
 const {
   getCurrentUser,
   login,
@@ -17,7 +19,6 @@ const {
   addThingToMarket,
   removeThingFromMarket,
   uploadThingImage,
-  upload,
 } = require('./controllers/actionsWithThings');
 
 const {

@@ -8,7 +8,7 @@ export default class Card extends React.Component {
   }
 
   render() {
-    const { id, name, description, categoryName, onMarket, onMarketAt, updateData, onClick } = this.props;
+    const { id, image, name, description, categoryName, onMarket, onMarketAt, updateData, onClick } = this.props;
     let button;
     if (onMarket) {
       button = <Button type='Remove from market' updateData={updateData} id={id} onClick={onClick}>Remove from market</Button>;
@@ -21,6 +21,7 @@ export default class Card extends React.Component {
     return (
       <div className="card">
         <ThingInfo
+          image={image}
           id={id}
           name={name}
           description={description}

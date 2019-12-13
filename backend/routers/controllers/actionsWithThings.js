@@ -1,6 +1,5 @@
 'use strict';
 
-const multer = require('koa-multer');
 const { Thing, UserThing } = require('../../models');
 
 const addNewThing = async (ctx) => {
@@ -70,20 +69,15 @@ const removeThingFromMarket = async (ctx) => {
   ctx.status = 200;
 };
 
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, 'backend/public/images/uploaded');
-  },
-  filename: (req, file, cb) => {
-    cb(null, `${Date.now()}-${file.originalname}`);
-  },
-});
-const upload = multer({ storage });
-
 const uploadThingImage = async (ctx) => {
-  ctx.body = {
-    result: 'запрос прошел',
-  };
+  // console.log('ctx');
+  // console.log(ctx.req.file.path);
+  ctx.body = await Thing.update(
+    {
+      image: ctx.req.file.path.substring(7),
+    },
+    { where: { id: '1' } },
+  );
   ctx.status = 200;
 };
 
@@ -93,5 +87,4 @@ module.exports = {
   addThingToMarket,
   removeThingFromMarket,
   uploadThingImage,
-  upload,
 };

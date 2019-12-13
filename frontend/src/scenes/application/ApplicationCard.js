@@ -56,6 +56,7 @@ export default class ApplicationCard extends React.Component {
               <p>{titleLeft}</p>
               <br />
               <ThingInfo
+                image={ThingDesired.Thing.image}
                 id={ThingDesired.id}
                 name={ThingDesired.Thing.name}
                 description={ThingDesired.Thing.description}
@@ -67,6 +68,7 @@ export default class ApplicationCard extends React.Component {
               <p>{titleRight}</p>
               <br />
               <ThingInfo
+                image={ThingOffered.Thing.image}
                 id={ThingOffered.id}
                 name={ThingOffered.Thing.name}
                 description={ThingOffered.Thing.description}

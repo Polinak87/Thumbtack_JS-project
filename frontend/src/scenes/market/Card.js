@@ -17,7 +17,7 @@ export default class Card extends React.Component {
   }
 
   render() {
-    const { id, name, description, categoryName, onMarket, onMarketAt, user, userId, currentUserId, onClick } = this.props;
+    const { image, id, name, description, categoryName, onMarket, onMarketAt, user, userId, currentUserId, onClick } = this.props;
     const button = () => {
       if (currentUserId === userId) {
         return <></>
@@ -32,6 +32,7 @@ export default class Card extends React.Component {
           </Link>
         </div>
         <ThingInfo
+          image={image}
           id={id}
           name={name}
           description={description}

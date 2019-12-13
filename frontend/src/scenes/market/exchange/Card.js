@@ -8,11 +8,12 @@ export default class Card extends React.Component {
   }
 
   render() {
-    const { id, name, description, categoryName, onMarket, onMarketAt, updateData, onClick } = this.props;
+    const { image, id, name, description, categoryName, onMarket, onMarketAt, updateData, onClick } = this.props;
 
     return (
       <div className="card">
         <ThingInfo
+          image={image}
           id={id}
           name={name}
           description={description}

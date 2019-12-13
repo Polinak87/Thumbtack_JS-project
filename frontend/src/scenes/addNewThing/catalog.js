@@ -37,6 +37,7 @@ class Catalog extends React.Component {
       cardList.push(
         <div className="column is-one-quarter" key={Thing.id}>
           <Card
+            image={Thing.image}
             id={Thing.id}
             name={Thing.name}
             description={Thing.description}
