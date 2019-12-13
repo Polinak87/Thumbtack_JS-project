@@ -3,13 +3,14 @@
 const { Thing, UserThing } = require('../../models');
 
 const addNewThing = async (ctx) => {
-  const { name, description, categoryId } = ctx.request.body;
+  const { name, description, categoryId } = ctx.req.body;
   const userId = ctx.state.user.id;
 
   await Thing.create({
     name,
     description,
     categoryId,
+    image: ctx.req.file.path.substring(7),
   }).then((thing) => {
     UserThing.create({
       userId,
@@ -69,22 +70,9 @@ const removeThingFromMarket = async (ctx) => {
   ctx.status = 200;
 };
 
-const uploadThingImage = async (ctx) => {
-  // console.log('ctx');
-  // console.log(ctx.req.file.path);
-  ctx.body = await Thing.update(
-    {
-      image: ctx.req.file.path.substring(7),
-    },
-    { where: { id: '1' } },
-  );
-  ctx.status = 200;
-};
-
 module.exports = {
   addNewThing,
   addThingFromCatalog,
   addThingToMarket,
   removeThingFromMarket,
-  uploadThingImage,
 };

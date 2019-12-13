@@ -19,7 +19,7 @@ class AddNewThingForm extends React.Component {
       // то фактически он не переключает селектор и handleChangeCategory не подхатывает значение поля, 
       // если пользователь выбирает любую категорию кроме первой, то handleChangeCategory заменяет еденицу на выбранное значение
       categoryList: [],
-      file:{},
+      file: {},
     }
 
     this.handleChangeName = this.handleChangeName.bind(this);
@@ -52,28 +52,29 @@ class AddNewThingForm extends React.Component {
   handleChangeFile(event) {
     console.log(event.target.files[0]);
     // добавить  thing id
-    this.setState({ file: event.target.files[0]})
+    this.setState({ file: event.target.files[0] })
   }
 
   handleSubmit(event) {
     event.preventDefault();
     const { name, description, categoryId, file } = this.state;
-    axios.post('/api/addnewthing', { name, description, categoryId })
+    let formData = new FormData();
+    formData.append('file', file);
+    formData.append('name', name);
+    formData.append('description', description);
+    formData.append('categoryId', categoryId);
+
+    axios.post('/api/addnewthing', formData,
+      {
+        params: {
+          id: '1',
+        },
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      })
       .then((response) => {
-        let formData = new FormData();
-        formData.append('file', file);
-        axios.post('api/addimage', formData,
-        {
-          params: {
-            id: '1',
-          },
-          headers: {
-            'Content-Type': 'multipart/form-data'
-          }
-        })
-          .then((response) => {
-            store.dispatch(addMessage({ messageText: 'New thing is added to your inventory.' }));
-          });
+        store.dispatch(addMessage({ messageText: 'New thing is added to your inventory.' }));
       });
   }
 
