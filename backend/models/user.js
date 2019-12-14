@@ -23,7 +23,6 @@ module.exports = (sequelize) => {
 
   User.associate = function (models) {
     User.belongsToMany(models.Thing, {
-      // as: 'owner',
       through: models.UserThing,
       foreignKey: 'userId',
     });

@@ -18,7 +18,6 @@ const addNewThing = async (ctx) => {
       onMarket: false,
     });
   });
-  // ctx.body = Thing; // make an error
   ctx.status = 200;
 };
 

@@ -10,9 +10,6 @@ module.exports = (sequelize) => {
     description: {
       type: Sequelize.STRING(50),
     },
-    // categoryId: {
-    //   type: Sequelize.INTEGER(50),
-    // },
     image: {
       type: Sequelize.STRING(500),
     },
@@ -23,12 +20,10 @@ module.exports = (sequelize) => {
 
   Thing.associate = function (models) {
     Thing.belongsToMany(models.User, {
-      // as: 'baseThing',
       through: models.UserThing,
       foreignKey: 'thingId',
     });
     Thing.hasMany(models.UserThing, {
-      // as: 'baseThing',
       foreignKey: 'thingId',
     });
     Thing.belongsTo(models.Category, {

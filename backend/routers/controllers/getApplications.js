@@ -34,7 +34,6 @@ const applicationsOutbox = async (ctx, next) => {
       idUserAuthor: currentUserId,
     },
   });
-  console.log(JSON.stringify(ctx.body));
   ctx.status = 200;
 };
 

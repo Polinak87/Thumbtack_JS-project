@@ -14,7 +14,6 @@ const getUserThings = async (ctx, next) => {
   ctx.body = await UserThing.findAll({
     include: [{
       model: Thing,
-      // as: 'baseThing',
       include: [{
         model: Category,
       }],
@@ -23,28 +22,18 @@ const getUserThings = async (ctx, next) => {
       userId: currentUserId,
     },
   });
-  console.log(JSON.stringify(ctx.body));
   ctx.status = 200;
 };
 
 const getMarketThings = async (ctx, next) => {
   const query = urlapi.parse(ctx.request.url).query;
-
-  // console.log('----------------------------------------------');
-  // console.log(urlapi.parse(ctx.request.url));
-  // console.log(query);
-  // console.log('----------------------------------------------');
-
   const categoryForFiltration = query.substring((query.indexOf('=') + 1), query.indexOf('&'));
   const sortingType = query.substring((query.lastIndexOf('=') + 1), query.length);
-
-  // console.log(categoryForFiltration, sortingType);
 
   if (!categoryForFiltration.localeCompare('all')) {
     ctx.body = await UserThing.findAll({
       include: [{
         model: Thing,
-        // as: 'baseThing',
         include: [{
           model: Category,
         }],
@@ -63,7 +52,6 @@ const getMarketThings = async (ctx, next) => {
     ctx.body = await UserThing.findAll({
       include: [{
         model: Thing,
-        // as: 'baseThing',
         where: {
           categoryId: categoryForFiltration,
         },
@@ -82,23 +70,15 @@ const getMarketThings = async (ctx, next) => {
     });
     ctx.status = 200;
   }
-  console.log(JSON.stringify(ctx.body[0]));
 };
 
 const getMarketThingsOfOneUser = async (ctx, next) => {
   const query = urlapi.parse(ctx.request.url).query;
-
-  // console.log('----------------------------------------------');
-  // console.log(urlapi.parse(ctx.request.url));
-  // console.log(query);
-  // console.log('----------------------------------------------');
-
   const userForFiltration = query.substring((query.indexOf('=') + 1), query.length);
 
   ctx.body = await UserThing.findAll({
     include: [{
       model: Thing,
-      // as: 'baseThing',
       include: [{
         model: Category,
       }],
@@ -122,7 +102,6 @@ const getCatalogThings = async (ctx, next) => {
     }],
   });
   ctx.status = 200;
-  // console.log(ctx.body);
 };
 
 module.exports = {
