@@ -10,7 +10,8 @@ import message from './message';
 import sorting from './sorting';
 import filtration from './filtration';
 import filtrationByUser from './filtrationByUser';
-import catalog from './catalog'; 
+import catalog from './catalog';
+import categories from './categories';
 
 
 export default combineReducers({
@@ -26,4 +27,5 @@ export default combineReducers({
   filtration,
   filtrationByUser,
   catalog,
+  categories,
 });

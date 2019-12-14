@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Redirect, withRouter } from "react-router-dom";
+import { Route, withRouter } from "react-router-dom";
 import Profile from './profile/Profile';
 import Market from './market/Market';
 import MarketFilteredByUser from './market/MarketFilteredByUser';
@@ -10,26 +10,11 @@ import Logout from './navbar/Logout';
 import RegistrationForm from './homePage/Registration';
 import ApplicationOutbox from './application/outbox/ApplicationOutbox';
 import ApplicationInbox from './application/inbox/ApplicatonInbox';
-import store from '../store';
 import HomePage from './homePage/HomePage';
-import axios from 'axios';
-import { addUser } from '../store/actions/user';
-
-
-const _ = require('lodash');
+import getCurrentUser from '../services/getCurrentUser'
 
 function MainRouter(props) {
-  if(_.isEmpty(store.getState().user)) {
-    axios.get('api/getcurrentuser')
-    .then((response) => {
-      store.dispatch(addUser(response.data));
-    })
-    .catch((error) =>  {
-      if (props.location.pathname !== "/login" && props.location.pathname !== "/home" && props.location.pathname !== "/registration" ) {
-        props.history.push("/home");
-      }
-    });
-  }
+  getCurrentUser(props);
 
   return (
       <div>
