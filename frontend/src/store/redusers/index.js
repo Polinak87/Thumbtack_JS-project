@@ -12,6 +12,7 @@ import filtration from './filtration';
 import filtrationByUser from './filtrationByUser';
 import catalog from './catalog';
 import categories from './categories';
+import addNewThing from './addNewThing';
 
 
 export default combineReducers({
@@ -28,4 +29,5 @@ export default combineReducers({
   filtrationByUser,
   catalog,
   categories,
+  addNewThing,
 });

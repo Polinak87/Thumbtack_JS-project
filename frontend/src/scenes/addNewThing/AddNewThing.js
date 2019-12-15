@@ -1,19 +1,21 @@
 import React from 'react';
-import axios from 'axios';
 import { connect } from 'react-redux';
 import isEmpty from 'lodash.isempty';
-import Hero from '../../components/Hero';
 import store from '../../store/index';
-import { addMessage } from '../../store/actions/message';
+import { getCategories } from '../../store/actions/categories';
 import { deleteMessage } from '../../store/actions/message';
+import { addNewThing } from  '../../store/actions/addNewThing';
+import Hero from '../../components/Hero';
 import Infomessage from '../../components/InfoMessage';
 import Catalog from './catalog';
-import { getCategories } from '../../store/actions/categories';
+import FormField from '../../components/FormField';
+import ButtonSubmit from '../../components/ButtonSubmit';
+
 
 class AddNewThingForm extends React.Component {
   constructor(props) {
     super(props);
-    const defaultCategoryId ='1';
+    const defaultCategoryId = '1';
     this.state = {
       name: '',
       description: '',
@@ -25,15 +27,16 @@ class AddNewThingForm extends React.Component {
     this.handleChangeFile = this.handleChangeFile.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.onMessageClose = this.onMessageClose.bind(this);
-
   }
 
   componentDidMount() {
-      store.dispatch(getCategories());
+    store.dispatch(getCategories());
   }
 
-  handleChange(event) {
-    this.setState({[event.target.name]: event.target.value});
+  handleChange() {
+    this.setState({ [event.target.name]: event.target.value });
+    console.log('this.state');
+    console.log(this.state);
   }
 
   handleChangeFile(event) {
@@ -43,21 +46,7 @@ class AddNewThingForm extends React.Component {
   handleSubmit(event) {
     event.preventDefault();
     const { name, description, categoryId, file } = this.state;
-    let formData = new FormData();
-    formData.append('file', file);
-    formData.append('name', name);
-    formData.append('description', description);
-    formData.append('categoryId', categoryId);
-
-    axios.post('/api/addnewthing', formData,
-      {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
-      })
-      .then((response) => {
-        store.dispatch(addMessage({ messageText: 'New thing is added to your inventory.' }));
-      });
+    store.dispatch(addNewThing(name, description, categoryId, file));
   }
 
   onMessageClose() {
@@ -66,11 +55,9 @@ class AddNewThingForm extends React.Component {
   }
 
   render() {
-    let categoryOptons = [];
-    this.props.categoryList.forEach((cat, index) => {
-      categoryOptons.push(
-        <option key={cat.id} value={cat.id}>{cat.name} </option>
-      );
+    const { categoryList } = this.props;
+    let categoryOptons = categoryList.map((cat) => {
+      return <option key={cat.id} value={cat.id}>{cat.name} </option> ;
     });
 
     return (
@@ -80,44 +67,28 @@ class AddNewThingForm extends React.Component {
         <br />
         <div className="column is-one-quarter">
           <form className="" name="AddNewThingForm" encType="multipart/form-data" onSubmit={this.handleSubmit}>
-            <div className="field">
-              <div className="control">
-                <input className="input" type="text" name="name" required placeholder="Name" autoFocus onChange={this.handleChange} value={this.state.name} />
-              </div>
-            </div>
-            <div className="field">
-              <div className="control">
-                <input className="input" type="text" name="description" required placeholder="Description" onChange={this.handleChange} value={this.state.description} />
-              </div>
-            </div>
+            <FormField type="text" name="name" placeholder="Name" onChange={this.handleChange} value={this.state.name} />
+            <FormField type="text" name="description" placeholder="Description" onChange={this.handleChange} value={this.state.description} />
+            <FormField type="file" name="file" onChange={this.handleChangeFile} />
             <div className="field">
               <div className="control is-expanded">
-                <div className="select is-fullwidth" name="categoryId" >
-                  <select onChange={this.handleChange} value={this.state.categoryId} >
+                <div className="select is-fullwidth" >
+                  <select name="categoryId" onChange={this.handleChange} value={this.state.categoryId} >
                     {categoryOptons}
                   </select>
                 </div>
               </div>
             </div>
-            <div className="field">
-              <div className="control">
-                <input className="input" type="file" name="file" required onChange={this.handleChangeFile} />
-              </div>
-            </div>
-            <div className="field">
-              <div className="control">
-                <input className="button is-block is-success is-large is-fullwidth" type="submit" value="Add" />
-              </div>
-            </div>
+            <ButtonSubmit value="Add" />
           </form>
         </div>
+        <Catalog />
         {!isEmpty(this.props.message) &&
           <Infomessage
             text={this.props.message.messageText}
             urlForRedirect='/addnewthing'
             onClose={this.onMessageClose} />
         }
-        <Catalog />
       </div>
     );
   };
