@@ -8,7 +8,7 @@ import Infomessage from '../../../components/InfoMessage';
 import Hero from '../../../components/Hero';
 import store from '../../../store/index';
 import CardBlock from '../../../components/CardBlock';
-import { addInboxApplications } from '../../../store/actions/inboxApplications';
+import { getInboxApplications } from '../../../store/actions/inboxApplications';
 import { deleteMessage } from '../../../store/actions/message';
 
 class ApplicationInbox extends React.Component {
@@ -21,13 +21,14 @@ class ApplicationInbox extends React.Component {
   }
 
   componentDidMount() {
-    axios.get('/api/applicationsinbox').then(response => {
-      let map = new Map();
-      response.data.forEach(function(thing) {
-        map.set(thing.id, thing);
-      });
-      this.props.addInboxApplications(map);
-    });
+    // axios.get('/api/applicationsinbox')
+    // .then(response => {
+    //   let map = new Map();
+    //   response.data.forEach(function(thing) {
+    //     map.set(thing.id, thing);
+    //   });
+      this.props.getInboxApplications('all');
+    // });
   }
 
   updateData(id, status) {
@@ -119,6 +120,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
+  getInboxApplications: value => dispatch(getInboxApplications(value)),
   addInboxApplications: value => dispatch(addInboxApplications(value)),
 });
 
