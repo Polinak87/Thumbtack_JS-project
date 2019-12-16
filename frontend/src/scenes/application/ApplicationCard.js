@@ -1,7 +1,6 @@
 import React from 'react';
-import ThingInfo from '../../components/ThingInfo';
-import Button from '../../components/Button';
-
+import CardFooter from './CardFooter';
+import CardButton from './CardButton';
 
 export default class ApplicationCard extends React.Component {
   constructor(props) {
@@ -12,99 +11,40 @@ export default class ApplicationCard extends React.Component {
     const { titleRight, titleLeft, applicationType, updateData, onClick } = this.props;
     const { id, ThingDesired, ThingOffered, status } = this.props.application;
 
-    const button = () => {
-      switch (status) {
-        case "pending":
-          if (applicationType === 'outbox') {
-            return <Button
-              type='Cancel application'
-              id={id}
-              updateData={updateData} 
-              onClick={onClick} />
-          } else {
-            return (
-              <div>
-                <Button
-                  type='Complete application'
-                  id={id}
-                  updateData={updateData}
-                  onClick={onClick} />
-                <br />
-                <Button
-                  type='Reject application'
-                  id={id}
-                  updateData={updateData}
-                  onClick={onClick} />
-              </div>
-            )
-          }
-        default:
-          return <></>
-      }
-    }
+    console.log(ThingDesired);
+    console.log('ThingDesired');
 
     return (
-      <div className="card" >
+      <div className="card">
         <div className="card-content">
-          <h6 className="title">
-            Status of application: {status}
-          </h6>
+          <h6 className="title">Status of application: {status}</h6>
         </div>
         <footer className="card-footer">
-          <div className="card-footer-item">
-            <div className="card-is-full">
-              <p>{titleLeft}</p>
-              <br />
-              <ThingInfo
-                image={ThingDesired.Thing.image}
-                id={ThingDesired.id}
-                name={ThingDesired.Thing.name}
-                description={ThingDesired.Thing.description}
-                categoryName={ThingDesired.Thing.Category.name} />
-            </div>
-          </div>
-          <div className="card-footer-item">
-            <div className="card-is-full">
-              <p>{titleRight}</p>
-              <br />
-              <ThingInfo
-                image={ThingOffered.Thing.image}
-                id={ThingOffered.id}
-                name={ThingOffered.Thing.name}
-                description={ThingOffered.Thing.description}
-                categoryName={ThingOffered.Thing.Category.name} />
-            </div>
-          </div>
+          <CardFooter
+            title={titleLeft}
+            image={ThingDesired.Thing.image}
+            id={ThingDesired.id}
+            name={ThingDesired.Thing.name}
+            description={ThingDesired.Thing.description}
+            categoryName={ThingDesired.Thing.Category.name}
+          />
+          <CardFooter
+            title={titleRight}
+            image={ThingOffered.Thing.image}
+            id={ThingOffered.id}
+            name={ThingOffered.Thing.name}
+            description={ThingOffered.Thing.description}
+            categoryName={ThingOffered.Thing.Category.name}
+          />
         </footer>
-        {button()}
+        <CardButton
+          status={status}
+          applicationType={applicationType}
+          id={id}
+          updateData={updateData}
+          onClick={onClick}
+        />
       </div>
-    )
-
-    return (
-      <div className="card" >
-        <div className="card-header"></div>
-        <div className="card-content">
-          <h6 className="title">
-            ...
-        </h6>
-        </div>
-        <footer className="card-footer">
-          {/* <div className="card-footer-item">
-            <div className="card-is-full">
-              ...
-          </div>
-          </div>
-          <div className="card-footer-item">
-            <div className="card-is-full">
-              ...
-          </div> */}
-          {/* </div> */}
-        </footer>
-        ...
-    </div>
-    )
+    );
   }
 }
-
-
-

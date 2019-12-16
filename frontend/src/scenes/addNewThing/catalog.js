@@ -3,6 +3,7 @@ import axios from 'axios';
 import { connect } from 'react-redux';
 import store from '../../store/index';
 import Card from './Card';
+import CardBlock from '../../components/CardBlock';
 import { addCatalog } from '../../store/actions/catalog';
 import { addMessage } from '../../store/actions/message';
 
@@ -48,14 +49,7 @@ class Catalog extends React.Component {
     };
 
     return (
-      <>
-        <br/>
-        <section className="section">
-          <div className="columns is-multiline">
-            {cardList}
-          </div>
-        </section>
-      </>
+      <CardBlock cardList={cardList}/>
     );
   }
 }

@@ -16,7 +16,7 @@ export default class ThingInfo extends React.Component {
     }
 
     return (
-      <>
+      <div>
         <div className="card-image">
           <figure className="image is-4by3">
             <img src={image} alt="Thing image" />
@@ -33,7 +33,7 @@ export default class ThingInfo extends React.Component {
           <br />
           {dateTime}
         </div>
-      </>
+      </div>
     );
   }
 }

@@ -10,6 +10,7 @@ import FilterByCategory from './FilterByCategory';
 import Sorting from './Sorting';
 import { deleteFiltrationType } from '../../store/actions/filtration';
 import { deleteSortingType } from '../../store/actions/sorting';
+import CardBlock from '../../components/CardBlock';
 
 class Market extends React.Component {
   constructor(props) {
@@ -73,11 +74,6 @@ class Market extends React.Component {
       )
     };
 
-    const heroText = 'Market';
-    const heroType = "hero is-primary";
-    console.log('props');
-    console.log(this.props);
-
     return (
       <>
         <br />
@@ -88,11 +84,7 @@ class Market extends React.Component {
           <Sorting />
         </div>
         <br />
-        <section className="section">
-          <div className="columns is-multiline">
-            {cardList}
-          </div>
-        </section>
+        <CardBlock cardList={cardList}/>
       </>
     );
   }

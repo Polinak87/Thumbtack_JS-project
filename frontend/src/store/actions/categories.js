@@ -19,6 +19,6 @@ export const addCategoryList = categoryList => ({
   categoryList,
 });
 
-  export const deleteCategories = () => ({
-    type: DELETE_CATEGORIES,
-  });
+export const deleteCategories = () => ({
+  type: DELETE_CATEGORIES,
+});

@@ -1,19 +1,19 @@
 import React from 'react';
 import { Route, withRouter } from "react-router-dom";
-import Profile from './profile/Profile';
-import Market from './market/Market';
-import MarketFilteredByUser from './market/MarketFilteredByUser';
-import ThingsForExchange from './market/exchange/ThingsForExchange'
-import Login from './homePage/Login';
-import AddNewThingForm from './addNewThing/AddNewThing';
-import Logout from './navbar/Logout';
-import RegistrationForm from './homePage/Registration';
-import ApplicationOutbox from './application/outbox/ApplicationOutbox';
-import ApplicationInbox from './application/inbox/ApplicatonInbox';
-import HomePage from './homePage/HomePage';
-import getCurrentUser from '../services/getCurrentUser'
+import Profile from './scenes/profile/Profile';
+import Market from './scenes/market/Market';
+import MarketFilteredByUser from './scenes/market/MarketFilteredByUser';
+import ThingsForExchange from './scenes/market/exchange/ThingsForExchange'
+import Login from './scenes/homePage/Login';
+import AddNewThingForm from './scenes/addNewThing/AddNewThing';
+import Logout from './scenes/navbar/Logout';
+import RegistrationForm from './scenes/homePage/Registration';
+import ApplicationOutbox from './scenes/application/outbox/ApplicationOutbox';
+import ApplicationInbox from './scenes/application/inbox/ApplicatonInbox';
+import HomePage from './scenes/homePage/HomePage';
+import getCurrentUser from './services/getCurrentUser'
 
-function MainRouter(props) {
+function Routers(props) {
   getCurrentUser(props);
 
   return (
@@ -33,4 +33,4 @@ function MainRouter(props) {
   );
 }
 
-export default withRouter(MainRouter);
+export default withRouter(Routers);

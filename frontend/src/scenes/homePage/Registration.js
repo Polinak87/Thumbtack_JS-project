@@ -6,6 +6,9 @@ import { addUser } from '../../store/actions/user';
 import { addMessage } from '../../store/actions/message';
 import { deleteMessage } from '../../store/actions/message';
 import Infomessage from '../../components/InfoMessage';
+import ButtonSubmit from '../../components/ButtonSubmit';
+import FormField from '../../components/FormField';
+import Avatar from './Avatar';
 
 class Registration extends React.Component {
   constructor(props) {
@@ -15,7 +18,7 @@ class Registration extends React.Component {
       lastName: '',
       email: '',
       password: '',
-    }
+    };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChangeFirstName = this.handleChangeFirstName.bind(this);
     this.handleChangeLastName = this.handleChangeLastName.bind(this);
@@ -43,20 +46,25 @@ class Registration extends React.Component {
   handleSubmit(event) {
     event.preventDefault();
     const { firstName, lastName, email, password } = this.state;
-    axios.post('/api/registration', { firstName, lastName, email, password })
-    .then((response) => {
-      if (response && response.status === 200) {
-        store.dispatch(addUser(response.data));
-        this.props.history.push("/profile");
-      }
-    })
-    .catch(function (error) {
-      if(error.response.status === 401) {
-        store.dispatch(addMessage({messageText: error.response.data}));
-      } else {
-        store.dispatch(addMessage({messageText: 'Something is wrang. Try again or contact technical support.'}));
-      }
-    });
+    axios
+      .post('/api/registration', { firstName, lastName, email, password })
+      .then(response => {
+        if (response && response.status === 200) {
+          store.dispatch(addUser(response.data));
+          this.props.history.push('/profile');
+        }
+      })
+      .catch(function(error) {
+        if (error.response.status === 401) {
+          store.dispatch(addMessage({ messageText: error.response.data }));
+        } else {
+          store.dispatch(
+            addMessage({
+              messageText: 'Something is wrang. Try again or contact technical support.',
+            }),
+          );
+        }
+      });
   }
 
   OnClick() {
@@ -65,17 +73,19 @@ class Registration extends React.Component {
   }
 
   render() {
-
     let infoMessage;
     let urlForRedirect = '/registration';
 
-    if(_.isEmpty(this.props.message)) {
+    if (_.isEmpty(this.props.message)) {
       infoMessage = null;
     } else {
-      infoMessage = <Infomessage 
-                      text={ this.props.message.messageText }
-                      urlForRedirect={urlForRedirect}
-                      OnClick={this.OnClick}/>
+      infoMessage = (
+        <Infomessage
+          text={this.props.message.messageText}
+          urlForRedirect={urlForRedirect}
+          OnClick={this.OnClick}
+        />
+      );
     }
 
     return (
@@ -86,31 +96,37 @@ class Registration extends React.Component {
               <div className="column is-4 is-offset-4">
                 <h3 className="title has-text-grey">Registration</h3>
                 <div className="box">
-                  <figure className="avatar">
-                    <img src="https://placehold.it/128x128" />
-                  </figure>
+                  <Avatar/>
                   <form className="" onSubmit={this.handleSubmit}>
-                    <div className="field">
-                      <div className="control">
-                        <input className="input is-large" type="text" required placeholder="First name" autoFocus onChange={this.handleChangeFirstName} value={this.state.firstName}/>
-                      </div>
-                    </div>
-                    <div className="field">
-                      <div className="control">
-                        <input className="input is-large" type="text" required placeholder="Last name" onChange={this.handleChangeLastName} value={this.state.lastName}/>
-                      </div>
-                    </div>
-                    <div className="field">
-                      <div className="control">
-                        <input className="input is-large" type="email" required placeholder="Email" onChange={this.handleChangeEmail} value={this.state.email}/>
-                      </div>
-                    </div>
-                    <div className="field">
-                      <div className="control">
-                        <input className="input is-large" type="password" required placeholder="Password" placeholder="Password" onChange={this.handleChangePassword} value={this.state.password}/>
-                      </div>
-                    </div>
-                    <input className="button is-block is-success is-large is-fullwidth" type="submit" value="Register"/>
+                    <FormField
+                      type="text"
+                      name="First name"
+                      placeholder="First name"
+                      onChange={this.handleChangeFirstName}
+                      value={this.state.firstName}
+                    />
+                    <FormField
+                      type="text"
+                      name="Last name"
+                      placeholder="Last name"
+                      onChange={this.handleChangeLastName}
+                      value={this.state.lastName}
+                    />
+                    <FormField
+                      type="email"
+                      name="email"
+                      placeholder="Email"
+                      onChange={this.handleChangeEmail}
+                      value={this.state.email}
+                    />
+                    <FormField
+                      type="password"
+                      name="password"
+                      placeholder="Password"
+                      onChange={this.handleChangePassword}
+                      value={this.state.password}
+                    />
+                    <ButtonSubmit value="Register" />
                   </form>
                 </div>
               </div>

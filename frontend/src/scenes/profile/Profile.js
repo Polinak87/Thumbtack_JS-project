@@ -5,6 +5,7 @@ import Card from './Card';
 import Hero from '../../components/Hero';
 import store from '../../store/index';
 import { addUserThings } from '../../store/actions/userThings';
+import CardBlock from '../../components/CardBlock';
 
 class Profile extends React.Component {
   constructor(props) {
@@ -75,11 +76,7 @@ class Profile extends React.Component {
       <>
         <br/>
         <Hero text='Your inventory' type="hero is-primary"/>
-        <section className="section">
-          <div className="columns is-multiline">
-            {cardList}
-          </div>
-        </section>
+        <CardBlock cardList={cardList}/>
       </>
     );
   }

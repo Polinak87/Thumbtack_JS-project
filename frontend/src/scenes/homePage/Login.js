@@ -6,6 +6,9 @@ import { addUser } from '../../store/actions/user';
 import { addMessage } from '../../store/actions/message';
 import { deleteMessage } from '../../store/actions/message';
 import Infomessage from '../../components/InfoMessage';
+import FormField from '../../components/FormField';
+import ButtonSubmit from '../../components/ButtonSubmit';
+import Avatar from './Avatar';
 
 class Login extends React.Component {
   constructor(props) {
@@ -13,7 +16,7 @@ class Login extends React.Component {
     this.state = {
       email: '',
       password: '',
-    }
+    };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChangeEmail = this.handleChangeEmail.bind(this);
     this.handleChangePassword = this.handleChangePassword.bind(this);
@@ -31,18 +34,23 @@ class Login extends React.Component {
   handleSubmit(event) {
     event.preventDefault();
     const { email, password } = this.state;
-    axios.post('/api/login', { email, password })
-      .then((response) => {
+    axios
+      .post('/api/login', { email, password })
+      .then(response => {
         if (response && response.status === 200) {
           store.dispatch(addUser(response.data));
-          this.props.history.push("/profile");
+          this.props.history.push('/profile');
         }
       })
-      .catch(function (error) {
-        if(error.response.status === 401) {
-          store.dispatch(addMessage({messageText: error.response.data}));
+      .catch(function(error) {
+        if (error.response.status === 401) {
+          store.dispatch(addMessage({ messageText: error.response.data }));
         } else {
-          store.dispatch(addMessage({messageText: 'Something is wrang. Try again or contact technical support.'}));
+          store.dispatch(
+            addMessage({
+              messageText: 'Something is wrang. Try again or contact technical support.',
+            }),
+          );
         }
       });
   }
@@ -53,17 +61,19 @@ class Login extends React.Component {
   }
 
   render() {
-
     let infoMessage;
     let urlForRedirect = '/login';
 
-    if(_.isEmpty(this.props.message)) {
+    if (_.isEmpty(this.props.message)) {
       infoMessage = null;
     } else {
-      infoMessage = <Infomessage 
-                      text={ this.props.message.messageText }
-                      urlForRedirect={urlForRedirect}
-                      OnClick={this.OnClick}/>
+      infoMessage = (
+        <Infomessage
+          text={this.props.message.messageText}
+          urlForRedirect={urlForRedirect}
+          OnClick={this.OnClick}
+        />
+      );
     }
 
     return (
@@ -74,21 +84,23 @@ class Login extends React.Component {
               <div className="column is-4 is-offset-4">
                 <h3 className="title has-text-grey">Login</h3>
                 <div className="box">
-                  <figure className="avatar">
-                    <img src="https://placehold.it/128x128" />
-                  </figure>
+                  <Avatar/>
                   <form className="" onSubmit={this.handleSubmit}>
-                    <div className="field">
-                      <div className="control">
-                        <input className="input is-large" type="email" placeholder="Your Email" required autoFocus onChange={this.handleChangeEmail} value={this.state.email} />
-                      </div>
-                    </div>
-                    <div className="field">
-                      <div className="control">
-                        <input className="input is-large" type="password" placeholder="Your Password" required onChange={this.handleChangePassword} value={this.state.password} />
-                      </div>
-                    </div>
-                    <input className="button is-block is-success is-large is-fullwidth" type="submit" value="Log in"/>
+                    <FormField
+                      type="email"
+                      name="email"
+                      placeholder="Your Email"
+                      onChange={this.handleChangeEmail}
+                      value={this.state.email}
+                    />
+                    <FormField
+                      type="password"
+                      name="password"
+                      placeholder="Your Password"
+                      onChange={this.handleChangePassword}
+                      value={this.state.password}
+                    />
+                    <ButtonSubmit value="Log in" />
                   </form>
                 </div>
               </div>

@@ -25,11 +25,15 @@ const addThingFromCatalog = async (ctx) => {
   const { id } = ctx.request.body;
   const userId = ctx.state.user.id;
 
-  await UserThing.create({
-    userId,
-    thingId: id,
-    onMarket: false,
-  });
+  try {
+    await UserThing.create({
+      userId,
+      thingId: id,
+      onMarket: false,
+    });
+  } catch (err) {
+    console.log(err);
+  }
   // ctx.body = Thing; // make an error
   ctx.status = 200;
 };

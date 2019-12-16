@@ -10,12 +10,13 @@ import Infomessage from '../../components/InfoMessage';
 import Catalog from './catalog';
 import FormField from '../../components/FormField';
 import ButtonSubmit from '../../components/ButtonSubmit';
-
+import SelectFullwidth from './SelectFullwidth';
 
 class AddNewThingForm extends React.Component {
   constructor(props) {
     super(props);
     const defaultCategoryId = '1';
+
     this.state = {
       name: '',
       description: '',
@@ -70,15 +71,7 @@ class AddNewThingForm extends React.Component {
             <FormField type="text" name="name" placeholder="Name" onChange={this.handleChange} value={this.state.name} />
             <FormField type="text" name="description" placeholder="Description" onChange={this.handleChange} value={this.state.description} />
             <FormField type="file" name="file" onChange={this.handleChangeFile} />
-            <div className="field">
-              <div className="control is-expanded">
-                <div className="select is-fullwidth" >
-                  <select name="categoryId" onChange={this.handleChange} value={this.state.categoryId} >
-                    {categoryOptons}
-                  </select>
-                </div>
-              </div>
-            </div>
+            <SelectFullwidth onChange={this.handleChange} value={this.state.categoryId} categoryOptons={categoryOptons}/>
             <ButtonSubmit value="Add" />
           </form>
         </div>

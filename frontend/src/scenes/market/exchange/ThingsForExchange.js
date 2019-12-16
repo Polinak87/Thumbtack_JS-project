@@ -10,6 +10,7 @@ import { addUserThings } from '../../../store/actions/userThings';
 import { addMessage } from '../../../store/actions/message';
 import { deleteMessage } from '../../../store/actions/message';
 import Infomessage from '../../../components/InfoMessage';
+import CardBlock from '../../../components/CardBlock';
 
 class ThingsForExchange extends React.Component {
   constructor(props) {
@@ -80,11 +81,7 @@ class ThingsForExchange extends React.Component {
       <>
         <br />
         <Hero text='Choose thing for exchange' type="hero is-info"/>
-        <section className="section">
-          <div className="columns is-multiline">
-            {cardList}
-          </div>
-        </section>
+        <CardBlock cardList={cardList}/>
         {infoMessage}
       </>
     );

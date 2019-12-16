@@ -1,15 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import Logout from './Logout'
+import isEmpty from 'lodash.isempty';
+import Logout from './Logout';
 import User from './User';
-const _ = require('lodash');
 
 function NavBar(props) {
-  console.log('props.user');
-  console.log(props.user);
-
-  if (_.isEmpty(props.user)) {
+  if (isEmpty(props.user)) {
     return null;
   }
 
@@ -27,11 +24,9 @@ function NavBar(props) {
             Market
           </Link>
           <div className="navbar-item has-dropdown is-hoverable">
-            <div className="navbar-link">
-              Applications
-            </div>
+            <div className="navbar-link">Applications</div>
             <div className="navbar-dropdown">
-              <Link to="/applicationsinbox"  className="navbar-item">
+              <Link to="/applicationsinbox" className="navbar-item">
                 inbox
               </Link>
               <Link to="/applicationsoutbox" className="navbar-item">
@@ -41,14 +36,14 @@ function NavBar(props) {
           </div>
         </div>
         <div className="navbar-end">
-          <User/>
+          <User />
           <div className="navbar-item">
             <Logout />
           </div>
         </div>
       </div>
     </nav>
-  )
+  );
 }
 
 const mapStateToProps = state => ({
@@ -56,4 +51,3 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps)(NavBar);
-

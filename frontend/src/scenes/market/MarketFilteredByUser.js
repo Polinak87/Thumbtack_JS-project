@@ -6,6 +6,7 @@ import Hero from '../../components/Hero';
 import store from '../../store/index';
 import { addMarketThingsOfOneUser } from '../../store/actions/marketThingsOfOneUser';
 import { addThingForExchange } from '../../store/actions/thingForExchange';
+import CardBlock from '../../components/CardBlock';
 
 class MarketFilteredByUser extends React.Component {
   constructor(props) {
@@ -62,19 +63,12 @@ class MarketFilteredByUser extends React.Component {
       )
     };
 
-    console.log('props');
-    console.log(this.props);
-
     return (
       <>
         <br />
         <Hero text='Market of User' type="hero is-primary" />
         <br />
-        <section className="section">
-          <div className="columns is-multiline">
-            {cardList}
-          </div>
-        </section>
+        <CardBlock cardList={cardList}/>
       </>
     );
   }

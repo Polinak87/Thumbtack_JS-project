@@ -14,16 +14,15 @@ export default class FilterByStatus extends React.Component {
 
   handleClick() {
     event.preventDefault();
-    let statusForFilter
+    let statusForFilter;
 
     if (this.radioAll.current.checked) {
       statusForFilter = 'all';
 
-      axios.get(this.props.urlBase)
-      .then((response) => {
+      axios.get(this.props.urlBase).then(response => {
         var map = new Map();
-        response.data.forEach(function (thing) {
-          map.set(thing.id, thing)
+        response.data.forEach(function(thing) {
+          map.set(thing.id, thing);
         });
         this.props.updateValue(map);
       });
@@ -41,64 +40,71 @@ export default class FilterByStatus extends React.Component {
       statusForFilter = 'canceled';
     }
     if (statusForFilter !== 'all') {
-      axios.post(this.props.urlForFilter, {
-        params: {
-          status: statusForFilter,
-        }
-      })
-        .then((response) => {
+      axios
+        .post(this.props.urlForFilter, {
+          params: {
+            status: statusForFilter,
+          },
+        })
+        .then(response => {
           var map = new Map();
-          response.data.forEach(function (thing) {
-            map.set(thing.id, thing)
+          response.data.forEach(function(thing) {
+            map.set(thing.id, thing);
           });
           this.props.updateValue(map);
         });
-    }    
+    }
   }
 
   render() {
-
     return (
-      <>
-        <div className="field">
-          <div className="control">
-            <label className="radio">
-              <input type="radio" name="filter" defaultChecked ref={this.radioAll} />
-              all
-            </label>
-            <label className="radio">
-              <input type="radio" name="filter" ref={this.radioPending} />
-              pending
-            </label>
-            <label className="radio">
-              <input type="radio" name="filter" ref={this.radioCompleted} />
-              completed
-            </label>
-            <label className="radio">
-              <input type="radio" name="filter" ref={this.radioRejected} />
-              rejected
-            </label>
-            <label className="radio">
-              <input type="radio" name="filter" ref={this.radioCanceled} />
-              canceled
-            </label>
-          </div>
-          <div>
-            <label className="radio">
-              <input type="radio" name="filter"/>
-              1
-            </label>
-            <label className="radio">
-              <input type="radio" name="filter"/>
-              2
-            </label>
+      <section className="section">
+        <div className="columns is-centered">
+          <div className="column is-narrow is-centered">
+            <div className="field">
+              <div className="control">
+                <label className="radio">
+                  <input type="radio" name="filter" defaultChecked ref={this.radioAll} />
+                  all
+                </label>
+                <label className="radio">
+                  <input type="radio" name="filter" ref={this.radioPending} />
+                  pending
+                </label>
+                <label className="radio">
+                  <input type="radio" name="filter" ref={this.radioCompleted} />
+                  completed
+                </label>
+                <label className="radio">
+                  <input type="radio" name="filter" ref={this.radioRejected} />
+                  rejected
+                </label>
+                <label className="radio">
+                  <input type="radio" name="filter" ref={this.radioCanceled} />
+                  canceled
+                </label>
+              </div>
+              <div>
+                <label className="radio">
+                  <input type="radio" name="filter" />1
+                </label>
+                <label className="radio">
+                  <input type="radio" name="filter" />2
+                </label>
+              </div>
+            </div>
+            <br />
+            <div className="control">
+              <button
+                className="button is-block is-success is-large is-fullwidth"
+                onClick={this.handleClick}
+              >
+                Filter
+              </button>
+            </div>
           </div>
         </div>
-        <br />
-        <div className="control">
-          <button className="button is-block is-success is-large is-fullwidth" onClick={this.handleClick}>Filter</button>
-        </div >
-      </>
-    )
-  };
+      </section>
+    );
+  }
 }

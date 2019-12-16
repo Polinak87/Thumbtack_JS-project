@@ -3,10 +3,6 @@ import ThingInfo from '../../components/ThingInfo';
 import Button from '../../components/Button'
 
 export default class Card extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     const { image, id, name, description, categoryName, onClick } = this.props;
 
