@@ -55,7 +55,7 @@ class Catalog extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  value: state.catalog,
+  value: state.things.catalog,
 });
 
 export default connect(mapStateToProps)(Catalog);

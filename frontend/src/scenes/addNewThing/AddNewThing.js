@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { getCategories } from '../../store/actions/categories';
 import { addNewThing } from '../../store/actions/addNewThing';
 import Hero from '../../components/Hero';
-import Catalog from './catalog';
+import Catalog from './Catalog';
 import FormField from '../../components/FormField';
 import ButtonSubmit from '../../components/ButtonSubmit';
 import SelectFullwidth from './SelectFullwidth';
@@ -68,12 +68,13 @@ class AddNewThingForm extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  categoryList: state.categories,
+  categoryList: state.main.categories,
 });
 
 const mapDispatchToProps = dispatch => ({
   getCategories: () => dispatch(getCategories()),
   addNewThing: (name, description, categoryId, file) => dispatch(addNewThing(name, description, categoryId, file)),
+  dispatch,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddNewThingForm);

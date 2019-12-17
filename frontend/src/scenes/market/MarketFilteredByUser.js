@@ -17,7 +17,7 @@ class MarketFilteredByUser extends React.Component {
   componentDidMount() {
     axios.get('/api/marketthingsfilteredbyuser', {
       params: {
-        user: this.props.filtrationByUser.id,
+        user: this.props.filtrationByUser,
       }
     })
       .then((response) => {
@@ -50,6 +50,7 @@ class MarketFilteredByUser extends React.Component {
       cardList.push(
         <div className="column is-one-quarter" key={userThing.id}>
           <Card
+            image={userThing.Thing.image}
             id={userThing.id}
             name={userThing.Thing.name}
             description={userThing.Thing.description}
@@ -75,8 +76,8 @@ class MarketFilteredByUser extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  value: state.marketThingsOfOneUser,
-  filtrationByUser: state.filtrationByUser,
+  value: state.things.marketThingsOfOneUser,
+  filtrationByUser: state.main.filterbyUser.id,
 });
 
 export default connect(mapStateToProps)(MarketFilteredByUser);

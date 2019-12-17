@@ -33,7 +33,7 @@ class ThingsForExchange extends React.Component {
   onClick(id) {
     event.preventDefault();
     const idThingOffered = id;
-    const { idThingDesired, idUserAnswer } = store.getState().thingForExchange;
+    const { idThingDesired, idUserAnswer } = this.props.thingForExchange;
     axios.post('/api/createapplication', { idThingOffered, idThingDesired, idUserAnswer })
     .then((response) => {
       if (response.status === 200) {
@@ -72,7 +72,8 @@ class ThingsForExchange extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  value: state.userThings,
+  value: state.things.userThings,
+  thingForExchange: state.things.thingForExchange,
   message: state.message,
 });
 

@@ -20,7 +20,7 @@ class App extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  message: state.message,
+  message: state.main.message,
 });
 
 export default connect(mapStateToProps)(App);

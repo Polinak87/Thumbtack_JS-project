@@ -12,7 +12,7 @@ class Sorting extends React.Component {
   }
 
   handleChangeSorting() {
-    store.dispatch(addSortingType({ sortingType: event.target.value }));
+    store.dispatch(addSortingType({ type: event.target.value }));
     console.log(event.target.value);
     axios
       .get('/api/marketthings', {
@@ -52,8 +52,8 @@ class Sorting extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  filtrationType: state.filtration.filtrationType,
-  sortingType: state.sorting.sortingType,
+  filtrationType: state.main.filterByCategory.category,
+  sortingType: state.main.sortByDate.type,
 });
 
 export default connect(mapStateToProps)(Sorting);

@@ -83,7 +83,7 @@ class Profile extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  value: state.userThings,
+  value: state.things.userThings,
 });
 
 export default connect(mapStateToProps)(Profile);

@@ -22,7 +22,7 @@ class FilterByCategory extends React.Component {
   }
 
   handleChangeCategory() {
-    store.dispatch(addFiltrationType({ filtrationType :event.target.value }));
+    store.dispatch(addFiltrationType({ category :event.target.value }));
     console.log(event.target.value);
     axios.get('/api/marketthings', {
       params: {
@@ -60,8 +60,8 @@ class FilterByCategory extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  filtrationType: state.filtration.filtrationType,
-  sortingType: state.sorting.sortingType,
+  filtrationType: state.main.filterByCategory.category,
+  sortingType: state.main.sortByDate.type,
 });
 
 export default connect(mapStateToProps)(FilterByCategory);

@@ -3,18 +3,18 @@ export const DELETE_FILTRATIONTYPE ='DELETE_FILTRATIONTYPE';
 export const ADD_FILTRATION_BY_USER ='ADD_FILTRATIONTYPE_BY_USER';
 export const DELETE_FILTRATION_BY_USER ='DELETE_FILTRATION_BY_USER';
 
-export const addFiltrationType = filtrationType => ({
+export const addFiltrationType = category => ({
   type: ADD_FILTRATIONTYPE,
-  filtrationType,
+  category,
 });
 
 export const deleteFiltrationType = () => ({
   type: DELETE_FILTRATIONTYPE,
 });
 
-export const addFiltrationByUser = filtrationByUser => ({
+export const addFiltrationByUser = id => ({
   type: ADD_FILTRATION_BY_USER,
-  filtrationByUser,
+  id,
 });
 
 export const deleteFiltrationByUser = () => ({

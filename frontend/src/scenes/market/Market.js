@@ -91,9 +91,9 @@ class Market extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  value: state.marketThings,
-  filtrationType: state.filtration.filtrationType,
-  sortingType: state.sorting.sortingType,
+  value: state.things.marketThings,
+  filtrationType: state.main.filterByCategory.category,
+  sortingType: state.main.sortByDate.type,
 });
 
 export default connect(mapStateToProps)(Market);

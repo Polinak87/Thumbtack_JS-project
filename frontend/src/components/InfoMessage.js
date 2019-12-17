@@ -36,7 +36,7 @@ class Infomessage extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  message: state.message,
+  message: state.main.message,
 });
 
 const mapDispatchToProps = dispatch => ({
