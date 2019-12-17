@@ -27,7 +27,7 @@ class Catalog extends React.Component {
     axios.post('api/addthingfromcatalog', { id })
     .then((response) => {
       if (response.status = 200) {
-        store.dispatch(addMessage({messageText: 'Thing is added to your inventory.'}));
+        store.dispatch(addMessage({text: 'Thing is added to your inventory.'}));
       }
     });
   }
@@ -56,7 +56,6 @@ class Catalog extends React.Component {
 
 const mapStateToProps = state => ({
   value: state.catalog,
-  message: state.message,
 });
 
 export default connect(mapStateToProps)(Catalog);

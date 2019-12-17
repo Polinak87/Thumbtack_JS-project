@@ -1,5 +1,4 @@
 import React from 'react';
-import store from '../../store/index';
 import { connect } from 'react-redux';
 import { getInboxApplications } from '../../store/actions/inboxApplications';
 
@@ -46,4 +45,4 @@ const mapDispatchToProps = dispatch => ({
   getInboxApplications: status => dispatch(getInboxApplications(status)),
 });
 
-export default connect(mapDispatchToProps)(FilterByStatus);
+export default connect(null, mapDispatchToProps)(FilterByStatus);

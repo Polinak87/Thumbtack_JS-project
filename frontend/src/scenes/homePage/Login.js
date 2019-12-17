@@ -4,8 +4,6 @@ import { connect } from 'react-redux';
 import store from '../../store/index';
 import { addUser } from '../../store/actions/user';
 import { addMessage } from '../../store/actions/message';
-import { deleteMessage } from '../../store/actions/message';
-import Infomessage from '../../components/InfoMessage';
 import FormField from '../../components/FormField';
 import ButtonSubmit from '../../components/ButtonSubmit';
 import Avatar from './Avatar';
@@ -18,17 +16,11 @@ class Login extends React.Component {
       password: '',
     };
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleChangeEmail = this.handleChangeEmail.bind(this);
-    this.handleChangePassword = this.handleChangePassword.bind(this);
-    this.OnClick = this.OnClick.bind(this);
+    this.onChange = this.onChange.bind(this);
   }
 
-  handleChangeEmail(event) {
-    this.setState({ email: event.target.value });
-  }
-
-  handleChangePassword(event) {
-    this.setState({ password: event.target.value });
+  onChange() {
+    this.setState({ [event.target.name]: event.target.value });
   }
 
   handleSubmit(event) {
@@ -42,39 +34,16 @@ class Login extends React.Component {
           this.props.history.push('/profile');
         }
       })
-      .catch(function(error) {
+      .catch(function (error) {
         if (error.response.status === 401) {
-          store.dispatch(addMessage({ messageText: error.response.data }));
+          store.dispatch(addMessage({ text: error.response.data }));
         } else {
-          store.dispatch(
-            addMessage({
-              messageText: 'Something is wrang. Try again or contact technical support.',
-            }),
-          );
+          store.dispatch(addMessage({ text: 'Something is wrang. Try again or contact technical support.' }));
         }
       });
   }
 
-  OnClick() {
-    event.preventDefault();
-    store.dispatch(deleteMessage());
-  }
-
   render() {
-    let infoMessage;
-    let urlForRedirect = '/login';
-
-    if (_.isEmpty(this.props.message)) {
-      infoMessage = null;
-    } else {
-      infoMessage = (
-        <Infomessage
-          text={this.props.message.messageText}
-          urlForRedirect={urlForRedirect}
-          OnClick={this.OnClick}
-        />
-      );
-    }
 
     return (
       <div>
@@ -84,20 +53,20 @@ class Login extends React.Component {
               <div className="column is-4 is-offset-4">
                 <h3 className="title has-text-grey">Login</h3>
                 <div className="box">
-                  <Avatar/>
+                  <Avatar />
                   <form className="" onSubmit={this.handleSubmit}>
                     <FormField
                       type="email"
                       name="email"
                       placeholder="Your Email"
-                      onChange={this.handleChangeEmail}
+                      onChange={this.onChange}
                       value={this.state.email}
                     />
                     <FormField
                       type="password"
                       name="password"
                       placeholder="Your Password"
-                      onChange={this.handleChangePassword}
+                      onChange={this.onChange}
                       value={this.state.password}
                     />
                     <ButtonSubmit value="Log in" />
@@ -107,7 +76,6 @@ class Login extends React.Component {
             </div>
           </div>
         </section>
-        {infoMessage}
       </div>
     );
   }

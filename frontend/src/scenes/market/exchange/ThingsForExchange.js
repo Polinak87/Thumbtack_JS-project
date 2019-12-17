@@ -1,6 +1,5 @@
 import React from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Card from './Card';
 import Hero from '../../../components/Hero';
@@ -8,14 +7,11 @@ import store from '../../../store/index';
 import { deleteThingForExchange } from '../../../store/actions/thingForExchange';
 import { addUserThings } from '../../../store/actions/userThings';
 import { addMessage } from '../../../store/actions/message';
-import { deleteMessage } from '../../../store/actions/message';
-import Infomessage from '../../../components/InfoMessage';
 import CardBlock from '../../../components/CardBlock';
 
 class ThingsForExchange extends React.Component {
   constructor(props) {
     super(props);
-    this.onClose = this.onClose.bind(this);
     this.onClick=this.onClick.bind(this);
   }
 
@@ -30,10 +26,8 @@ class ThingsForExchange extends React.Component {
       });
   }
 
-  onClose() {
-    event.preventDefault();
+  componentWillUnmount() {
     store.dispatch(deleteThingForExchange());
-    store.dispatch(deleteMessage());
   }
 
   onClick(id) {
@@ -43,8 +37,7 @@ class ThingsForExchange extends React.Component {
     axios.post('/api/createapplication', { idThingOffered, idThingDesired, idUserAnswer })
     .then((response) => {
       if (response.status === 200) {
-        const messageText = ' Your application is sent. You can track it in your outbox applications.';
-        store.dispatch(addMessage({messageText}));
+        store.dispatch(addMessage({text: ' Your application is sent. You can track it in your outbox applications.'}));
       }
     });
   }
@@ -68,21 +61,11 @@ class ThingsForExchange extends React.Component {
       )
     };
 
-    const urlForRedirect = '/market';
-    let infoMessage;
-    
-    if(_.isEmpty(this.props.message)) {
-      infoMessage = null;
-    } else {
-      infoMessage = <Infomessage text={ this.props.message.messageText } urlForRedirect={urlForRedirect} onClose={this.onClose}/>
-    }
-
     return (
       <>
         <br />
         <Hero text='Choose thing for exchange' type="hero is-info"/>
         <CardBlock cardList={cardList}/>
-        {infoMessage}
       </>
     );
   }

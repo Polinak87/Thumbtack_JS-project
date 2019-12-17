@@ -20,7 +20,7 @@ export const addNewThing = (name, description, categoryId, file) => {
     })
     .then((response) => {
       dispatch(setNewThing(response.data));
-      store.dispatch(addMessage({ messageText: 'New thing is added to your inventory.' }));
+      store.dispatch(addMessage({ text: 'New thing is added to your inventory.'}));
     });
   };
 }

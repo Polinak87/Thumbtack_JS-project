@@ -1,34 +1,23 @@
 import React from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
-import isEmpty from 'lodash.isempty';
 import ApplicationCard from '../ApplicationCard';
 import FilterByStatus from '../FilterByStatus';
-import Infomessage from '../../../components/InfoMessage';
 import Hero from '../../../components/Hero';
 import store from '../../../store/index';
 import CardBlock from '../../../components/CardBlock';
 import { getInboxApplications } from '../../../store/actions/inboxApplications';
-import { deleteMessage } from '../../../store/actions/message';
+import { addInboxApplications } from '../../../store/actions/inboxApplications';
 
 class ApplicationInbox extends React.Component {
   constructor(props) {
     super(props);
     this.updateData = this.updateData.bind(this);
-    this.updateValue = this.updateValue.bind(this);
-    this.onClose = this.onClose.bind(this);
     this.onClick = this.onClick.bind(this);
   }
 
   componentDidMount() {
-    // axios.get('/api/applicationsinbox')
-    // .then(response => {
-    //   let map = new Map();
-    //   response.data.forEach(function(thing) {
-    //     map.set(thing.id, thing);
-    //   });
-      this.props.getInboxApplications('all');
-    // });
+    this.props.getInboxApplications('all');
   }
 
   updateData(id, status) {
@@ -37,15 +26,6 @@ class ApplicationInbox extends React.Component {
     application.status = status;
     value.set(id, application);
     this.props.addInboxApplications(value);
-  }
-
-  updateValue(filteredValue) {
-    this.props.addInboxApplications(filteredValue);
-  }
-
-  onClose() {
-    event.preventDefault();
-    store.dispatch(deleteMessage());
   }
 
   onClick(id, type) {
@@ -68,7 +48,7 @@ class ApplicationInbox extends React.Component {
       axios.put('/api/rejectapplication', { id }).then(response => {
         this.updateData(id, response.data.status);
         if (response.data.message !== '') {
-          store.dispatch(addMessage({ messageText: response.data.message }));
+          store.dispatch(addMessage({ text: response.data.message }));
         }
       });
     }
@@ -96,19 +76,8 @@ class ApplicationInbox extends React.Component {
       <div>
         <br />
         <Hero text="Your inbox applications" type="hero is-primary" />
-        <FilterByStatus
-          updateValue={this.updateValue}
-          urlBase="/api/applicationsinbox"
-          urlForFilter="/api/applicationsinboxfiltered"
-        />
+        <FilterByStatus />
         <CardBlock cardList={cardList} />
-        {!isEmpty(this.props.message) && (
-          <Infomessage
-            text={this.props.message.messageText}
-            urlForRedirect="/applicationsinbox"
-            onClose={this.onMessageClose}
-          />
-        )}
       </div>
     );
   }
@@ -116,7 +85,6 @@ class ApplicationInbox extends React.Component {
 
 const mapStateToProps = state => ({
   value: state.inboxApplications,
-  message: state.message,
 });
 
 const mapDispatchToProps = dispatch => ({

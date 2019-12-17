@@ -6,7 +6,7 @@ export const DELETE_INBOX_APPLICATIONS = 'DELETE_OUTBOX_APPLICATIONS';
 export const getInboxApplications = status => {
   return dispatch => {
     axios
-      .post('/api/applicationsinboxfiltered', {
+      .get('/api/applicationsinbox', {
         params: {
           status,
         },

@@ -38,7 +38,6 @@ const {
   applicationsOutbox,
   applicationsOutboxFiltered,
   applicationsInbox,
-  applicationsInboxFiltered,
 } = require('./controllers/getApplications');
 
 const router = new Router();
@@ -69,7 +68,6 @@ router.put('/api/completeapplication', completeApplication);
 router.get('/api/applicationsoutbox', applicationsOutbox);
 router.post('/api/applicationsoutboxfiltered', applicationsOutboxFiltered);
 router.get('/api/applicationsinbox', applicationsInbox);
-router.post('/api/applicationsinboxfiltered', applicationsInboxFiltered);
 
 module.exports = {
   router,

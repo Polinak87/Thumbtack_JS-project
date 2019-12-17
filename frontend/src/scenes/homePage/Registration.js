@@ -4,8 +4,6 @@ import { connect } from 'react-redux';
 import store from '../../store/index';
 import { addUser } from '../../store/actions/user';
 import { addMessage } from '../../store/actions/message';
-import { deleteMessage } from '../../store/actions/message';
-import Infomessage from '../../components/InfoMessage';
 import ButtonSubmit from '../../components/ButtonSubmit';
 import FormField from '../../components/FormField';
 import Avatar from './Avatar';
@@ -20,27 +18,11 @@ class Registration extends React.Component {
       password: '',
     };
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleChangeFirstName = this.handleChangeFirstName.bind(this);
-    this.handleChangeLastName = this.handleChangeLastName.bind(this);
-    this.handleChangeEmail = this.handleChangeEmail.bind(this);
-    this.handleChangePassword = this.handleChangePassword.bind(this);
-    this.OnClick = this.OnClick.bind(this);
+    this.onChange = this.onChange.bind(this);
   }
 
-  handleChangeFirstName(event) {
-    this.setState({ firstName: event.target.value });
-  }
-
-  handleChangeLastName(event) {
-    this.setState({ lastName: event.target.value });
-  }
-
-  handleChangeEmail(event) {
-    this.setState({ email: event.target.value });
-  }
-
-  handleChangePassword(event) {
-    this.setState({ password: event.target.value });
+  onChange() {
+    this.setState({ [event.target.name]: event.target.value });
   }
 
   handleSubmit(event) {
@@ -54,40 +36,16 @@ class Registration extends React.Component {
           this.props.history.push('/profile');
         }
       })
-      .catch(function(error) {
+      .catch(function (error) {
         if (error.response.status === 401) {
-          store.dispatch(addMessage({ messageText: error.response.data }));
+          store.dispatch(addMessage({ text: error.response.data }));
         } else {
-          store.dispatch(
-            addMessage({
-              messageText: 'Something is wrang. Try again or contact technical support.',
-            }),
-          );
+          store.dispatch(addMessage({ text: 'Something is wrang. Try again or contact technical support.' }));
         }
       });
   }
 
-  OnClick() {
-    event.preventDefault();
-    store.dispatch(deleteMessage());
-  }
-
   render() {
-    let infoMessage;
-    let urlForRedirect = '/registration';
-
-    if (_.isEmpty(this.props.message)) {
-      infoMessage = null;
-    } else {
-      infoMessage = (
-        <Infomessage
-          text={this.props.message.messageText}
-          urlForRedirect={urlForRedirect}
-          OnClick={this.OnClick}
-        />
-      );
-    }
-
     return (
       <div>
         <section className="hero is-success is-fullheight">
@@ -96,34 +54,34 @@ class Registration extends React.Component {
               <div className="column is-4 is-offset-4">
                 <h3 className="title has-text-grey">Registration</h3>
                 <div className="box">
-                  <Avatar/>
+                  <Avatar />
                   <form className="" onSubmit={this.handleSubmit}>
                     <FormField
                       type="text"
-                      name="First name"
+                      name="firstName"
                       placeholder="First name"
-                      onChange={this.handleChangeFirstName}
+                      onChange={this.onChange}
                       value={this.state.firstName}
                     />
                     <FormField
                       type="text"
-                      name="Last name"
+                      name="lastName"
                       placeholder="Last name"
-                      onChange={this.handleChangeLastName}
+                      onChange={this.onChange}
                       value={this.state.lastName}
                     />
                     <FormField
                       type="email"
                       name="email"
                       placeholder="Email"
-                      onChange={this.handleChangeEmail}
+                      onChange={this.onChange}
                       value={this.state.email}
                     />
                     <FormField
                       type="password"
                       name="password"
                       placeholder="Password"
-                      onChange={this.handleChangePassword}
+                      onChange={this.onChange}
                       value={this.state.password}
                     />
                     <ButtonSubmit value="Register" />
@@ -133,7 +91,6 @@ class Registration extends React.Component {
             </div>
           </div>
         </section>
-        {infoMessage}
       </div>
     );
   }
