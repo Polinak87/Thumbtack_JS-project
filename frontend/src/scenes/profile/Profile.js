@@ -1,82 +1,61 @@
 import React from 'react';
-import axios from 'axios';
 import { connect } from 'react-redux';
 import Card from './Card';
 import Hero from '../../components/Hero';
-import store from '../../store/index';
-import { addUserThings } from '../../store/actions/userThings';
 import CardBlock from '../../components/CardBlock';
+import { getUserThings } from '../../store/actions/userThings';
+import { addUserThings } from '../../store/actions/userThings';
+import { addThingToMartet } from '../../store/actions/userThings';
+import { removeThingFromMartet } from '../../store/actions/userThings';
+
 
 class Profile extends React.Component {
   constructor(props) {
     super(props);
-    this.updateData = this.updateData.bind(this);
-    this.onClick = this.onClick.bind(this);
+    this.onClickAdd = this.onClickAdd.bind(this);
+    this.onClickRemove = this.onClickRemove.bind(this);
   }
 
   componentDidMount() {
-    axios.get('/api/userthings')
-      .then((response) => {
-        let map = new Map();
-        response.data.forEach(function (thing) {
-          map.set(thing.id, thing);
-        })
-        store.dispatch(addUserThings(map));
-      })
+    this.props.getUserThings();
   }
 
-  updateData(id, onMarket, onMarketAt) {
-    let { value } = this.props;
-    let thing = value.get(id);
-    thing.onMarket = onMarket;
-    thing.onMarketAt = onMarketAt;
-    value.set(id, thing);
-    store.dispatch(addUserThings(value));
+  onClickAdd(id) {
+    this.props.addThingToMartet(id);
   }
 
-  onClick(id, type) {
-    event.preventDefault();
-    if (type=='Add to market') {
-      axios.post('/api/addthingtomarket', { id })
-      .then((response) => {
-        this.updateData(id, response.data.onMarket, response.data.onMarketAt);
-      });
-      console.log('click add');
-      console.log(id);
-    };
-    if (type=='Remove from market'){
-      axios.post('/api/removethingfrommarket', { id })
-      .then((response) => {
-        this.updateData(id, response.data.onMarket, response.data.onMarketAt);
-      });
-      console.log('click remove');
-    };
+  onClickRemove(id) {
+    this.props.removeThingFromMartet(id);
   }
 
   render() {
     let cardList = [];
-    for (let UserThing of this.props.value.values()) {
+    const { value } = this.props;
+    for (let UserThing of value.values()) {
+      const { Thing, id, onMarket, onMarketAt } = UserThing;
+      const { image, name, description, Category } = Thing;
+      const { name: categoryName } = Category;
       cardList.push(
         <div className="column is-one-quarter" key={UserThing.id}>
           <Card
-            image={UserThing.Thing.image}
-            id={UserThing.id}
-            name={UserThing.Thing.name}
-            description={UserThing.Thing.description}
-            categoryName={UserThing.Thing.Category.name}
-            onMarket={UserThing.onMarket}
-            onMarketAt={UserThing.onMarketAt}
-            updateData={this.updateData}
-            onClick={this.onClick}/>
+            image={image}
+            id={id}
+            name={name}
+            description={description}
+            categoryName={categoryName}
+            onMarket={onMarket}
+            onMarketAt={onMarketAt}
+            onClickAdd={this.onClickAdd}
+            onClickRemove={this.onClickRemove} />
         </div>
       )
     };
 
     return (
       <>
-        <br/>
-        <Hero text='Your inventory' type="hero is-primary"/>
-        <CardBlock cardList={cardList}/>
+        <br />
+        <Hero text='Your inventory' type="hero is-primary" />
+        <CardBlock cardList={cardList} />
       </>
     );
   }
@@ -86,4 +65,12 @@ const mapStateToProps = state => ({
   value: state.things.userThings,
 });
 
-export default connect(mapStateToProps)(Profile);
+const mapDispatchToProps = dispatch => ({
+  getUserThings: () => dispatch(getUserThings()),
+  addUserThings: (value) => dispatch(addUserThings(value)),
+  addThingToMartet: (id) => dispatch(addThingToMartet(id)),
+  removeThingFromMartet: (id) => dispatch(removeThingFromMartet(id)),
+  dispatch,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Profile);

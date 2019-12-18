@@ -118,7 +118,7 @@ class ApplicationOutbox extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  value: state.outboxApplications,
+  value: state.applications.outbox,
   message: state.message,
 });
 

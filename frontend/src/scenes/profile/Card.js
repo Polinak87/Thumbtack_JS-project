@@ -16,24 +16,24 @@ export default class Card extends React.Component {
       categoryName,
       onMarket,
       onMarketAt,
-      updateData,
-      onClick,
+      onClickAdd,
+      onClickRemove,
     } = this.props;
+  
     let button;
     if (onMarket) {
       button = (
-        <Button type="Remove from market" updateData={updateData} id={id} onClick={onClick}>
+        <Button type="Remove from market" id={id} onClick={onClickRemove}>
           Remove from market
         </Button>
       );
     } else {
       button = (
-        <Button type="Add to market" updateData={updateData} id={id} onClick={onClick}>
+        <Button type="Add to market" id={id} onClick={onClickAdd}>
           Add to market
         </Button>
       );
     }
-    // проверить и убрать updateData
     // button - скоее всего без закрывающего тэга, просто />
 
     return (

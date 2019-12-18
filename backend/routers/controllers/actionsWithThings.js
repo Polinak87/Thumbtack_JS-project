@@ -1,6 +1,6 @@
 'use strict';
 
-const { Thing, UserThing } = require('../../models');
+const { Thing, UserThing, Category } = require('../../models');
 
 const addNewThing = async (ctx) => {
   const { name, description, categoryId } = ctx.req.body;
@@ -40,36 +40,49 @@ const addThingFromCatalog = async (ctx) => {
 
 const addThingToMarket = async (ctx) => {
   const thingId = ctx.request.body.id;
-  const date = new Date();
 
-  await UserThing.update(
-    {
-      onMarket: true,
-      onMarketAt: date,
+  const thing = await UserThing.findOne({
+    include: [{
+      model: Thing,
+      include: [{
+        model: Category,
+      }],
+    }],
+    where: {
+      id: thingId,
     },
-    { where: { id: thingId } },
-  );
-  ctx.body = {
-    onMarket: true,
-    onMarketAt: date,
-  };
+  });
+
+  thing.onMarket = true;
+  thing.onMarketAt = new Date();
+  await thing.save();
+
+  ctx.body = thing;
   ctx.status = 200;
+  // console.log('-------------------');
+  // console.log(ctx.body);
 };
 
 const removeThingFromMarket = async (ctx) => {
   const thingId = ctx.request.body.id;
 
-  await UserThing.update(
-    {
-      onMarket: false,
-      onMarketAt: null,
+  const thing = await UserThing.findOne({
+    include: [{
+      model: Thing,
+      include: [{
+        model: Category,
+      }],
+    }],
+    where: {
+      id: thingId,
     },
-    { where: { id: thingId } },
-  );
-  ctx.body = {
-    onMarket: false,
-    onMarketAt: null,
-  };
+  });
+
+  thing.onMarket = false;
+  thing.onMarketAt = null;
+  await thing.save();
+
+  ctx.body = thing;
   ctx.status = 200;
 };
 

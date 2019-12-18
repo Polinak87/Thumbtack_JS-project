@@ -84,7 +84,7 @@ class ApplicationInbox extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  value: state.inboxApplications,
+  value: state.applications.inbox,
 });
 
 const mapDispatchToProps = dispatch => ({

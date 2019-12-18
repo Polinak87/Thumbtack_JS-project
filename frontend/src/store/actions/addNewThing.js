@@ -1,5 +1,4 @@
 import axios from 'axios';
-import store from '../../store/index';
 import { addMessage } from '../actions/message';
 
 export const ADD_NEW_THING = 'ADD_NEW_THING';
@@ -20,7 +19,7 @@ export const addNewThing = (name, description, categoryId, file) => {
     })
     .then((response) => {
       dispatch(setNewThing(response.data));
-      store.dispatch(addMessage({ text: 'New thing is added to your inventory.'}));
+      dispatch(addMessage({ text: 'New thing is added to your inventory.'}));
     });
   };
 }

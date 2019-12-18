@@ -21,7 +21,7 @@ class Market extends React.Component {
   componentDidMount() {
     axios.get('/api/marketthings', {
       params: {
-        filtrationType: this.props.filtrationType,
+        filtrationType: '9',
         sortingType: this.props.sortingType,
       }
     })

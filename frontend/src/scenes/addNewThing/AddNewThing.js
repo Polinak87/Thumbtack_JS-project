@@ -6,7 +6,7 @@ import Hero from '../../components/Hero';
 import Catalog from './Catalog';
 import FormField from '../../components/FormField';
 import ButtonSubmit from '../../components/ButtonSubmit';
-import SelectFullwidth from './SelectFullwidth';
+import Select from '../../components/Select';
 
 class AddNewThingForm extends React.Component {
   constructor(props) {
@@ -31,6 +31,7 @@ class AddNewThingForm extends React.Component {
     this.setState({ [event.target.name]: event.target.value });
   }
 
+  //нужен ли event в скобках
   handleChangeFile(event) {
     this.setState({ file: event.target.files[0] })
   }
@@ -57,7 +58,7 @@ class AddNewThingForm extends React.Component {
             <FormField type="text" name="name" placeholder="Name" onChange={this.handleChange} value={this.state.name} />
             <FormField type="text" name="description" placeholder="Description" onChange={this.handleChange} value={this.state.description} />
             <FormField type="file" name="file" onChange={this.handleChangeFile} />
-            <SelectFullwidth onChange={this.handleChange} value={this.state.categoryId} categoryOptons={categoryOptons} />
+            <Select onChange={this.handleChange} value={this.state.categoryId} categoryOptons={categoryOptons} />
             <ButtonSubmit value="Add" />
           </form>
         </div>

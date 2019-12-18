@@ -6,6 +6,7 @@ import { ADD_THING_FOR_EXCHANGE } from '../actions/thingForExchange';
 import { DELETE_THING_FOR_EXCHANGE } from '../actions/thingForExchange';
 import { ADD_NEW_THING } from '../actions/addNewThing';
 import { DELETE_USER } from '../actions/user';
+import { UPDATE_USER_THING } from '../actions/userThings';
 
 const defaultState = {
   userThings: new Map(),
@@ -23,6 +24,12 @@ const things = (state = defaultState, action) => {
           ...state,
           userThings: new Map([...action.userThings]),
         });
+    case UPDATE_USER_THING:
+      return (
+        {
+          ...state,
+          userThings: new Map([...state.userThings, ...new Map([[action.userThing.id, action.userThing]]) ]),
+        });
     case ADD_MARKET_THINGS:
       return (
         {
@@ -33,7 +40,7 @@ const things = (state = defaultState, action) => {
       return (
         {
           ...state,
-          userThings: new Map([...userThings, ...action.newThing])
+          userThings: new Map([...state.userThings, ...new Map([[action.newThing.id, action.newThing]]) ]),
         });
     case ADD_CATALOG:
       return (
