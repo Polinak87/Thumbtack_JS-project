@@ -3,6 +3,8 @@
 const {
   Application,
   UserThing,
+  Thing,
+  Category,
 } = require('../../models');
 
 const createApplication = async (ctx) => {
@@ -53,28 +55,40 @@ const canceleApplication = async (ctx) => {
 const rejectApplication = async (ctx) => {
   const { id } = ctx.request.body;
 
-  const currentApplication = await Application.findOne(
-    {
-      where: { id },
-    },
-  );
+  const currentApplication = await Application.findOne({
+    include: [{
+      model: UserThing,
+      as: 'ThingOffered',
+      include: [{
+        model: Thing,
+        include: [{
+          model: Category,
+        }],
+      }],
+    }, {
+      model: UserThing,
+      as: 'ThingDesired',
+      include: [{
+        model: Thing,
+        include: [{
+          model: Category,
+        }],
+      }],
+    }],
+    where: { id },
+  });
 
   if (currentApplication.status === 'pending') {
-    await Application.update(
-      {
-        status: 'rejected',
-      },
-      { where: { id } },
-    );
-
+    currentApplication.status = 'rejected';
+    currentApplication.save();
     ctx.body = {
-      status: 'rejected',
+      currentApplication,
       message: '',
     };
     ctx.status = 200;
   } else {
     ctx.body = {
-      status: currentApplication.status,
+      currentApplication,
       message: 'Ops, the other user has just canceled the application.',
     };
     ctx.status = 200;
@@ -84,11 +98,28 @@ const rejectApplication = async (ctx) => {
 const completeApplication = async (ctx) => {
   const { id } = ctx.request.body;
 
-  const currentApplication = await Application.findOne(
-    {
-      where: { id },
-    },
-  );
+  const currentApplication = await Application.findOne({
+    include: [{
+      model: UserThing,
+      as: 'ThingOffered',
+      include: [{
+        model: Thing,
+        include: [{
+          model: Category,
+        }],
+      }],
+    }, {
+      model: UserThing,
+      as: 'ThingDesired',
+      include: [{
+        model: Thing,
+        include: [{
+          model: Category,
+        }],
+      }],
+    }],
+    where: { id },
+  });
 
   const {
     idUserAuthor,
@@ -114,8 +145,7 @@ const completeApplication = async (ctx) => {
 
       await ctx.body.push(
         {
-          id,
-          status: 'completed',
+          currentApplication,
           message: '',
         },
       );
@@ -138,6 +168,8 @@ const completeApplication = async (ctx) => {
         { where: { id: idThingDesired } },
       );
 
+
+      // продолжить с этого места, выборку полной информации и добавление в body
       await Application.findAll(
         {
           where: {
@@ -167,10 +199,13 @@ const completeApplication = async (ctx) => {
           },
           { where: { id: ApplicationsForReject[i].dataValues.id } },
         );
+
+        const a = ApplicationsForReject[i].dataValues;
+
+        a.status = 'rejected';
         await ctx.body.push(
           {
-            id: ApplicationsForReject[i].dataValues.id,
-            status: 'rejected',
+            a,
             message: '',
           },
         );
@@ -200,8 +235,7 @@ const completeApplication = async (ctx) => {
     case 'canceled':
       await ctx.body.push(
         {
-          id,
-          status: 'canceled',
+          currentApplication,
           message: 'Very sorry, the other user has just canceled the application.',
         },
       );
@@ -211,8 +245,7 @@ const completeApplication = async (ctx) => {
     case 'rejected':
       await ctx.body.push(
         {
-          id,
-          status: 'rejected',
+          currentApplication,
           message: 'Ops, another user has just accepted your application for exchange this thing. This application is automatically canceled.',
         },
       );

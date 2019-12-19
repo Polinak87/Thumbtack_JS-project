@@ -2,12 +2,12 @@ import React from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import Card from './Card';
-import Hero from '../../../components/Hero';
-import store from '../../../store/index';
-import { deleteThingForExchange } from '../../../store/actions/thingForExchange';
-import { addMessage } from '../../../store/actions/message';
-import { getUserThings } from '../../../store/actions/userThings';
-import CardBlock from '../../../components/CardBlock';
+import Hero from '../../components/Hero';
+import store from '../../store/index';
+import { deleteThingForExchange } from '../../store/actions/thingForExchange';
+import { addMessage } from '../../store/actions/message';
+import { getUserThings } from '../../store/actions/userThings';
+import CardBlock from '../../components/CardBlock';
 
 class ThingsForExchange extends React.Component {
   constructor(props) {

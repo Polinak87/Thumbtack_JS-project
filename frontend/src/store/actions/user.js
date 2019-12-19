@@ -55,6 +55,24 @@ export const logout = () => {
   }
 }
 
+export const getCurrentUser = (props) => {
+  return dispatch => {
+    if (isEmpty(store.getState().user)) {
+      axios.get('api/getcurrentuser')
+        .then((response) => {
+          dispatch(addUser(response.data));
+        })
+        .catch((error) => {
+          const { pathname } = props.location;
+          const isRedirectPathname = ['/login', "/home", "/registration"];
+          if (!isRedirectPathname.includes(pathname)) {
+            props.history.push("/home");
+          }
+        });
+    }
+  }
+}
+
 export const addUser = user => ({
   type: ADD_USER,
   user,

@@ -3,7 +3,7 @@ import { Route, withRouter } from "react-router-dom";
 import Profile from './scenes/profile/Profile';
 import Market from './scenes/market/Market';
 import MarketFilteredByUser from './scenes/market/MarketFilteredByUser';
-import ThingsForExchange from './scenes/market/exchange/ThingsForExchange'
+import ThingsForExchange from './scenes/exchange/ThingsForExchange'
 import Login from './scenes/homePage/Login';
 import AddNewThingForm from './scenes/addNewThing/AddNewThing';
 import Logout from './scenes/navbar/Logout';

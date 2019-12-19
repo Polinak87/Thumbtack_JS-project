@@ -1,4 +1,5 @@
 import { ADD_INBOX_APPLICATIONS } from '../actions/inboxApplications';
+import { UPDATE_INBOX_APPLICATIONS } from '../actions/inboxApplications';
 import { ADD_OUTBOX_APPLICATIONS } from '../actions/outboxApplications';
 import { DELETE_USER } from '../actions/user';
 
@@ -15,6 +16,13 @@ const applications = (state = defaultState, action) => {
           ...state,
           inbox: new Map([...action.inboxApplications]),
         });
+    case UPDATE_INBOX_APPLICATIONS:
+    return (
+      {
+        ...state,
+        inbox: new Map([...state.inbox, ...action.updateddata]),
+      }
+    )
     case ADD_OUTBOX_APPLICATIONS:
       return (
         {

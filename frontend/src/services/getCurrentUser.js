@@ -12,7 +12,8 @@ export default function getCurrentUser(props) {
     })
     .catch((error) =>  {
       const { pathname } = props.location;
-      if (pathname !== "/login" && pathname !== "/home" && pathname !== "/registration" ) {
+      const isRedirectPathname = ['/login', "/home", "/registration"];
+      if (!isRedirectPathname.includes(pathname)) {
         props.history.push("/home");
       }
     });

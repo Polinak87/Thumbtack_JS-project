@@ -8,6 +8,8 @@ import store from '../../../store/index';
 import CardBlock from '../../../components/CardBlock';
 import { getInboxApplications } from '../../../store/actions/inboxApplications';
 import { addInboxApplications } from '../../../store/actions/inboxApplications';
+import { rejectApplication } from '../../../store/actions/inboxApplications';
+import { completeApplication } from '../../../store/actions/inboxApplications';
 
 class ApplicationInbox extends React.Component {
   constructor(props) {
@@ -31,26 +33,24 @@ class ApplicationInbox extends React.Component {
   onClick(id, type) {
     event.preventDefault();
     if (type == 'Complete application') {
-      axios.put('/api/completeapplication', { id }).then(response => {
-        if (response.status === 200) {
-          let arrayForUpdate = response.data;
-          for (let i = 0; i < arrayForUpdate.length; i++) {
-            const { id, status, message } = arrayForUpdate[i];
-            this.updateData(id, status);
-            if (message !== '') {
-              store.dispatch(addMessage({ messageText: message }));
-            }
-          }
-        }
-      });
+      const { completeApplication } =this.props;
+      completeApplication(id);
+      // axios.put('/api/completeapplication', { id }).then(response => {
+      //   if (response.status === 200) {
+      //     let arrayForUpdate = response.data;
+      //     for (let i = 0; i < arrayForUpdate.length; i++) {
+      //       const { id, status, message } = arrayForUpdate[i];
+      //       this.updateData(id, status);
+      //       if (message !== '') {
+      //         store.dispatch(addMessage({ messageText: message }));
+      //       }
+      //     }
+      //   }
+      // });
     }
     if (type == 'Reject application') {
-      axios.put('/api/rejectapplication', { id }).then(response => {
-        this.updateData(id, response.data.status);
-        if (response.data.message !== '') {
-          store.dispatch(addMessage({ text: response.data.message }));
-        }
-      });
+      const { rejectApplication } = this.props;
+      rejectApplication(id);
     }
   }
 
@@ -90,6 +90,9 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   getInboxApplications: value => dispatch(getInboxApplications(value)),
   addInboxApplications: value => dispatch(addInboxApplications(value)),
+  rejectApplication: id => dispatch(rejectApplication(id)),
+  completeApplication: id => dispatch(completeApplication(id)),
+  dispatch,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ApplicationInbox);
