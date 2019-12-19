@@ -5,8 +5,8 @@ import Card from './Card';
 import Hero from '../../../components/Hero';
 import store from '../../../store/index';
 import { deleteThingForExchange } from '../../../store/actions/thingForExchange';
-import { addUserThings } from '../../../store/actions/userThings';
 import { addMessage } from '../../../store/actions/message';
+import { getUserThings } from '../../../store/actions/userThings';
 import CardBlock from '../../../components/CardBlock';
 
 class ThingsForExchange extends React.Component {
@@ -16,20 +16,15 @@ class ThingsForExchange extends React.Component {
   }
 
   componentDidMount() {
-    axios.get('/api/userthings')
-      .then((response) => {
-        let map = new Map();
-        response.data.forEach(function (thing) {
-          map.set(thing.id, thing)
-        });
-        store.dispatch(addUserThings(map));
-      });
+    this.props.getUserThings();
   }
 
   componentWillUnmount() {
-    store.dispatch(deleteThingForExchange());
+    const { deleteThingForExchange } = this.props;
+    deleteThingForExchange();
   }
 
+  //поправвить после того, как будет исправлен onClick на market
   onClick(id) {
     event.preventDefault();
     const idThingOffered = id;
@@ -77,4 +72,10 @@ const mapStateToProps = state => ({
   message: state.message,
 });
 
-export default connect(mapStateToProps)(ThingsForExchange);
+const mapDispatchToProps = dispatch => ({
+  getUserThings: () => dispatch(getUserThings()),
+  deleteThingForExchange: () => dispatch(deleteThingForExchange()),
+  dispatch,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ThingsForExchange);

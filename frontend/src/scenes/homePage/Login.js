@@ -1,9 +1,6 @@
 import React from 'react';
-import axios from 'axios';
 import { connect } from 'react-redux';
-import store from '../../store/index';
-import { addUser } from '../../store/actions/user';
-import { addMessage } from '../../store/actions/message';
+import { login } from '../../store/actions/user';
 import FormField from '../../components/FormField';
 import ButtonSubmit from '../../components/ButtonSubmit';
 import Avatar from './Avatar';
@@ -26,21 +23,9 @@ class Login extends React.Component {
   handleSubmit(event) {
     event.preventDefault();
     const { email, password } = this.state;
-    axios
-      .post('/api/login', { email, password })
-      .then(response => {
-        if (response && response.status === 200) {
-          store.dispatch(addUser(response.data));
-          this.props.history.push('/profile');
-        }
-      })
-      .catch(function (error) {
-        if (error.response.status === 401) {
-          store.dispatch(addMessage({ text: error.response.data }));
-        } else {
-          store.dispatch(addMessage({ text: 'Something is wrang. Try again or contact technical support.' }));
-        }
-      });
+    const { login } = this.props;
+    // сделать переадресацию и не передавать props
+    login(email, password, this.props);
   }
 
   render() {
@@ -85,4 +70,9 @@ const mapStateToProps = state => ({
   message: state.message,
 });
 
-export default connect(mapStateToProps)(Login);
+const mapDispatchToProps = dispatch => ({
+  login: (email, password, props) => dispatch(login(email, password, props)),
+  dispatch,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

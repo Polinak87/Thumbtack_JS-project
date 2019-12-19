@@ -4,7 +4,6 @@ import Card from './Card';
 import Hero from '../../components/Hero';
 import CardBlock from '../../components/CardBlock';
 import { getUserThings } from '../../store/actions/userThings';
-import { addUserThings } from '../../store/actions/userThings';
 import { addThingToMartet } from '../../store/actions/userThings';
 import { removeThingFromMartet } from '../../store/actions/userThings';
 
@@ -67,7 +66,6 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   getUserThings: () => dispatch(getUserThings()),
-  addUserThings: (value) => dispatch(addUserThings(value)),
   addThingToMartet: (id) => dispatch(addThingToMartet(id)),
   removeThingFromMartet: (id) => dispatch(removeThingFromMartet(id)),
   dispatch,

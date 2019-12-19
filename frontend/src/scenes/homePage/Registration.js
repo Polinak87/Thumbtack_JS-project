@@ -1,9 +1,6 @@
 import React from 'react';
-import axios from 'axios';
 import { connect } from 'react-redux';
-import store from '../../store/index';
-import { addUser } from '../../store/actions/user';
-import { addMessage } from '../../store/actions/message';
+import { registration } from '../../store/actions/user';
 import ButtonSubmit from '../../components/ButtonSubmit';
 import FormField from '../../components/FormField';
 import Avatar from './Avatar';
@@ -28,21 +25,8 @@ class Registration extends React.Component {
   handleSubmit(event) {
     event.preventDefault();
     const { firstName, lastName, email, password } = this.state;
-    axios
-      .post('/api/registration', { firstName, lastName, email, password })
-      .then(response => {
-        if (response && response.status === 200) {
-          store.dispatch(addUser(response.data));
-          this.props.history.push('/profile');
-        }
-      })
-      .catch(function (error) {
-        if (error.response.status === 401) {
-          store.dispatch(addMessage({ text: error.response.data }));
-        } else {
-          store.dispatch(addMessage({ text: 'Something is wrang. Try again or contact technical support.' }));
-        }
-      });
+    const { registration } = this.props;
+    registration(firstName, lastName, email, password, this.props);
   }
 
   render() {
@@ -100,4 +84,9 @@ const mapStateToProps = state => ({
   message: state.message,
 });
 
-export default connect(mapStateToProps)(Registration);
+const mapDispatchToProps = dispatch => ({
+  registration: (firstName, lastName, email, password, props) => dispatch(registration(firstName, lastName, email, password, props)),
+  dispatch,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Registration);

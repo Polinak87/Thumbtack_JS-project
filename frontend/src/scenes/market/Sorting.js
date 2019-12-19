@@ -1,34 +1,19 @@
 import React from 'react';
-import axios from 'axios';
 import { connect } from 'react-redux';
 import { addSortingType } from '../../store/actions/sorting';
-import store from '../../store/index';
-import { addMarketThings } from '../../store/actions/marketThings';
+import { getMarketThings } from '../../store/actions/marketThings';
 
 class Sorting extends React.Component {
   constructor(props) {
     super(props);
-    this.handleChangeSorting = this.handleChangeSorting.bind(this);
+    this.onChange = this.onChange.bind(this);
   }
 
-  handleChangeSorting() {
-    store.dispatch(addSortingType({ type: event.target.value }));
-    console.log(event.target.value);
-    axios
-      .get('/api/marketthings', {
-        params: {
-          filtrationType: this.props.filtrationType,
-          sortingType: event.target.value,
-        },
-      })
-      .then(response => {
-        let map = new Map();
-        response.data.forEach(function(thing) {
-          map.set(thing.id, thing);
-        });
-        store.dispatch(addMarketThings(map));
-        console.log(map);
-      });
+  onChange() {
+    const { addSortingType, getMarketThings, filtrationType } = this.props;
+    const sortingType = event.target.value;
+    addSortingType({ sortingType });
+    getMarketThings(filtrationType, sortingType);
   }
 
   render() {
@@ -36,7 +21,7 @@ class Sorting extends React.Component {
       <div className="field">
         <div className="control is-expanded">
           <div className="is-inline select is-primary">
-            <select onChange={this.handleChangeSorting}>
+            <select onChange={this.onChange}>
               <option key="by date descending" value="DESC">
                 by date descending
               </option>
@@ -53,7 +38,12 @@ class Sorting extends React.Component {
 
 const mapStateToProps = state => ({
   filtrationType: state.main.filterByCategory.category,
-  sortingType: state.main.sortByDate.type,
 });
 
-export default connect(mapStateToProps)(Sorting);
+const mapDispatchToProps = dispatch => ({
+  addSortingType: (type) => dispatch(addSortingType(type)),
+  getMarketThings: (filtrationType, sortingType) => dispatch(getMarketThings(filtrationType, sortingType)),
+  dispatch,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Sorting);

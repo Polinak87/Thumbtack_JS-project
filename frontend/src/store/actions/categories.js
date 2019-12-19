@@ -8,8 +8,6 @@ export const getCategories = () => {
     axios.get('/api/category')
       .then((response) => {
         dispatch(addCategoryList(response.data));
-        console.log('response.data');
-        console.log(response);
       });
   };
 }

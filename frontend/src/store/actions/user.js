@@ -1,5 +1,59 @@
-export const ADD_USER ='ADD_USER';
-export const DELETE_USER ='DELETE_USER';
+import axios from 'axios';
+import { addMessage } from '../actions/message';
+
+export const ADD_USER = 'ADD_USER';
+export const DELETE_USER = 'DELETE_USER';
+
+export const registration = (firstName, lastName, email, password, props) => {
+  return dispatch => {
+    axios
+      .post('/api/registration', { firstName, lastName, email, password })
+      .then(response => {
+        if (response && response.status === 200) {
+          dispatch(addUser(response.data));
+          props.history.push('/profile');
+        }
+      })
+      .catch(function (error) {
+        if (error.response.status === 401) {
+          dispatch(addMessage({ text: error.response.data }));
+        } else {
+          dispatch(addMessage({ text: 'Something is wrang. Try again or contact technical support.' }));
+        }
+      });
+  }
+}
+
+export const login = (email, password, props) => {
+  return dispatch => {
+    axios
+      .post('/api/login', { email, password })
+      .then(response => {
+        if (response && response.status === 200) {
+          dispatch(addUser(response.data));
+          props.history.push("/profile");
+        }
+      })
+      .catch(function (error) {
+        if (error.response.status === 401) {
+          dispatch(addMessage({ text: error.response.data }));
+        } else {
+          dispatch(addMessage({ text: 'Something is wrang. Try again or contact technical support.' }));
+        }
+      });
+  }
+}
+
+export const logout = () => {
+  return dispatch => {
+    axios.post('/api/logout')
+      .then((response) => {
+        if (response && response.status === 200) {
+          dispatch(deleteUser());
+        }
+      });
+  }
+}
 
 export const addUser = user => ({
   type: ADD_USER,

@@ -1,16 +1,14 @@
 import React from 'react';
-import axios from 'axios';
 import { connect } from 'react-redux';
-import Card from './Card'
-import Hero from '../../components/Hero';
-import store from '../../store/index';
-import { addMarketThings } from '../../store/actions/marketThings';
+import { getMarketThings } from '../../store/actions/marketThings';
 import { addThingForExchange } from '../../store/actions/thingForExchange';
-import FilterByCategory from './FilterByCategory';
-import Sorting from './Sorting';
 import { deleteFiltrationType } from '../../store/actions/filtration';
 import { deleteSortingType } from '../../store/actions/sorting';
 import CardBlock from '../../components/CardBlock';
+import FilterByCategory from './FilterByCategory';
+import Sorting from './Sorting';
+import Card from './Card'
+import Hero from '../../components/Hero';
 
 class Market extends React.Component {
   constructor(props) {
@@ -19,53 +17,47 @@ class Market extends React.Component {
   }
 
   componentDidMount() {
-    axios.get('/api/marketthings', {
-      params: {
-        filtrationType: '9',
-        sortingType: this.props.sortingType,
-      }
-    })
-      .then((response) => {
-        let map = new Map();
-        response.data.forEach(function (thing) {
-          map.set(thing.id, thing)
-        });
-        store.dispatch(addMarketThings(map));
-        console.log(map);
-      });
+    const { getMarketThings, filtrationType, sortingType } = this.props;
+    getMarketThings(filtrationType, sortingType);
   }
 
   componentWillUnmount() {
     console.log('unmount');
-    store.dispatch(deleteFiltrationType());
-    store.dispatch(deleteSortingType());
+    const { deleteFiltrationType, deleteSortingType } = this.props;
+    deleteFiltrationType();
+    deleteSortingType();
   }
 
   onClick(id) {
+    //доделать компонент button. затем модернизировать эту функцию и перенести действия в action
     event.preventDefault();
     const { userId } = this.props;
     const thingForExchange = {
       idThingDesired: id,
       idUserAnswer: userId,
     };
-    store.dispatch(addThingForExchange(thingForExchange));
+    this.props.addThingForExchange(thingForExchange);
     this.props.history.replace('/thingsforexchange');
   }
 
 
   render() {
-    let currentUserId = store.getState().user.id;
+    const { currentUserId, value } = this.props;
     let cardList = [];
-    for (let userThing of this.props.value.values()) {
+    for (let userThing of value.values()) {
+      const { Thing, id, onMarketAt } = userThing;
+      const { image, name, description, Category } = Thing;
+      const { name: categoryName } = Category;
       cardList.push(
         <div className="column is-one-quarter" key={userThing.id}>
           <Card
-            image={userThing.Thing.image}
-            id={userThing.id}
-            name={userThing.Thing.name}
-            description={userThing.Thing.description}
-            categoryName={userThing.Thing.Category.name}
-            onMarketAt={userThing.onMarketAt}
+            image={image}
+            id={id}
+            name={name}
+            description={description}
+            categoryName={categoryName}
+            onMarketAt={onMarketAt}
+            /* проверить нужен ли в итоге юзер*/
             user={userThing.User}
             userId={userThing.userId}
             currentUserId={currentUserId}
@@ -84,16 +76,25 @@ class Market extends React.Component {
           <Sorting />
         </div>
         <br />
-        <CardBlock cardList={cardList}/>
+        <CardBlock cardList={cardList} />
       </>
     );
   }
 }
 
 const mapStateToProps = state => ({
+  currentUserId: state.user.id,
   value: state.things.marketThings,
   filtrationType: state.main.filterByCategory.category,
   sortingType: state.main.sortByDate.type,
 });
 
-export default connect(mapStateToProps)(Market);
+const mapDispatchToProps = dispatch => ({
+  getMarketThings: (filtrationType, sortingType) => dispatch(getMarketThings(filtrationType, sortingType)),
+  deleteFiltrationType: () => dispatch(deleteFiltrationType()),
+  deleteSortingType: () => dispatch(deleteSortingType()),
+  addThingForExchange: (thingForExchange) => dispatch(addThingForExchange(thingForExchange)),
+  dispatch,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Market);

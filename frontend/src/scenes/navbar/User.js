@@ -4,12 +4,15 @@ import isEmpty from 'lodash.isempty';
 
 class User extends React.Component {
   render() {
-    if (isEmpty(this.props.user)) {
+    const { user } = this.props;
+    if (isEmpty(user)) {
       return null;
     }
+    
+    const {firstName, lastName } = user;
     return (
       <div className="navbar-item">
-        <p>{this.props.user.firstName.toString() + ' ' + this.props.user.lastName.toString()}</p>
+        <p>{firstName.toString() + ' ' + lastName.toString()}</p>
       </div>
     );
   }

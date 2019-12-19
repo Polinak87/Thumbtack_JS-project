@@ -1,48 +1,31 @@
 import React from 'react';
-import axios from 'axios';
-import store from '../../store/index';
 import { connect } from 'react-redux';
 import { addFiltrationType } from '../../store/actions/filtration';
-import { addMarketThings } from '../../store/actions/marketThings';
+import { getMarketThings } from '../../store/actions/marketThings';
+import { getCategories } from '../../store/actions/categories';
 
 class FilterByCategory extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      categoryList: [],
-    }
-    this.handleChangeCategory = this.handleChangeCategory.bind(this);
+    this.onChange = this.onChange.bind(this);
   }
 
   componentDidMount() {
-    axios.get('/api/category')
-      .then((response) => {
-        this.setState({ categoryList: response.data })
-      });
+    const { getCategories } = this.props;
+    getCategories();
   }
 
-  handleChangeCategory() {
-    store.dispatch(addFiltrationType({ category :event.target.value }));
-    console.log(event.target.value);
-    axios.get('/api/marketthings', {
-      params: {
-        filtrationType: event.target.value,
-        sortingType: this.props.sortingType,
-      }
-    })
-      .then((response) => {
-        let map = new Map();
-        response.data.forEach(function (thing) {
-          map.set(thing.id, thing)
-        });
-        store.dispatch(addMarketThings(map));
-        console.log(map);
-      });
+  onChange() {
+    const { sortingType, getMarketThings, addFiltrationType } = this.props;
+    const filtrationType = event.target.value;
+    addFiltrationType({ category: filtrationType });
+    getMarketThings(filtrationType, sortingType);
   }
 
   render() {
+    const { categoryList } = this.props;
     let categoryOptons = [];
-    this.state.categoryList.forEach((cat, index) => {
+    categoryList.forEach((cat, index) => {
       categoryOptons.push(
         <option key={cat.id} value={cat.id}>{cat.name} </option>
       );
@@ -50,7 +33,7 @@ class FilterByCategory extends React.Component {
 
     return (
       <div className="select is-primary">
-        <select onChange={this.handleChangeCategory} value={this.state.categoryId}>
+        <select onChange={this.onChange}>
           {categoryOptons}
           <option key='0' value='all'>all </option>
         </select>
@@ -60,8 +43,16 @@ class FilterByCategory extends React.Component {
 }
 
 const mapStateToProps = state => ({
+  categoryList: state.main.categories,
   filtrationType: state.main.filterByCategory.category,
   sortingType: state.main.sortByDate.type,
 });
 
-export default connect(mapStateToProps)(FilterByCategory);
+const mapDispatchToProps = dispatch => ({
+  getCategories: () => dispatch(getCategories()),
+  addFiltrationType: (filtrationType) => dispatch(addFiltrationType(filtrationType)),
+  getMarketThings: (filtrationType, sortingType) => dispatch(getMarketThings(filtrationType, sortingType)),
+  dispatch,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(FilterByCategory);

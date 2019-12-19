@@ -1,29 +1,31 @@
 import React from 'react';
-import axios from 'axios';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import store from '../../store/index';
-import { deleteUser } from '../../store/actions/user';
+import { logout } from '../../store/actions/user';
 
-export default class Logout extends React.Component {
+class Logout extends React.Component {
   constructor(props) {
     super(props);
-    this.handleClick = this.handleClick.bind(this);
+    this.onClick = this.onClick.bind(this);
   }
 
-  handleClick() {
+  onClick() {
     event.preventDefault();
-    axios.post('/api/logout')
-      .then((response) => {
-        if (response && response.status === 200) {
-          store.dispatch(deleteUser());
-        }
-      });
-    }
+    const { logout } = this.props;
+    logout();
+  }
 
   render() {
-
     return (
-      <Link to='/home' button className="button is-light" onClick={this.handleClick}>Log out</Link>
+      <Link to='/home' button className="button is-light" onClick={this.onClick}>Log out</Link>
     );
   }
 }
+
+const mapDispatchToProps = dispatch => ({
+  logout: () => dispatch(logout()),
+  dispatch,
+});
+
+export default connect(null, mapDispatchToProps)(Logout);
+
