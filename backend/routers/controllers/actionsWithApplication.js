@@ -24,11 +24,28 @@ const createApplication = async (ctx) => {
 const canceleApplication = async (ctx) => {
   const { id } = ctx.request.body;
 
-  const currentApplication = await Application.findOne(
-    {
-      where: { id },
-    },
-  );
+  const currentApplication = await Application.findOne({
+    include: [{
+      model: UserThing,
+      as: 'ThingOffered',
+      include: [{
+        model: Thing,
+        include: [{
+          model: Category,
+        }],
+      }],
+    }, {
+      model: UserThing,
+      as: 'ThingDesired',
+      include: [{
+        model: Thing,
+        include: [{
+          model: Category,
+        }],
+      }],
+    }],
+    where: { id },
+  });
 
   if (currentApplication.status === 'pending') {
     await Application.update(
@@ -36,16 +53,18 @@ const canceleApplication = async (ctx) => {
         status: 'canceled',
       },
       { where: { id } },
-    );
-
-    ctx.body = {
-      status: 'canceled',
-      message: '',
-    };
-    ctx.status = 200;
+    )
+      .then(() => {
+        currentApplication.status = 'canceled';
+        ctx.body = {
+          currentApplication,
+          message: '',
+        };
+        ctx.status = 200;
+      });
   } else {
     ctx.body = {
-      status: currentApplication.status,
+      currentApplication,
       message: 'Ops, another user has just answered on your application for exchange this thing.',
     };
     ctx.status = 200;
@@ -141,11 +160,13 @@ const completeApplication = async (ctx) => {
           status: 'completed',
         },
         { where: { id } },
-      );
+      ).then(() => {
+        currentApplication.status = 'completed';
+      });
 
       await ctx.body.push(
         {
-          currentApplication,
+          application: currentApplication,
           message: '',
         },
       );
@@ -168,61 +189,102 @@ const completeApplication = async (ctx) => {
         { where: { id: idThingDesired } },
       );
 
-
-      // продолжить с этого места, выборку полной информации и добавление в body
-      await Application.findAll(
-        {
-          where: {
-            idThingOffered,
-            status: 'pending',
-          },
+      await Application.findAll({
+        include: [{
+          model: UserThing,
+          as: 'ThingOffered',
+          include: [{
+            model: Thing,
+            include: [{
+              model: Category,
+            }],
+          }],
+        }, {
+          model: UserThing,
+          as: 'ThingDesired',
+          include: [{
+            model: Thing,
+            include: [{
+              model: Category,
+            }],
+          }],
+        }],
+        where: {
+          idThingOffered,
+          status: 'pending',
         },
-      ).then((applications) => {
-        ApplicationsForCancel = applications;
-      });
+      })
+        .then((applications) => {
+          ApplicationsForCancel = applications;
+        });
 
-      await Application.findAll(
-        {
-          where: {
-            idThingDesired,
-            status: 'pending',
-          },
+      await Application.findAll({
+        include: [{
+          model: UserThing,
+          as: 'ThingOffered',
+          include: [{
+            model: Thing,
+            include: [{
+              model: Category,
+            }],
+          }],
+        }, {
+          model: UserThing,
+          as: 'ThingDesired',
+          include: [{
+            model: Thing,
+            include: [{
+              model: Category,
+            }],
+          }],
+        }],
+        where: {
+          idThingDesired,
+          status: 'pending',
         },
-      ).then((applications) => {
-        ApplicationsForReject = applications;
-      });
+      })
+        .then((applications) => {
+          ApplicationsForReject = applications;
+        });
 
       for (let i = 0; i < ApplicationsForReject.length; i++) {
+        const ApplicationForReject = ApplicationsForReject[i].dataValues;
+
         await Application.update(
           {
             status: 'rejected',
           },
-          { where: { id: ApplicationsForReject[i].dataValues.id } },
-        );
+          { where: { id: ApplicationForReject.id } },
+        )
+          .then(() => {
+            ApplicationForReject.status = 'rejected';
+          });
 
-        const a = ApplicationsForReject[i].dataValues;
-
-        a.status = 'rejected';
         await ctx.body.push(
           {
-            a,
+            application: ApplicationForReject,
             message: '',
           },
         );
       }
 
       for (let i = 0; i < ApplicationsForCancel.length; i++) {
+        const ApplicationForCancel = ApplicationsForCancel[i].dataValues;
+
         await Application.update(
           {
             status: 'canceled',
           },
-          { where: { id: ApplicationsForCancel[i].dataValues.id } },
-        );
-        if (ApplicationsForCancel[i].dataValues.idUserAnswer === ctx.state.user.id) {
+          { where: { id: ApplicationForCancel.id } },
+        )
+          .then(() => {
+            ApplicationForCancel.status = 'canceled';
+          });
+
+        if (ApplicationForCancel.idUserAnswer === ctx.state.user.id) {
           await ctx.body.push(
             {
-              id: ApplicationsForCancel[i].dataValues.id,
-              status: 'canceled',
+              application: ApplicationForCancel,
               message: '',
             },
           );
@@ -235,7 +297,7 @@ const completeApplication = async (ctx) => {
     case 'canceled':
       await ctx.body.push(
         {
-          currentApplication,
+          application: currentApplication,
           message: 'Very sorry, the other user has just canceled the application.',
         },
       );
@@ -245,7 +307,7 @@ const completeApplication = async (ctx) => {
     case 'rejected':
       await ctx.body.push(
         {
-          currentApplication,
+          application: currentApplication,
           message: 'Ops, another user has just accepted your application for exchange this thing. This application is automatically canceled.',
         },
       );
@@ -253,10 +315,10 @@ const completeApplication = async (ctx) => {
       break;
 
     default:
-    {
-      ctx.status = 200;
-      break;
-    }
+      {
+        ctx.status = 200;
+        break;
+      }
   }
 };
 

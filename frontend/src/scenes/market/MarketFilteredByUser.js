@@ -26,8 +26,8 @@ class MarketFilteredByUser extends React.Component {
           map.set(thing.id, thing)
         });
         store.dispatch(addMarketThingsOfOneUser(map));
-        console.log("map");
-        console.log(map);
+        // console.log("map");
+        // console.log(map);
       });
   }
 
