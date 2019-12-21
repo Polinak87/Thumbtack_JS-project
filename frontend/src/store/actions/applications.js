@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { createMap } from '../../services/createMap';
-import { addMessage } from './message';
+import { addMessage } from './main';
 
 export const ADD_INBOX_APPLICATIONS = 'ADD_INBOX_APPLICATIONS';
 export const ADD_OUTBOX_APPLICATIONS = 'ADD_OUTBOX_APPLICATIONS';
@@ -61,11 +61,11 @@ export const cancelApplication = id => {
   }
 }
 
+// нужен ли arrayForUpdate
 export const completeApplication = id => {
   return dispatch => {
     axios.put('/api/completeapplication', { id })
       .then(response => {
-        if (response.status === 200) {
           let { data } = response;
           let arrayForUpdate = [];
           for (let i = 0; i < data.length; i++) {
@@ -76,7 +76,6 @@ export const completeApplication = id => {
             }
           }
           dispatch(updateInboxApplications(createMap(arrayForUpdate)));
-        }
       });
   }
 }

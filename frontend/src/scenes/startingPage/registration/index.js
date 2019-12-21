@@ -1,9 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { registration } from '../../store/actions/user';
-import ButtonSubmit from '../../components/ButtonSubmit';
-import FormField from '../../components/FormField';
-import Avatar from './Avatar';
+import { registration } from '../../../store/actions/user';
+import ButtonSubmit from '../../../components/ButtonSubmit';
+import FormField from '../../../components/FormField';
+import Avatar from '../Avatar';
 
 class Registration extends React.Component {
   constructor(props) {

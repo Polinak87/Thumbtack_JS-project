@@ -1,12 +1,12 @@
 import React from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
-import Card from './Card'
-import Hero from '../../components/Hero';
-import store from '../../store/index';
-import { addMarketThingsOfOneUser } from '../../store/actions/marketThingsOfOneUser';
-import { addThingForExchange } from '../../store/actions/thingForExchange';
-import CardBlock from '../../components/CardBlock';
+import Card from '../Card'
+import Hero from '../../../components/Hero';
+import store from '../../../store/index';
+import { addMarketThingsOfOneUser } from '../../../store/actions/things';
+import { addThingForExchange } from '../../../store/actions/things';
+import CardBlock from '../../../components/CardBlock';
 
 class MarketFilteredByUser extends React.Component {
   constructor(props) {

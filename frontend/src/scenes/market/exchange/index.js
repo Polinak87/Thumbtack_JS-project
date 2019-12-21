@@ -4,9 +4,9 @@ import { connect } from 'react-redux';
 import Card from './Card';
 import Hero from '../../components/Hero';
 import store from '../../store/index';
-import { deleteThingForExchange } from '../../store/actions/thingForExchange';
-import { addMessage } from '../../store/actions/message';
-import { getUserThings } from '../../store/actions/userThings';
+import { deleteThingForExchange } from '../../store/actions/things';
+import { addMessage } from '../../store/actions/main';
+import { getUserThings } from '../../store/actions/things';
 import CardBlock from '../../components/CardBlock';
 
 class ThingsForExchange extends React.Component {

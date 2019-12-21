@@ -1,12 +1,12 @@
-import { ADD_MESSAGE } from '../actions/message';
-import { DELETE_MESSAGE } from '../actions/message';
-import { ADD_CATEGORIES } from '../actions/categories';
-import { ADD_SORTINGTYPE } from '../actions/sorting';
-import { DELETE_SORTINGTYPE } from '../actions/sorting';
-import { ADD_FILTRATIONTYPE } from '../actions/filtration';
-import { DELETE_FILTRATIONTYPE } from '../actions/filtration';
-import { ADD_FILTRATION_BY_USER } from '../actions/filtration';
-import { DELETE_FILTRATION_BY_USER } from '../actions/filtration'
+import { ADD_MESSAGE } from '../actions/main';
+import { DELETE_MESSAGE } from '../actions/main';
+import { ADD_CATEGORIES } from '../actions/main';
+import { ADD_SORTINGTYPE } from '../actions/main';
+import { DELETE_SORTINGTYPE } from '../actions/main';
+import { ADD_FILTRATIONTYPE } from '../actions/main';
+import { DELETE_FILTRATIONTYPE } from '../actions/main';
+import { ADD_FILTRATION_BY_USER } from '../actions/main';
+import { DELETE_FILTRATION_BY_USER } from '../actions/main'
 import { DELETE_USER } from '../actions/user';
 
 const defaultState = {

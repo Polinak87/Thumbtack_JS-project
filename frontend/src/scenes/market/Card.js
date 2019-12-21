@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import ThingInfo from '../../components/ThingInfo';
 import Button from '../../components/Button';
-import { addFiltrationByUser } from '../../store/actions/filtration';
+import { addFiltrationByUser } from '../../store/actions/main';
 
 class Card extends React.Component {
   constructor(props) {

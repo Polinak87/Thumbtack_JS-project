@@ -4,8 +4,8 @@ import { connect } from 'react-redux';
 import store from '../../store/index';
 import Card from './Card';
 import CardBlock from '../../components/CardBlock';
-import { addCatalog } from '../../store/actions/catalog';
-import { addMessage } from '../../store/actions/message';
+import { addCatalog } from '../../store/actions/things';
+import { addMessage } from '../../store/actions/main';
 
 class Catalog extends React.Component {
   constructor(props) {

@@ -1,9 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { getMarketThings } from '../../store/actions/marketThings';
-import { addThingForExchange } from '../../store/actions/thingForExchange';
-import { deleteFiltrationType } from '../../store/actions/filtration';
-import { deleteSortingType } from '../../store/actions/sorting';
+import { getMarketThings } from '../../store/actions/things';
+import { addThingForExchange } from '../../store/actions/things';
+import { deleteFiltrationType } from '../../store/actions/main';
+import { deleteSortingType } from '../../store/actions/main';
 import CardBlock from '../../components/CardBlock';
 import FilterByCategory from './FilterByCategory';
 import Sorting from './Sorting';

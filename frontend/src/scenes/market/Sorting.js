@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { addSortingType } from '../../store/actions/sorting';
-import { getMarketThings } from '../../store/actions/marketThings';
+import { addSortingType } from '../../store/actions/main';
+import { getMarketThings } from '../../store/actions/things';
 
 class Sorting extends React.Component {
   constructor(props) {

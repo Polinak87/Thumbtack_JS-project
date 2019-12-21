@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { deleteMessage } from '../store/actions/message';
+import { deleteMessage } from '../store/actions/main';
 
 class Infomessage extends React.Component {
   constructor(props) {

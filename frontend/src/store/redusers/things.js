@@ -1,12 +1,11 @@
-import { ADD_USER_THINGS } from '../actions/userThings';
-import { ADD_MARKET_THINGS } from '../actions/marketThings';
-import { ADD_CATALOG } from '../actions/catalog';
-import { ADD_MARKET_THINGS_OF_ONE_USER } from '../actions/marketThingsOfOneUser';
-import { ADD_THING_FOR_EXCHANGE } from '../actions/thingForExchange';
-import { DELETE_THING_FOR_EXCHANGE } from '../actions/thingForExchange';
-import { ADD_NEW_THING } from '../actions/addNewThing';
+import { ADD_USER_THINGS } from '../actions/things';
+import { UPDATE_USER_THING } from '../actions/things';
+import { ADD_THING_FOR_EXCHANGE } from '../actions/things';
+import { DELETE_THING_FOR_EXCHANGE } from '../actions/things';
+import { ADD_MARKET_THINGS } from '../actions/things';
+import { ADD_MARKET_THINGS_OF_ONE_USER } from '../actions/things';
+import { ADD_CATALOG } from '../actions/things';
 import { DELETE_USER } from '../actions/user';
-import { UPDATE_USER_THING } from '../actions/userThings';
 
 const defaultState = {
   userThings: new Map(),
@@ -35,12 +34,6 @@ const things = (state = defaultState, action) => {
         {
           ...state,
           marketThings: new Map([...action.marketThings]),
-        });
-    case ADD_NEW_THING:
-      return (
-        {
-          ...state,
-          userThings: new Map([...state.userThings, ...new Map([[action.newThing.id, action.newThing]]) ]),
         });
     case ADD_CATALOG:
       return (

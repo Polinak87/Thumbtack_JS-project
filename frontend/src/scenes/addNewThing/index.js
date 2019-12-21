@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { getCategories } from '../../store/actions/categories';
-import { addNewThing } from '../../store/actions/addNewThing';
+import { getCategories } from '../../store/actions/main';
+import { addNewThing } from '../../store/actions/things';
 import Hero from '../../components/Hero';
 import Catalog from './Catalog';
 import FormField from '../../components/FormField';

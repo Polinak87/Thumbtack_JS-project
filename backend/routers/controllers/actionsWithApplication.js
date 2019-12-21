@@ -315,10 +315,10 @@ const completeApplication = async (ctx) => {
       break;
 
     default:
-      {
-        ctx.status = 200;
-        break;
-      }
+    {
+      ctx.status = 200;
+      break;
+    }
   }
 };
 

@@ -3,9 +3,9 @@ import { connect } from 'react-redux';
 import Card from './Card';
 import Hero from '../../components/Hero';
 import CardBlock from '../../components/CardBlock';
-import { getUserThings } from '../../store/actions/userThings';
-import { addThingToMartet } from '../../store/actions/userThings';
-import { removeThingFromMartet } from '../../store/actions/userThings';
+import { getUserThings } from '../../store/actions/things';
+import { addThingToMartet } from '../../store/actions/things';
+import { removeThingFromMartet } from '../../store/actions/things';
 
 
 class Profile extends React.Component {
