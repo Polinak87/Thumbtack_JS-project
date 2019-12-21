@@ -2,12 +2,12 @@ import React from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import Card from './Card';
-import Hero from '../../components/Hero';
-import store from '../../store/index';
-import { deleteThingForExchange } from '../../store/actions/things';
-import { addMessage } from '../../store/actions/main';
-import { getUserThings } from '../../store/actions/things';
-import CardBlock from '../../components/CardBlock';
+import Hero from '../../../components/Hero';
+import store from '../../../store/index';
+import { deleteThingForExchange } from '../../../store/actions/things';
+import { addMessage } from '../../../store/actions/main';
+import { getUserThings } from '../../../store/actions/things';
+import CardBlock from '../../../components/CardBlock';
 
 class ThingsForExchange extends React.Component {
   constructor(props) {
@@ -24,7 +24,7 @@ class ThingsForExchange extends React.Component {
     deleteThingForExchange();
   }
 
-  //поправвить после того, как будет исправлен onClick на market
+  //перенести в редакс
   onClick(id) {
     event.preventDefault();
     const idThingOffered = id;

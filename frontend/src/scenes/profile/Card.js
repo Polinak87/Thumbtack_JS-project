@@ -23,18 +23,13 @@ export default class Card extends React.Component {
     let button;
     if (onMarket) {
       button = (
-        <Button type="Remove from market" id={id} onClick={onClickRemove}>
-          Remove from market
-        </Button>
+        <Button type="Remove from market" id={id} onClick={onClickRemove}/>
       );
     } else {
       button = (
-        <Button type="Add to market" id={id} onClick={onClickAdd}>
-          Add to market
-        </Button>
+        <Button type="Add to market" id={id} onClick={onClickAdd}/>
       );
     }
-    // button - скоее всего без закрывающего тэга, просто />
 
     return (
       <div className="card">

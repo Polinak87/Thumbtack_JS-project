@@ -1,26 +1,22 @@
 import React from 'react';
 import axios from 'axios';
+import store from '../../store';
 import { connect } from 'react-redux';
-import store from '../../store/index';
 import Card from './Card';
 import CardBlock from '../../components/CardBlock';
-import { addCatalog } from '../../store/actions/things';
+import { getCatalog } from '../../store/actions/things';
+import { addThingFromCatalog } from '../../store/actions/things';
 import { addMessage } from '../../store/actions/main';
 
 class Catalog extends React.Component {
   constructor(props) {
     super(props);
+    this.onClick = this.onClick.bind();
   }
 
   componentDidMount() {
-    axios.get('/api/catalog')
-      .then((response) => {
-        let map = new Map();
-        response.data.forEach(function (thing) {
-          map.set(thing.id, thing);
-        })
-        store.dispatch(addCatalog(map));
-      });
+    const { getCatalog } = this.props;
+    getCatalog();
   }
 
   onClick(id) {
@@ -31,6 +27,7 @@ class Catalog extends React.Component {
       }
     });
   }
+
 
   render() {
     let cardList = [];
@@ -43,13 +40,13 @@ class Catalog extends React.Component {
             name={Thing.name}
             description={Thing.description}
             categoryName={Thing.Category.name}
-            onClick={this.onClick}/>
+            onClick={this.onClick} />
         </div>
       )
     };
 
     return (
-      <CardBlock cardList={cardList}/>
+      <CardBlock cardList={cardList} />
     );
   }
 }
@@ -58,4 +55,11 @@ const mapStateToProps = state => ({
   value: state.things.catalog,
 });
 
-export default connect(mapStateToProps)(Catalog);
+const mapDispatchToProps = dispatch => ({
+  getCatalog: () => dispatch(getCatalog()),
+  addThingFromCatalog: (id) => dispatch(addThingFromCatalog(id)),
+  dispatch,
+});
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(Catalog);

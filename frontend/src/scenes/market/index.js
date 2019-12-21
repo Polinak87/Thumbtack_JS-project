@@ -22,7 +22,6 @@ class Market extends React.Component {
   }
 
   componentWillUnmount() {
-    console.log('unmount');
     const { deleteFiltrationType, deleteSortingType } = this.props;
     deleteFiltrationType();
     deleteSortingType();
@@ -71,7 +70,7 @@ class Market extends React.Component {
         <br />
         <Hero text='Market' type="hero is-primary" />
         <br />
-        <div className="is-inline-block">
+        <div className="is-inline-flex">
           <FilterByCategory />
           <Sorting />
         </div>

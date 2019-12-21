@@ -1,10 +1,9 @@
 import React from 'react';
-import axios from 'axios';
 import { connect } from 'react-redux';
 import Card from '../Card'
 import Hero from '../../../components/Hero';
 import store from '../../../store/index';
-import { addMarketThingsOfOneUser } from '../../../store/actions/things';
+import { getMarketThingsOfOneUser } from '../../../store/actions/things';
 import { addThingForExchange } from '../../../store/actions/things';
 import CardBlock from '../../../components/CardBlock';
 
@@ -15,20 +14,8 @@ class MarketFilteredByUser extends React.Component {
   }
 
   componentDidMount() {
-    axios.get('/api/marketthingsfilteredbyuser', {
-      params: {
-        user: this.props.filtrationByUser,
-      }
-    })
-      .then((response) => {
-        let map = new Map();
-        response.data.forEach(function (thing) {
-          map.set(thing.id, thing)
-        });
-        store.dispatch(addMarketThingsOfOneUser(map));
-        // console.log("map");
-        // console.log(map);
-      });
+    const { filtrationByUser, getMarketThingsOfOneUser } = this.props;
+    getMarketThingsOfOneUser(filtrationByUser);
   }
 
   onClick(id) {
@@ -80,4 +67,9 @@ const mapStateToProps = state => ({
   filtrationByUser: state.main.filterbyUser.id,
 });
 
-export default connect(mapStateToProps)(MarketFilteredByUser);
+const mapDispatchToProps = dispatch => ({
+  getMarketThingsOfOneUser: (user) => dispatch(getMarketThingsOfOneUser(user)),
+  dispatch,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(MarketFilteredByUser);

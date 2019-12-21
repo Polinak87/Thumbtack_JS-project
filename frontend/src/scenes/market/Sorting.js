@@ -20,7 +20,7 @@ class Sorting extends React.Component {
     return (
       <div className="field">
         <div className="control is-expanded">
-          <div className="is-inline select is-primary">
+          <div className="select is-primary">
             <select onChange={this.onChange}>
               <option key="by date descending" value="DESC">
                 by date descending

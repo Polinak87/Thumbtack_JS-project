@@ -1,9 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { login } from '../../store/actions/user';
-import FormField from '../../components/FormField';
-import ButtonSubmit from '../../components/ButtonSubmit';
-import Avatar from './Avatar';
+import { login } from '../../../store/actions/user';
+import FormField from '../../../components/FormField';
+import ButtonSubmit from '../../../components/ButtonSubmit';
+import Avatar from '../Avatar';
 
 class Login extends React.Component {
   constructor(props) {
@@ -24,7 +24,6 @@ class Login extends React.Component {
     event.preventDefault();
     const { email, password } = this.state;
     const { login } = this.props;
-    // сделать переадресацию и не передавать props
     login(email, password, this.props);
   }
 

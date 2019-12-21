@@ -9,8 +9,8 @@ export const registration = (firstName, lastName, email, password, props) => {
     axios
       .post('/api/registration', { firstName, lastName, email, password })
       .then(response => {
-          dispatch(addUser(response.data));
-          props.history.push('/profile');
+        dispatch(addUser(response.data));
+        props.history.push('/profile');
       })
       .catch(function (error) {
         if (error.response.status === 401) {
@@ -27,8 +27,8 @@ export const login = (email, password, props) => {
     axios
       .post('/api/login', { email, password })
       .then(response => {
-          dispatch(addUser(response.data));
-          props.history.push("/profile");
+        dispatch(addUser(response.data));
+        props.history.push("/profile");
       })
       .catch(function (error) {
         if (error.response.status === 401) {
@@ -51,22 +51,20 @@ export const logout = () => {
   }
 }
 
-//// обдумать props.history.push("/home");
-export const getCurrentUser = (props) => {
+export const getCurrentUser = () => {
   return dispatch => {
-    if (isEmpty(store.getState().user)) {
-      axios.get('api/getcurrentuser')
-        .then((response) => {
-          dispatch(addUser(response.data));
-        })
-        .catch((error) => {
-          const { pathname } = props.location;
-          const isRedirectPathname = ['/login', "/home", "/registration"];
-          if (!isRedirectPathname.includes(pathname)) {
-            props.history.push("/home");
-          }
-        });
-    }
+    axios.get('api/getcurrentuser')
+      .then((response) => {
+        dispatch(addUser(response.data));
+      });
+      // Обдумать, где разместить этот код, здесь - не работает
+      // .catch((error) => {
+      //   const { pathname } = props.location;
+      //   const isRedirectPathname = ['/login', "/home", "/registration"];
+      //   if (!isRedirectPathname.includes(pathname)) {
+      //     props.history.push("/home");
+      //   }
+      // });
   }
 }
 

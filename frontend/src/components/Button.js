@@ -7,30 +7,14 @@ export default class Button extends React.Component {
   }
 
   style(type){
-    if (type=='Add to market') {
-    return "button is-block is-success is-large is-fullwidth";
-    };
-    if (type=='Remove from market'){
-    return "button is-block is-danger is-large is-fullwidth";
-    };
-    if (type=='Complete application'){
-      return "button is-block is-success is-large is-fullwidth";
-    };
-    if (type=='Reject application'){
-      return "button is-block is-danger is-large is-fullwidth";
-    };
-    if (type=='Cancel application'){
-      return "button is-block is-danger is-large is-fullwidth";
-    };
-    if (type=='Exchange'){
-      return "button is-block is-success is-large is-fullwidth";
-    };
-    if (type=='Choose'){
-      return "button is-block is-success is-large is-fullwidth";
-    };
-    if (type=='Add to inventory') {
-      return "button is-block is-success is-large is-fullwidth";
-    };
+    const Green = ['Add to market','Complete application','Exchange','Choose','Add to inventory'];
+    if (Green.includes(type)) {
+      return "is-success";
+    }
+    const Red = ['Reject application', 'Cancel application', 'Remove from market'];
+    if (Red.includes(type)) {
+      return "is-danger";
+    }
   };
 
   render() {
@@ -38,7 +22,7 @@ export default class Button extends React.Component {
     console.log(type);
     return (
       <>
-        <button className={this.style(type)} onClick={() => onClick(id, type)}> {type} </button>
+        <button className={`button is-block ${this.style(type)} is-large is-fullwidth`} onClick={() => onClick(id, type)}> {type} </button>
       </>
     );
   }

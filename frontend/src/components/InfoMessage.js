@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { deleteMessage } from '../store/actions/main';
 
-class Infomessage extends React.Component {
+class InfoMessage extends React.Component {
   constructor(props) {
     super(props);
     this.onClose = this.onClose.bind(this);
@@ -43,7 +43,7 @@ const mapDispatchToProps = dispatch => ({
   deleteMessage: () => dispatch(deleteMessage()),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Infomessage);
+export default connect(mapStateToProps, mapDispatchToProps)(InfoMessage);
 
 
 

@@ -25,16 +25,11 @@ const addThingFromCatalog = async (ctx) => {
   const { id } = ctx.request.body;
   const userId = ctx.state.user.id;
 
-  try {
-    await UserThing.create({
-      userId,
-      thingId: id,
-      onMarket: false,
-    });
-  } catch (err) {
-    console.log(err);
-  }
-  // ctx.body = Thing; // make an error
+  ctx.body = await UserThing.create({
+    userId,
+    thingId: id,
+    onMarket: false,
+  });
   ctx.status = 200;
 };
 
@@ -59,8 +54,6 @@ const addThingToMarket = async (ctx) => {
 
   ctx.body = thing;
   ctx.status = 200;
-  // console.log('-------------------');
-  // console.log(ctx.body);
 };
 
 const removeThingFromMarket = async (ctx) => {

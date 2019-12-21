@@ -31,7 +31,6 @@ class AddNewThingForm extends React.Component {
     this.setState({ [event.target.name]: event.target.value });
   }
 
-  //нужен ли event в скобках
   handleChangeFile(event) {
     this.setState({ file: event.target.files[0] })
   }
