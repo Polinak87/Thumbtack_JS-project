@@ -27,10 +27,10 @@ class Market extends React.Component {
     deleteSortingType();
   }
 
-  onClick(id) {
+  onClick(id, userId) {
     //доделать компонент button. затем модернизировать эту функцию и перенести действия в action
     event.preventDefault();
-    const { userId } = this.props;
+    // const { userId } = this.props;
     const thingForExchange = {
       idThingDesired: id,
       idUserAnswer: userId,

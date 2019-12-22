@@ -72,7 +72,7 @@ export const completeApplication = id => {
             const { application, message } = data[i];
             arrayForUpdate.push(application);
             if (message !== '') {
-              store.dispatch(addMessage({ text: message }));
+              dispatch(addMessage({ text: message }));
             }
           }
           dispatch(updateInboxApplications(createMap(arrayForUpdate)));

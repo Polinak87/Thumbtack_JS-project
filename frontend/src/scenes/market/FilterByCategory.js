@@ -34,8 +34,8 @@ class FilterByCategory extends React.Component {
     return (
       <div className="select is-primary">
         <select onChange={this.onChange}>
-          {categoryOptons}
           <option key='0' value='all'>all </option>
+          {categoryOptons}
         </select>
       </div>
     )

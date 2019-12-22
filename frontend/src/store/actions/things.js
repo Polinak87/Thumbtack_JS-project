@@ -25,7 +25,7 @@ export const addNewThing = (name, description, categoryId, file) => {
         }
       })
       .then((response) => {
-        dispatch(updateUserThing(response.data));
+        // dispatch(updateUserThing(response.data));
         dispatch(addMessage({ text: 'New thing is added to your inventory.' }));
       });
   };

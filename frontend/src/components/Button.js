@@ -18,11 +18,11 @@ export default class Button extends React.Component {
   };
 
   render() {
-    let {type, onClick, id} = this.props;
+    let {type, onClick, id, userId} = this.props;
     console.log(type);
     return (
       <>
-        <button className={`button is-block ${this.style(type)} is-large is-fullwidth`} onClick={() => onClick(id, type)}> {type} </button>
+        <button className={`button is-block ${this.style(type)} is-large is-fullwidth`} onClick={() => onClick(id, userId)}> {type} </button>
       </>
     );
   }
