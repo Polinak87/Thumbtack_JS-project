@@ -68,7 +68,7 @@ const mapDispatchToProps = dispatch => ({
   getUserThings: () => dispatch(getUserThings()),
   addThingToMartet: (id) => dispatch(addThingToMartet(id)),
   removeThingFromMartet: (id) => dispatch(removeThingFromMartet(id)),
-  dispatch,
+  // dispatch,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Profile);

@@ -36,7 +36,7 @@ class Market extends React.Component {
       idUserAnswer: userId,
     };
     this.props.addThingForExchange(thingForExchange);
-    this.props.history.replace('/thingsforexchange');
+    this.props.history.replace('/things-for-exchange');
   }
 
 

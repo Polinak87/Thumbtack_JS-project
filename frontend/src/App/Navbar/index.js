@@ -17,7 +17,7 @@ function NavBar(props) {
           <Link to="/profile" className="navbar-item">
             Profile
           </Link>
-          <Link to="/addnewthing" className="navbar-item">
+          <Link to="/add-new-thing" className="navbar-item">
             New thing
           </Link>
           <Link to="/market" className="navbar-item">
@@ -26,10 +26,10 @@ function NavBar(props) {
           <div className="navbar-item has-dropdown is-hoverable">
             <div className="navbar-link">Applications</div>
             <div className="navbar-dropdown">
-              <Link to="/applicationsinbox" className="navbar-item">
+              <Link to="/applications-inbox" className="navbar-item">
                 inbox
               </Link>
-              <Link to="/applicationsoutbox" className="navbar-item">
+              <Link to="/applications-outbox" className="navbar-item">
                 outbox
               </Link>
             </div>

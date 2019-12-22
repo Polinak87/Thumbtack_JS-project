@@ -28,7 +28,7 @@ class Card extends React.Component {
     return (
       <div className="card">
         <div className="card-header">
-          <Link to="/marketthingsfilteredbyuser" className="card-header-title has-text-grey is-centered is-italic is-size-3" onClick={() => this.onClick(user.id)}>
+          <Link to="/market-things-filtered-by-user" className="card-header-title has-text-grey is-centered is-italic is-size-3" onClick={() => this.onClick(user.id)}>
             By {firstName} {lastName}
           </Link>
         </div>

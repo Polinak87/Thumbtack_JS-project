@@ -53,18 +53,10 @@ export const logout = () => {
 
 export const getCurrentUser = () => {
   return dispatch => {
-    axios.get('api/getcurrentuser')
+    return axios.get('api/getcurrentuser')
       .then((response) => {
         dispatch(addUser(response.data));
       });
-      // Обдумать, где разместить этот код, здесь - не работает
-      // .catch((error) => {
-      //   const { pathname } = props.location;
-      //   const isRedirectPathname = ['/login', "/home", "/registration"];
-      //   if (!isRedirectPathname.includes(pathname)) {
-      //     props.history.push("/home");
-      //   }
-      // });
   }
 }
 
