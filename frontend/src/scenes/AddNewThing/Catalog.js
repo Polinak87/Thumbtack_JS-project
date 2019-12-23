@@ -1,17 +1,14 @@
 import React from 'react';
-import axios from 'axios';
-import store from '../../store';
 import { connect } from 'react-redux';
 import Card from './Card';
 import CardBlock from '../../components/CardBlock';
 import { getCatalog } from '../../store/actions/things';
 import { addThingFromCatalog } from '../../store/actions/things';
-import { addMessage } from '../../store/actions/main';
 
 class Catalog extends React.Component {
   constructor(props) {
     super(props);
-    this.onClick = this.onClick.bind();
+    this.onClick = this.onClick.bind(this);
   }
 
   componentDidMount() {
@@ -20,14 +17,9 @@ class Catalog extends React.Component {
   }
 
   onClick(id) {
-    axios.post('api/addthingfromcatalog', { id })
-    .then((response) => {
-      if (response.status = 200) {
-        store.dispatch(addMessage({text: 'Thing is added to your inventory.'}));
-      }
-    });
-  }
-
+    const { addThingFromCatalog } = this.props;
+    addThingFromCatalog(id);
+  };
 
   render() {
     let cardList = [];
@@ -53,6 +45,7 @@ class Catalog extends React.Component {
 
 const mapStateToProps = state => ({
   value: state.things.catalog,
+  a: state.things.userThings,
 });
 
 const mapDispatchToProps = dispatch => ({

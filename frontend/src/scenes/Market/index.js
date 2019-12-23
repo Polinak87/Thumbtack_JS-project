@@ -28,17 +28,12 @@ class Market extends React.Component {
   }
 
   onClick(id, userId) {
-    //доделать компонент button. затем модернизировать эту функцию и перенести действия в action
-    event.preventDefault();
-    // const { userId } = this.props;
-    const thingForExchange = {
+    this.props.addThingForExchange({
       idThingDesired: id,
       idUserAnswer: userId,
-    };
-    this.props.addThingForExchange(thingForExchange);
+    });
     this.props.history.replace('/things-for-exchange');
   }
-
 
   render() {
     const { currentUserId, value } = this.props;

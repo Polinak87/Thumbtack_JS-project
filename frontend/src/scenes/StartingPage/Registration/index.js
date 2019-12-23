@@ -27,6 +27,10 @@ class Registration extends React.Component {
     const { firstName, lastName, email, password } = this.state;
     const { registration } = this.props;
     registration(firstName, lastName, email, password, this.props);
+    // делает переход даже в случае ошибки
+      // .then(() => {
+      //   this.props.history.push('/profile');
+      // });
   }
 
   render() {

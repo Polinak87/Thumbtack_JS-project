@@ -18,15 +18,12 @@ class MarketFilteredByUser extends React.Component {
     getMarketThingsOfOneUser(filtrationByUser);
   }
 
-  onClick(id) {
-    event.preventDefault();
-    const { userId } = this.props;
-    const thingForExchange = {
+  onClick(id, userId) {
+    this.props.addThingForExchange({
       idThingDesired: id,
       idUserAnswer: userId,
-    };
-    store.dispatch(addThingForExchange(thingForExchange));
-    this.props.history.replace('/thingsforexchange');
+    });
+    this.props.history.replace('/things-for-exchange');
   }
 
 
@@ -69,6 +66,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   getMarketThingsOfOneUser: (user) => dispatch(getMarketThingsOfOneUser(user)),
+  addThingForExchange: (thingForExchange) => dispatch(addThingForExchange(thingForExchange)),
   dispatch,
 });
 

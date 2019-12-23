@@ -6,7 +6,7 @@ export const DELETE_USER = 'DELETE_USER';
 
 export const registration = (firstName, lastName, email, password, props) => {
   return dispatch => {
-    axios
+    return axios
       .post('/api/registration', { firstName, lastName, email, password })
       .then(response => {
         dispatch(addUser(response.data));

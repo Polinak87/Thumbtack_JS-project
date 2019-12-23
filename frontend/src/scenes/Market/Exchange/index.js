@@ -1,18 +1,16 @@
 import React from 'react';
-import axios from 'axios';
 import { connect } from 'react-redux';
 import Card from './Card';
 import Hero from '../../../components/Hero';
-import store from '../../../store/index';
 import { deleteThingForExchange } from '../../../store/actions/things';
-import { addMessage } from '../../../store/actions/main';
+import { createApplication } from '../../../store/actions/applications';
 import { getUserThings } from '../../../store/actions/things';
 import CardBlock from '../../../components/CardBlock';
 
 class ThingsForExchange extends React.Component {
   constructor(props) {
     super(props);
-    this.onClick=this.onClick.bind(this);
+    this.onClick = this.onClick.bind(this);
   }
 
   componentDidMount() {
@@ -24,17 +22,11 @@ class ThingsForExchange extends React.Component {
     deleteThingForExchange();
   }
 
-  //перенести в редакс
   onClick(id) {
-    event.preventDefault();
     const idThingOffered = id;
-    const { idThingDesired, idUserAnswer } = this.props.thingForExchange;
-    axios.post('/api/createapplication', { idThingOffered, idThingDesired, idUserAnswer })
-    .then((response) => {
-      if (response.status === 200) {
-        store.dispatch(addMessage({text: ' Your application is sent. You can track it in your outbox applications.'}));
-      }
-    });
+    const { createApplication, thingForExchange } = this.props;
+    const { idThingDesired, idUserAnswer } = thingForExchange;
+    createApplication(idThingOffered, idThingDesired, idUserAnswer);
   }
 
   render() {
@@ -59,8 +51,8 @@ class ThingsForExchange extends React.Component {
     return (
       <>
         <br />
-        <Hero text='Choose thing for exchange' type="hero is-info"/>
-        <CardBlock cardList={cardList}/>
+        <Hero text='Choose thing for exchange' type="hero is-info" />
+        <CardBlock cardList={cardList} />
       </>
     );
   }
@@ -75,6 +67,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   getUserThings: () => dispatch(getUserThings()),
   deleteThingForExchange: () => dispatch(deleteThingForExchange()),
+  createApplication: (idThingOffered, idThingDesired, idUserAnswer) => dispatch(createApplication(idThingOffered, idThingDesired, idUserAnswer)),
   dispatch,
 });
 

@@ -6,18 +6,31 @@ const addNewThing = async (ctx) => {
   const { name, description, categoryId } = ctx.req.body;
   const userId = ctx.state.user.id;
 
-  await Thing.create({
+  const thing = await Thing.create({
     name,
     description,
     categoryId,
     image: ctx.req.file.path.substring(7),
-  }).then((thing) => {
-    UserThing.create({
-      userId,
-      thingId: thing.id,
-      onMarket: false,
-    });
   });
+
+  const userThing = await UserThing.create({
+    userId,
+    thingId: thing.id,
+    onMarket: false,
+  });
+
+  ctx.body = await UserThing.findOne({
+    include: [{
+      model: Thing,
+      include: [{
+        model: Category,
+      }],
+    }],
+    where: {
+      id: userThing.id,
+    },
+  });
+
   ctx.status = 200;
 };
 
@@ -25,11 +38,26 @@ const addThingFromCatalog = async (ctx) => {
   const { id } = ctx.request.body;
   const userId = ctx.state.user.id;
 
-  ctx.body = await UserThing.create({
+  const newUserThing = await UserThing.create({
     userId,
     thingId: id,
     onMarket: false,
   });
+
+  const { id: newUserThingId } = newUserThing;
+
+  ctx.body = await UserThing.findOne({
+    include: [{
+      model: Thing,
+      include: [{
+        model: Category,
+      }],
+    }],
+    where: {
+      id: newUserThingId,
+    },
+  });
+
   ctx.status = 200;
 };
 
