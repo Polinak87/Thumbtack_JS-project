@@ -3,9 +3,8 @@ import { connect } from 'react-redux';
 import { getCategories } from '../../store/actions/main';
 import { addNewThing } from '../../store/actions/things';
 import FormField from '../../components/FormField';
-import ButtonSubmit from '../../components/ButtonSubmit';
 import Select from '../../components/Select';
-import Button from '../../components/Button';
+import Button, { green } from '../../components/Button';
 
 class AddNewThingForm extends React.Component {
   constructor(props) {
@@ -23,7 +22,7 @@ class AddNewThingForm extends React.Component {
   }
 
   componentDidMount() {
-    this.props.dispatch(getCategories());
+    this.props.getCategories();
   }
 
   handleChange() {
@@ -37,7 +36,7 @@ class AddNewThingForm extends React.Component {
   handleSubmit(event) {
     event.preventDefault();
     const { name, description, categoryId, file } = this.state;
-    this.props.dispatch(addNewThing(name, description, categoryId, file));
+    this.props.addNewThing(name, description, categoryId, file);
   }
 
   render() {
@@ -52,8 +51,7 @@ class AddNewThingForm extends React.Component {
         <FormField type="text" name="description" placeholder="Description" onChange={this.handleChange} value={this.state.description} />
         <FormField type="file" name="file" onChange={this.handleChangeFile} />
         <Select onChange={this.handleChange} value={this.state.categoryId} categoryOptons={categoryOptons} />
-        {/* <ButtonSubmit value="Add" /> */}
-        <Button className="is-success" type="submit" value="Add"/>
+        <Button className={green} type="submit" value="Add"/>
       </form>
     );
   };
@@ -66,7 +64,6 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   getCategories: () => dispatch(getCategories()),
   addNewThing: (name, description, categoryId, file) => dispatch(addNewThing(name, description, categoryId, file)),
-  dispatch,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddNewThingForm);

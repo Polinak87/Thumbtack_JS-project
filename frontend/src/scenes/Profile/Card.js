@@ -1,6 +1,6 @@
 import React from 'react';
 import ThingInfo from '../../components/ThingInfo';
-import Button from '../../components/Button';
+import Button, { green, red, large } from '../../components/Button';
 
 export default class Card extends React.Component {
   constructor(props) {
@@ -23,11 +23,11 @@ export default class Card extends React.Component {
     let button;
     if (onMarket) {
       button = (
-        <Button type="Remove from market" id={id} onClick={onClickRemove}/>
+        <Button className={large + " " + red} value="Remove from market" id={id} onClick={onClickRemove}/>
       );
     } else {
       button = (
-        <Button type="Add to market" id={id} onClick={onClickAdd}/>
+        <Button className={large + " " + green} value="Add to market" id={id} onClick={onClickAdd}/>
       );
     }
 

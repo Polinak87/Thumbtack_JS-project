@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { login } from '../../../store/actions/user';
 import FormField from '../../../components/FormField';
-import ButtonSubmit from '../../../components/ButtonSubmit';
+import Button, { green } from '../../../components/Button';
 import Avatar from '../Avatar';
 
 class Login extends React.Component {
@@ -53,7 +53,7 @@ class Login extends React.Component {
                       onChange={this.onChange}
                       value={this.state.password}
                     />
-                    <ButtonSubmit value="Log in" />
+                    <Button className={green} type="submit" value="Log in" />
                   </form>
                 </div>
               </div>
@@ -71,7 +71,6 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   login: (email, password, props) => dispatch(login(email, password, props)),
-  dispatch,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

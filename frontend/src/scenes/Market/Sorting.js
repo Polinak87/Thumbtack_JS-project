@@ -43,7 +43,6 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   addSortingType: (type) => dispatch(addSortingType(type)),
   getMarketThings: (filtrationType, sortingType) => dispatch(getMarketThings(filtrationType, sortingType)),
-  dispatch,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Sorting);

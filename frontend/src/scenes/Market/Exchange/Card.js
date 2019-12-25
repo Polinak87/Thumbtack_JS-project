@@ -1,6 +1,6 @@
 import React from 'react';
 import ThingInfo from '../../../components/ThingInfo';
-import Button from '../../../components/Button';
+import Button, { green } from '../../../components/Button';
 
 export default class Card extends React.Component {
   constructor(props) {
@@ -21,9 +21,9 @@ export default class Card extends React.Component {
           onMarket={onMarket}
           onMarketAt={onMarketAt}/>
         <Button
-          type='Choose'
+          className={green}
+          value='Choose'
           id={id}
-          updateData={updateData}
           onClick={onClick}/>
       </div >
     );

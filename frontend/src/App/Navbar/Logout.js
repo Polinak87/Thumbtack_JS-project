@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import Button, { light } from '../../components/Button';
 import { logout } from '../../store/actions/user';
 
 class Logout extends React.Component {
@@ -17,14 +17,13 @@ class Logout extends React.Component {
 
   render() {
     return (
-      <Link to='/home' button className="button is-light" onClick={this.onClick}>Log out</Link>
+      <Button to='/home' className={light} onClick={this.onClick} value="Log out" />
     );
   }
 }
 
 const mapDispatchToProps = dispatch => ({
   logout: () => dispatch(logout()),
-  dispatch,
 });
 
 export default connect(null, mapDispatchToProps)(Logout);

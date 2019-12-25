@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { registration } from '../../../store/actions/user';
-import ButtonSubmit from '../../../components/ButtonSubmit';
+import Button, { green } from '../../../components/Button';
 import FormField from '../../../components/FormField';
 import Avatar from '../Avatar';
 
@@ -72,7 +72,7 @@ class Registration extends React.Component {
                       onChange={this.onChange}
                       value={this.state.password}
                     />
-                    <ButtonSubmit value="Register" />
+                    <Button className={green} type="submit" value="Register" />
                   </form>
                 </div>
               </div>
@@ -90,7 +90,6 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   registration: (firstName, lastName, email, password, props) => dispatch(registration(firstName, lastName, email, password, props)),
-  dispatch,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Registration);

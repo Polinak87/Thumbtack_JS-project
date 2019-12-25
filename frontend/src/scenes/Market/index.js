@@ -32,7 +32,6 @@ class Market extends React.Component {
       idThingDesired: id,
       idUserAnswer: userId,
     });
-    this.props.history.replace('/things-for-exchange');
   }
 
   render() {
@@ -88,7 +87,6 @@ const mapDispatchToProps = dispatch => ({
   deleteFiltrationType: () => dispatch(deleteFiltrationType()),
   deleteSortingType: () => dispatch(deleteSortingType()),
   addThingForExchange: (thingForExchange) => dispatch(addThingForExchange(thingForExchange)),
-  dispatch,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Market);

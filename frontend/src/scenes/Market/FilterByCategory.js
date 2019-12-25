@@ -52,7 +52,6 @@ const mapDispatchToProps = dispatch => ({
   getCategories: () => dispatch(getCategories()),
   addFiltrationType: (filtrationType) => dispatch(addFiltrationType(filtrationType)),
   getMarketThings: (filtrationType, sortingType) => dispatch(getMarketThings(filtrationType, sortingType)),
-  dispatch,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(FilterByCategory);

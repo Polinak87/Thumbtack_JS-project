@@ -42,7 +42,6 @@ class ThingsForExchange extends React.Component {
             categoryName={UserThing.Thing.Category.name}
             onMarket={UserThing.onMarket}
             onMarketAt={UserThing.onMarketAt}
-            updateData={this.updateData}
             onClick={this.onClick} />
         </div>
       )
@@ -68,7 +67,6 @@ const mapDispatchToProps = dispatch => ({
   getUserThings: () => dispatch(getUserThings()),
   deleteThingForExchange: () => dispatch(deleteThingForExchange()),
   createApplication: (idThingOffered, idThingDesired, idUserAnswer) => dispatch(createApplication(idThingOffered, idThingDesired, idUserAnswer)),
-  dispatch,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ThingsForExchange);

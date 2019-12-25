@@ -1,5 +1,5 @@
 import React from 'react';
-import Button from '../../components/Button';
+import Button, { green, red } from '../../components/Button';
 
 export default function CardButton(props) {
   const { status, applicationType, id, onClickComplete, onClickReject, onClickCancel } = props;
@@ -7,14 +7,14 @@ export default function CardButton(props) {
   if (status === 'pending') {
     if (applicationType === 'outbox') {
       return (
-        <Button type="Cancel application" id={id} onClick={onClickCancel} />
+        <Button className={red} value="Cancel application" id={id} onClick={onClickCancel} />
       );
     }
     return (
       <div>
-        <Button type="Complete application" id={id} onClick={onClickComplete} />
+        <Button className={green} value="Complete application" id={id} onClick={onClickComplete} />
         <br />
-        <Button type="Reject application" id={id} onClick={onClickReject} />
+        <Button className={red} value="Reject application" id={id} onClick={onClickReject} />
       </div>
     );
   }

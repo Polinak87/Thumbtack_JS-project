@@ -1,37 +1,44 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import classNames from 'classnames';
+
+export const green = "is-success";
+export const red = "is-danger";
+export const light = "is-light";
+export const large = "is-block is-large is-fullwidth";
 
 export default class Button extends React.Component {
   constructor(props) {
     super(props);
-    // this.style = this.style.bind(this);
   }
 
   classes = () => {
-    classNames(
+    return classNames(
       "button",
       this.props.className,
     );
-    console.log('this.props.className');
-    console.log(this.props.className);
   }
 
-  // style(type) {
-  //   const Green = ['Add to market', 'Complete application', 'Exchange', 'Choose', 'Add to inventory'];
-  //   if (Green.includes(type)) {
-  //     return "is-success";
-  //   }
-  //   const Red = ['Reject application', 'Cancel application', 'Remove from market'];
-  //   if (Red.includes(type)) {
-  //     return "is-danger";
-  //   }
-  // };
-
   render() {
-    let { value, onClick, id, userId, ...attrs } = this.props;
-    // console.log(type);
+    let { value, onClick, id, userId, className, ...attrs } = this.props;
+
+    const tag = () => {
+      if (attrs.to) {
+        return Link;
+      };
+      return "button";
+    }
+
+    const onButtonClick = () => {
+      if (this.props.onClick) {
+      return onClick(id, userId);
+    } return null;
+  }
+
+    const Tag = tag();
+
     return (
-      <button {...attrs} className={this.classes} onClick={() => onClick(id, userId)}> {value} </button>
+      <Tag className={this.classes()} {...attrs} onClick={onButtonClick} > {value} </Tag>
     );
   }
 }

@@ -51,7 +51,6 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   getCatalog: () => dispatch(getCatalog()),
   addThingFromCatalog: (id) => dispatch(addThingFromCatalog(id)),
-  dispatch,
 });
 
 

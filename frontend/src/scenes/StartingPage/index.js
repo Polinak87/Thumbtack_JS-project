@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import Button, { green } from '../../components/Button';
 
 export default class StartingPage extends React.Component {
   constructor(props) {
@@ -18,9 +18,9 @@ export default class StartingPage extends React.Component {
                 <br />
                 <em className="title has-text-grey">Exchange things you don't use any more for things you like</em>
                 <div className="box">
-                  <Link to="/registration" className="button is-block is-success is-large is-half" >Registration</Link>
+                  <Button to="/registration" className={green} value="Registration"/>
                   <br />
-                  <Link to="/login" className="button is-block is-success is-large is-half" >Log in</Link>
+                  <Button to="/login" className={green} value="Login" />
                 </div>
               </div>
             </div>

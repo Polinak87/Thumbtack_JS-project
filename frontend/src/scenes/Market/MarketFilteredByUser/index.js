@@ -67,7 +67,6 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   getMarketThingsOfOneUser: (user) => dispatch(getMarketThingsOfOneUser(user)),
   addThingForExchange: (thingForExchange) => dispatch(addThingForExchange(thingForExchange)),
-  dispatch,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MarketFilteredByUser);
