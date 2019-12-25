@@ -1,10 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { getCategories } from '../../store/actions/main';
-import { addNewThing } from '../../store/actions/things';
-import FormField from '../../components/FormField';
-import Select from '../../components/Select';
-import Button, { green } from '../../components/Button';
+import { getCategories } from '../../../store/actions/main';
+import { addNewThing } from '../../../store/actions/things';
+import FormField from '../../../components/FormField';
+import Select from '../../../components/Select';
+import Button, { green, large } from '../../../components/Button';
+import FileInput from './FileInput';
 
 class AddNewThingForm extends React.Component {
   constructor(props) {
@@ -49,9 +50,9 @@ class AddNewThingForm extends React.Component {
       <form className="" name="AddNewThingForm" encType="multipart/form-data" onSubmit={this.handleSubmit}>
         <FormField type="text" name="name" placeholder="Name" onChange={this.handleChange} value={this.state.name} />
         <FormField type="text" name="description" placeholder="Description" onChange={this.handleChange} value={this.state.description} />
-        <FormField type="file" name="file" onChange={this.handleChangeFile} />
+        <FileInput onChange={this.handleChangeFile} fileName={this.state.file.name} />
         <Select onChange={this.handleChange} value={this.state.categoryId} categoryOptons={categoryOptons} />
-        <Button className={green} type="submit" value="Add"/>
+        <Button className={large + " " + green} type="submit" value="Add" />
       </form>
     );
   };

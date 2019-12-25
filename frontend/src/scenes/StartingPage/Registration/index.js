@@ -1,9 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { registration } from '../../../store/actions/user';
-import Button, { green } from '../../../components/Button';
+import Button, { green, large } from '../../../components/Button';
 import FormField from '../../../components/FormField';
 import Avatar from '../Avatar';
+import Column from '../../../components/Column';
 
 class Registration extends React.Component {
   constructor(props) {
@@ -28,22 +29,22 @@ class Registration extends React.Component {
     const { registration } = this.props;
     registration(firstName, lastName, email, password, this.props);
     // делает переход даже в случае ошибки
-      // .then(() => {
-      //   this.props.history.push('/profile');
-      // });
+    // .then(() => {
+    //   this.props.history.push('/profile');
+    // });
   }
 
   render() {
     return (
-      <div>
-        <section className="hero is-success is-fullheight">
-          <div className="hero-body">
-            <div className="container has-text-centered">
-              <div className="column is-4 is-offset-4">
+      <div className="columns is-centered">
+        <Column>
+          <section className="hero is-success is-fullheight">
+            <div className="hero-body">
+              <div className="container has-text-centered">
                 <h3 className="title has-text-grey">Registration</h3>
                 <div className="box">
                   <Avatar />
-                  <form className="" onSubmit={this.handleSubmit}>
+                  <form className="" name="RegistrationForm" onSubmit={this.handleSubmit}>
                     <FormField
                       type="text"
                       name="firstName"
@@ -72,13 +73,13 @@ class Registration extends React.Component {
                       onChange={this.onChange}
                       value={this.state.password}
                     />
-                    <Button className={green} type="submit" value="Register" />
+                    <Button className={large + " " + green} type="submit" value="Register" />
                   </form>
                 </div>
               </div>
             </div>
-          </div>
-        </section>
+          </section>
+        </Column>
       </div>
     );
   }

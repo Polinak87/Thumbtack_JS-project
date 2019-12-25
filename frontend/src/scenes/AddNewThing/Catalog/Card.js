@@ -1,7 +1,7 @@
 import React from 'react';
-import ThingInfo from '../../components/ThingInfo';
-import Button from '../../components/Button';
-import { green } from '../../components/Button';
+import ThingInfo from '../../../components/ThingInfo';
+import Button from '../../../components/Button';
+import { green, large } from '../../../components/Button';
 
 export default class Card extends React.Component {
   render() {
@@ -15,7 +15,7 @@ export default class Card extends React.Component {
           name={name}
           description={description}
           categoryName={categoryName}/>
-          <Button className={green} value='Add to inventory' id={id} onClick={onClick}/>
+          <Button className={large + " " + green} value='Add to inventory' id={id} onClick={onClick}/>
       </div >
     );
   }

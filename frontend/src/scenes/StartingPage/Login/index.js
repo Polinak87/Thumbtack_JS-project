@@ -2,8 +2,9 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { login } from '../../../store/actions/user';
 import FormField from '../../../components/FormField';
-import Button, { green } from '../../../components/Button';
+import Button, { green, large } from '../../../components/Button';
 import Avatar from '../Avatar';
+import Column from '../../../components/Column';
 
 class Login extends React.Component {
   constructor(props) {
@@ -30,15 +31,15 @@ class Login extends React.Component {
   render() {
 
     return (
-      <div>
-        <section className="hero is-success is-fullheight">
-          <div className="hero-body">
-            <div className="container has-text-centered">
-              <div className="column is-4 is-offset-4">
+      <div className="columns is-centered">
+        <Column>
+          <section className="hero is-success is-fullheight">
+            <div className="hero-body">
+              <div className="container has-text-centered">
                 <h3 className="title has-text-grey">Login</h3>
                 <div className="box">
                   <Avatar />
-                  <form className="" onSubmit={this.handleSubmit}>
+                  <form className="" name="LoginForm" onSubmit={this.handleSubmit}>
                     <FormField
                       type="email"
                       name="email"
@@ -53,13 +54,13 @@ class Login extends React.Component {
                       onChange={this.onChange}
                       value={this.state.password}
                     />
-                    <Button className={green} type="submit" value="Log in" />
+                    <Button className={large + " " + green} type="submit" value="Log in" />
                   </form>
                 </div>
               </div>
             </div>
-          </div>
-        </section>
+          </section>
+        </Column>
       </div>
     );
   }

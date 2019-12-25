@@ -1,5 +1,6 @@
 import React from 'react';
-import Button, { green } from '../../components/Button';
+import Button, { green, large } from '../../components/Button';
+import Column from '../../components/Column';
 
 export default class StartingPage extends React.Component {
   constructor(props) {
@@ -10,7 +11,7 @@ export default class StartingPage extends React.Component {
 
     return (
       <div className="columns is-centered">
-        <div className="column is-one-third">
+        <Column>
           <section className="hero is-success is-fullheight">
             <div className="hero-body">
               <div className="container has-text-centered">
@@ -18,14 +19,14 @@ export default class StartingPage extends React.Component {
                 <br />
                 <em className="title has-text-grey">Exchange things you don't use any more for things you like</em>
                 <div className="box">
-                  <Button to="/registration" className={green} value="Registration"/>
+                  <Button to="/registration" className={large + " " + green} value="Registration"/>
                   <br />
-                  <Button to="/login" className={green} value="Login" />
+                  <Button to="/login" className={large + " " + green} value="Login" />
                 </div>
               </div>
             </div>
           </section>
-        </div>
+        </Column>
       </div>
     );
   }

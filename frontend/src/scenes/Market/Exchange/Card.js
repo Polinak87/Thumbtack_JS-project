@@ -1,6 +1,6 @@
 import React from 'react';
 import ThingInfo from '../../../components/ThingInfo';
-import Button, { green } from '../../../components/Button';
+import Button, { green, large } from '../../../components/Button';
 
 export default class Card extends React.Component {
   constructor(props) {
@@ -8,7 +8,7 @@ export default class Card extends React.Component {
   }
 
   render() {
-    const { image, id, name, description, categoryName, onMarket, onMarketAt, updateData, onClick } = this.props;
+    const { image, id, name, description, categoryName, onMarket, onMarketAt, onClick } = this.props;
 
     return (
       <div className="card">
@@ -21,7 +21,7 @@ export default class Card extends React.Component {
           onMarket={onMarket}
           onMarketAt={onMarketAt}/>
         <Button
-          className={green}
+          className={large + " " + green}
           value='Choose'
           id={id}
           onClick={onClick}/>

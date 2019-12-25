@@ -9,6 +9,7 @@ import FilterByCategory from './FilterByCategory';
 import Sorting from './Sorting';
 import Card from './Card'
 import Hero from '../../components/Hero';
+import Column from '../../components/Column';
 
 class Market extends React.Component {
   constructor(props) {
@@ -42,7 +43,7 @@ class Market extends React.Component {
       const { image, name, description, Category } = Thing;
       const { name: categoryName } = Category;
       cardList.push(
-        <div className="column is-one-quarter" key={userThing.id}>
+        <Column key={userThing.id}>
           <Card
             image={image}
             id={id}
@@ -55,7 +56,7 @@ class Market extends React.Component {
             userId={userThing.userId}
             currentUserId={currentUserId}
             onClick={this.onClick} />
-        </div>
+        </Column>
       )
     };
 

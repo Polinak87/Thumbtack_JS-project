@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import ThingInfo from '../../components/ThingInfo';
-import Button, { green } from '../../components/Button';
+import Button, { green, large } from '../../components/Button';
 import { addFiltrationByUser } from '../../store/actions/main';
 
 class Card extends React.Component {
@@ -22,7 +22,7 @@ class Card extends React.Component {
     const button = () => {
       if (currentUserId === userId) {
         return;
-      } return <Button to="/things-for-exchange" className={green} value='Exchange' id={id} userId={userId} onClick={onClick} />
+      } return <Button to="/things-for-exchange" className={large + " " + green} value='Exchange' id={id} userId={userId} onClick={onClick} />
     }
 
     return (

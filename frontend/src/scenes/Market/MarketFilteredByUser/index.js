@@ -6,6 +6,7 @@ import store from '../../../store/index';
 import { getMarketThingsOfOneUser } from '../../../store/actions/things';
 import { addThingForExchange } from '../../../store/actions/things';
 import CardBlock from '../../../components/CardBlock';
+import Column from '../../../components/Column';
 
 class MarketFilteredByUser extends React.Component {
   constructor(props) {
@@ -32,7 +33,7 @@ class MarketFilteredByUser extends React.Component {
     let cardList = [];
     for (let userThing of this.props.value.values()) {
       cardList.push(
-        <div className="column is-one-quarter" key={userThing.id}>
+        <Column key={userThing.id}>
           <Card
             image={userThing.Thing.image}
             id={userThing.id}
@@ -44,7 +45,7 @@ class MarketFilteredByUser extends React.Component {
             userId={userThing.userId}
             currentUserId={currentUserId}
             onClick={this.onClick} />
-        </div>
+        </Column>
       )
     };
 

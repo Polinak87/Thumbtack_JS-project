@@ -3,6 +3,7 @@ import ApplicationCard from './ApplicationCard';
 import FilterByStatus from './FilterByStatus';
 import Hero from '../../components/Hero';
 import CardBlock from '../../components/CardBlock';
+import Column from '../../components/Column';
 
 export default function Application(props) {
   let cardList = [];
@@ -11,7 +12,7 @@ export default function Application(props) {
   for (let application of value.values()) {
     const { id } = application;
     cardList.push(
-      <div className="column is-one-third" key={id}>
+      <Column key={id}>
         <ApplicationCard
           application={application}
           applicationType={applicationType}
@@ -21,7 +22,7 @@ export default function Application(props) {
           onClickReject={onClickReject}
           onClickCancel={onClickCancel}
         />
-      </div>,
+      </Column>,
     );
   }
 

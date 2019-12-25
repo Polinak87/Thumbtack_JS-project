@@ -6,6 +6,7 @@ import CardBlock from '../../components/CardBlock';
 import { getUserThings } from '../../store/actions/things';
 import { addThingToMartet } from '../../store/actions/things';
 import { removeThingFromMartet } from '../../store/actions/things';
+import Column from '../../components/Column';
 
 
 class Profile extends React.Component {
@@ -35,7 +36,7 @@ class Profile extends React.Component {
       const { image, name, description, Category } = Thing;
       const { name: categoryName } = Category;
       cardList.push(
-        <div className="column is-one-quarter" key={UserThing.id}>
+        <Column key={UserThing.id}>
           <Card
             image={image}
             id={id}
@@ -46,7 +47,7 @@ class Profile extends React.Component {
             onMarketAt={onMarketAt}
             onClickAdd={this.onClickAdd}
             onClickRemove={this.onClickRemove} />
-        </div>
+        </Column>
       )
     };
 

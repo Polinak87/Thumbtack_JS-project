@@ -1,9 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Card from './Card';
-import CardBlock from '../../components/CardBlock';
-import { getCatalog } from '../../store/actions/things';
-import { addThingFromCatalog } from '../../store/actions/things';
+import CardBlock from '../../../components/CardBlock';
+import Column from '../../../components/Column';
+import { getCatalog } from '../../../store/actions/things';
+import { addThingFromCatalog } from '../../../store/actions/things';
 
 class Catalog extends React.Component {
   constructor(props) {
@@ -25,7 +26,7 @@ class Catalog extends React.Component {
     let cardList = [];
     for (let Thing of this.props.value.values()) {
       cardList.push(
-        <div className="column is-one-quarter" key={Thing.id}>
+        <Column key={Thing.id}>
           <Card
             image={Thing.image}
             id={Thing.id}
@@ -33,7 +34,7 @@ class Catalog extends React.Component {
             description={Thing.description}
             categoryName={Thing.Category.name}
             onClick={this.onClick} />
-        </div>
+        </Column>
       )
     };
 
