@@ -2,24 +2,17 @@ import React from 'react';
 import CardFooter from './CardFooter';
 import CardButton from './CardButton';
 
-export default class ApplicationCard extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
-  render() {
+export default function ApplicationCard(props) {
     const {
       titleRight,
       titleLeft,
+      application,
       applicationType,
       onClickComplete,
       onClickReject,
       onClickCancel,
-    } = this.props;
-    const { id, ThingDesired, ThingOffered, status } = this.props.application;
-
-    console.log(ThingDesired);
-    console.log('ThingDesired');
+    } = props;
+    const { id, ThingDesired, ThingOffered, status } = application;
 
     return (
       <div className="card">
@@ -54,5 +47,4 @@ export default class ApplicationCard extends React.Component {
         />
       </div>
     );
-  }
 }

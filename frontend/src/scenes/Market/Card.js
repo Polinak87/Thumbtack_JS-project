@@ -1,81 +1,64 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { connect } from 'react-redux';
 import ThingInfo from '../../components/ThingInfo';
 import Button, { green, large } from '../../components/Button';
-import { addFiltrationByUser } from '../../store/actions/main';
 
-class Card extends React.Component {
-  constructor(props) {
-    super(props);
-    this.onClick = this.onClick.bind(this);
-  }
+export default function Card(props) {
+  const {
+    image,
+    id,
+    name,
+    description,
+    categoryName,
+    onMarket,
+    onMarketAt,
+    user,
+    userId,
+    currentUserId,
+    onButtonClick,
+    onTitleClick,
+  } = props;
 
-  onClick(id) {
-    const { addFiltrationByUser } = this.props;
-    addFiltrationByUser({ id });
-  }
+  const { firstName, lastName } = user;
 
-  render() {
-    const {
-      image,
-      id,
-      name,
-      description,
-      categoryName,
-      onMarket,
-      onMarketAt,
-      user,
-      userId,
-      currentUserId,
-      onClick,
-    } = this.props;
-    const { firstName, lastName } = user;
-    const button = () => {
-      if (currentUserId === userId) {
-        return;
-      }
-      return (
-        <Button
-          to="/things-for-exchange"
-          className={`${large} ${green}`}
-          id={id}
-          userId={userId}
-          onClick={onClick}
-        >
-          Exchange
-        </Button>
-      );
-    };
-
+  const button = () => {
+    if (currentUserId === userId) {
+      return;
+    }
     return (
-      <div className="card">
-        <div className="card-header">
-          <Link
-            to="/market-things-filtered-by-user"
-            className="card-header-title has-text-grey is-centered is-italic is-size-3"
-            onClick={() => this.onClick(user.id)}
-          >
-            By {firstName} {lastName}
-          </Link>
-        </div>
-        <ThingInfo
-          image={image}
-          id={id}
-          name={name}
-          description={description}
-          categoryName={categoryName}
-          onMarket={onMarket}
-          onMarketAt={onMarketAt}
-        />
-        {button()}
-      </div>
+      <Button
+        to="/things-for-exchange"
+        className={`${large} ${green}`}
+        id={id}
+        userId={userId}
+        onClick={onButtonClick}
+      >
+        Exchange
+        </Button>
     );
-  }
+  };
+
+  return (
+    <div className="card">
+      <div className="card-header">
+        <Link
+          to="/market-things-filtered-by-user"
+          className="card-header-title has-text-grey is-centered is-italic is-size-3"
+          onClick={() => onTitleClick(userId)}
+        >
+          By {firstName} {lastName}
+        </Link>
+      </div>
+      <ThingInfo
+        image={image}
+        id={id}
+        name={name}
+        description={description}
+        categoryName={categoryName}
+        onMarket={onMarket}
+        onMarketAt={onMarketAt}
+      />
+      {button()}
+    </div>
+  );
 }
-
-const mapDispatchToProps = dispatch => ({
-  addFiltrationByUser: id => dispatch(addFiltrationByUser(id)),
-});
-
-export default connect(null, mapDispatchToProps)(Card);

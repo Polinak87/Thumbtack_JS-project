@@ -3,37 +3,30 @@ import { connect } from 'react-redux';
 import { addSortingType } from '../../store/actions/main';
 import { getMarketThings } from '../../store/actions/things';
 
-class Sorting extends React.Component {
-  constructor(props) {
-    super(props);
-    this.onChange = this.onChange.bind(this);
-  }
-
-  onChange() {
-    const { addSortingType, getMarketThings, filtrationType } = this.props;
+function Sorting(props) {
+  const onChange = () => {
+    const { addSortingType, getMarketThings, filtrationType } = props;
     const sortingType = event.target.value;
     addSortingType({ sortingType });
     getMarketThings(filtrationType, sortingType);
   }
 
-  render() {
-    return (
-      <div className="field">
-        <div className="control is-expanded">
-          <div className="select is-primary">
-            <select onChange={this.onChange}>
-              <option key="by date descending" value="DESC">
-                by date descending
+  return (
+    <div className="field">
+      <div className="control is-expanded">
+        <div className="select is-primary">
+          <select onChange={onChange}>
+            <option key="by date descending" value="DESC">
+              by date descending
               </option>
-              <option key="by date ascending" value="ASC">
-                by date ascending
+            <option key="by date ascending" value="ASC">
+              by date ascending
               </option>
-            </select>
-          </div>
+          </select>
         </div>
       </div>
-    );
-  }
+    </div>
+  );
 }
 
 const mapStateToProps = state => ({

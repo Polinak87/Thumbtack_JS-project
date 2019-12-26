@@ -48,8 +48,7 @@ class ThingsForExchange extends React.Component {
             categoryName={categoryName}
             onMarket={onMarket}
             onMarketAt={onMarketAt}
-            onClickAdd={this.onClickAdd}
-            onClickRemove={this.onClickRemove}
+            onClick={this.onClick}
           />
         </Column>
       );

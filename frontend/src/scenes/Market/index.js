@@ -4,6 +4,7 @@ import { getMarketThings } from '../../store/actions/things';
 import { addThingForExchange } from '../../store/actions/things';
 import { deleteFiltrationType } from '../../store/actions/main';
 import { deleteSortingType } from '../../store/actions/main';
+import { addFiltrationByUser } from '../../store/actions/main';
 import CardBlock from '../../components/CardBlock';
 import FilterByCategory from './FilterByCategory';
 import Sorting from './Sorting';
@@ -14,7 +15,8 @@ import Column from '../../components/Column';
 class Market extends React.Component {
   constructor(props) {
     super(props);
-    this.onClick = this.onClick.bind(this);
+    this.onButtonClick = this.onButtonClick.bind(this);
+    this.onTitleClick = this.onTitleClick.bind(this);
   }
 
   componentDidMount() {
@@ -28,11 +30,16 @@ class Market extends React.Component {
     deleteSortingType();
   }
 
-  onClick(id, userId) {
+  onButtonClick(id, userId) {
     this.props.addThingForExchange({
       idThingDesired: id,
       idUserAnswer: userId,
     });
+  }
+
+  onTitleClick(id) {
+    const { addFiltrationByUser } = this.props;
+    addFiltrationByUser({ id });
   }
 
   render() {
@@ -56,7 +63,8 @@ class Market extends React.Component {
             user={User}
             userId={userId}
             currentUserId={currentUserId}
-            onClick={this.onClick}
+            onButtonClick={this.onButtonClick}
+            onTitleClick={this.onTitleClick}
           />
         </Column>
       );
@@ -91,6 +99,7 @@ const mapDispatchToProps = dispatch => ({
   deleteFiltrationType: () => dispatch(deleteFiltrationType()),
   deleteSortingType: () => dispatch(deleteSortingType()),
   addThingForExchange: thingForExchange => dispatch(addThingForExchange(thingForExchange)),
+  addFiltrationByUser: (id) => dispatch(addFiltrationByUser(id)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Market);

@@ -1,7 +1,6 @@
 import React from 'react';
 
-export default function FileInput(props) {
-  const { onChange, fileName } = props;
+export default function FileInput({ onChange, fileName }) {
   return (
     <div className="field">
       <div className="file is-large is-success has-name is-fullwidth">

@@ -1,8 +1,6 @@
 import React from 'react';
 
-export default function FormField(props) {
-  const { type, name, placeholder, onChange, value } = props;
-
+export default function FormField({ type, name, placeholder, onChange, value }) {
   return (
     <div className="field">
       <div className="control">

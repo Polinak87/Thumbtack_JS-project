@@ -27,7 +27,7 @@ class FilterByCategory extends React.Component {
     let categoryOptons = categoryList.map(cat => {
       return (
         <option key={cat.id} value={cat.id}>
-          {cat.name}{' '}
+          {cat.name}
         </option>
       );
     });
@@ -36,7 +36,7 @@ class FilterByCategory extends React.Component {
       <div className="select is-primary">
         <select onChange={this.onChange}>
           <option key="0" value="all">
-            all{' '}
+            all
           </option>
           {categoryOptons}
         </select>
