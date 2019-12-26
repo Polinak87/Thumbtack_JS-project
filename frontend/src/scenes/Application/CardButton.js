@@ -4,19 +4,27 @@ import Button, { green, red, large } from '../../components/Button';
 export default function CardButton(props) {
   const { status, applicationType, id, onClickComplete, onClickReject, onClickCancel } = props;
 
-  if (status === 'pending') {
-    if (applicationType === 'outbox') {
-      return (
-        <Button className={large + " " + red} value="Cancel application" id={id} onClick={onClickCancel} />
-      );
-    }
+  if (status != 'pending') {
+    return null;
+  }
+
+  if (applicationType === 'outbox') {
     return (
-      <div>
-        <Button className={large + " " + green} value="Complete application" id={id} onClick={onClickComplete} />
-        <br />
-        <Button className={large + " " + red} value="Reject application" id={id} onClick={onClickReject} />
-      </div>
+      <Button className={`${large} ${red}`} id={id} onClick={onClickCancel}>
+        Cancel application
+      </Button>
     );
   }
-  return null;
+
+  return (
+    <div>
+      <Button className={`${large} ${green}`} id={id} onClick={onClickComplete}>
+        Complete application
+      </Button>
+      <br />
+      <Button className={`${large} ${red}`} id={id} onClick={onClickReject}>
+        Reject application
+      </Button>
+    </div>
+  );
 }

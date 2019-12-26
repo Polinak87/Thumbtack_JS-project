@@ -1,9 +1,8 @@
 import React from 'react';
 
 export default class Select extends React.Component {
-
   render() {
-    const type = { fullwidth: 'is-fullwidth'} ;
+    const type = { fullwidth: 'is-fullwidth' };
     const { onChange, value, categoryOptons } = this.props;
     return (
       <div className="field">

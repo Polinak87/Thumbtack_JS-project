@@ -21,13 +21,9 @@ class InfoMessage extends React.Component {
           <article className="message is-info is-medium" name="modalMessage">
             <div className="message-header">
               <p>Info</p>
-              <button className="delete" onClick={this.onClose}/>
+              <button className="delete" onClick={this.onClose} />
             </div>
-            <div className="message-body">
-              {this.props.message.text}
-            </div>
-            <div>
-            </div>
+            <div className="message-body">{this.props.message.text}</div>
           </article>
         </div>
       </div>
@@ -44,6 +40,3 @@ const mapDispatchToProps = dispatch => ({
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(InfoMessage);
-
-
-

@@ -12,7 +12,7 @@ export default class ThingInfo extends React.Component {
     if (onMarket) {
       dateTime = <time dateTime="2016-1-1">On market from: {onMarketAt}</time>;
     } else {
-      dateTime = <br/>;
+      dateTime = <br />;
     }
 
     return (

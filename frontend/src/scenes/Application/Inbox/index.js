@@ -32,12 +32,12 @@ class ApplicationInbox extends React.Component {
   }
 
   render() {
-    const { value } = this.props;
+    const { applicationsMap } = this.props;
     return (
       <Application
         heroText="Your inbox applications"
         onFilterChange={this.onFilterChange}
-        value={value}
+        applicationsMap={applicationsMap}
         applicationType="inbox"
         titleLeft="Thing you have now"
         titleRight="Thing you are offered to get"
@@ -49,7 +49,7 @@ class ApplicationInbox extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  value: state.applications.inbox,
+  applicationsMap: state.applications.inbox,
 });
 
 const mapDispatchToProps = dispatch => ({

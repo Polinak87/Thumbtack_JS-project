@@ -1,5 +1,5 @@
 import React from 'react';
-import { withRouter } from 'react-router-dom'
+import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import isEmpty from 'lodash.isempty';
 import '../styles/components/App.scss';
@@ -9,24 +9,22 @@ import Infomessage from './InfoMessage';
 import { getCurrentUser } from '../store/actions/user';
 
 class App extends React.Component {
-
   componentDidMount() {
     const { user, getCurrentUser } = this.props;
     if (isEmpty(user)) {
-      getCurrentUser()
-      .catch((error) => {
+      getCurrentUser().catch(error => {
         const { pathname } = this.props.location;
-        const isRedirectPathname = ['/login', "/home", "/registration"];
+        const isRedirectPathname = ['/login', '/home', '/registration'];
         if (!isRedirectPathname.includes(pathname)) {
-          this.props.history.push("/home");
+          this.props.history.push('/home');
         }
-      });;
+      });
     }
   }
 
   render() {
     return (
-      <div className='app'>
+      <div className="app">
         <NavBar />
         <Routers />
         {!isEmpty(this.props.message) && <Infomessage />}

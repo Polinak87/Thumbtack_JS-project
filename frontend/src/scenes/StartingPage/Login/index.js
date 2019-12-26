@@ -29,7 +29,6 @@ class Login extends React.Component {
   }
 
   render() {
-
     return (
       <div className="columns is-centered">
         <Column>
@@ -54,7 +53,9 @@ class Login extends React.Component {
                       onChange={this.onChange}
                       value={this.state.password}
                     />
-                    <Button className={large + " " + green} type="submit" value="Log in" />
+                    <Button className={`${large} ${green}`} type="submit">
+                      Log in
+                    </Button>
                   </form>
                 </div>
               </div>

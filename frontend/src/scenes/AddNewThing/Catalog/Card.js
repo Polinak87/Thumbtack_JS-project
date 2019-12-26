@@ -14,9 +14,12 @@ export default class Card extends React.Component {
           id={id}
           name={name}
           description={description}
-          categoryName={categoryName}/>
-          <Button className={large + " " + green} value='Add to inventory' id={id} onClick={onClick}/>
-      </div >
+          categoryName={categoryName}
+        />
+        <Button className={`${large} ${green}`} id={id} onClick={onClick}>
+          Add to inventory
+        </Button>
+      </div>
     );
   }
 }

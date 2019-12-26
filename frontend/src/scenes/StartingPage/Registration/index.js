@@ -73,7 +73,9 @@ class Registration extends React.Component {
                       onChange={this.onChange}
                       value={this.state.password}
                     />
-                    <Button className={large + " " + green} type="submit" value="Register" />
+                    <Button className={`${large} ${green}`} type="submit">
+                      Register
+                    </Button>
                   </form>
                 </div>
               </div>
@@ -90,7 +92,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  registration: (firstName, lastName, email, password, props) => dispatch(registration(firstName, lastName, email, password, props)),
+  registration: (firstName, lastName, email, password, props) =>
+    dispatch(registration(firstName, lastName, email, password, props)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Registration);

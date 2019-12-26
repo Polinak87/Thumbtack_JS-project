@@ -4,16 +4,14 @@ import { DELETE_USER } from '../actions/user';
 const user = (state = {}, action) => {
   switch (action.type) {
     case ADD_USER:
-      return (
-        {
-          ...action.user,
-        });
+      return {
+        ...action.user,
+      };
     case DELETE_USER:
       return {};
     default:
-      return state
+      return state;
   }
-}
+};
 
 export default user;
-

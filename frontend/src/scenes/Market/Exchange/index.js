@@ -31,35 +31,42 @@ class ThingsForExchange extends React.Component {
   }
 
   render() {
-    let cardList = [];
-    for (let UserThing of this.props.value.values()) {
-      cardList.push(
+    const { userThingsMap } = this.props;
+    const userThingsArray = Array.from(userThingsMap.values());
+
+    let cardList = userThingsArray.map(UserThing => {
+      const { Thing, id, onMarket, onMarketAt } = UserThing;
+      const { image, name, description, Category } = Thing;
+      const { name: categoryName } = Category;
+      return (
         <Column key={UserThing.id}>
           <Card
-            image={UserThing.Thing.image}
-            id={UserThing.id}
-            name={UserThing.Thing.name}
-            description={UserThing.Thing.description}
-            categoryName={UserThing.Thing.Category.name}
-            onMarket={UserThing.onMarket}
-            onMarketAt={UserThing.onMarketAt}
-            onClick={this.onClick} />
+            image={image}
+            id={id}
+            name={name}
+            description={description}
+            categoryName={categoryName}
+            onMarket={onMarket}
+            onMarketAt={onMarketAt}
+            onClickAdd={this.onClickAdd}
+            onClickRemove={this.onClickRemove}
+          />
         </Column>
-      )
-    };
+      );
+    });
 
     return (
-      <>
+      <div>
         <br />
-        <Hero text='Choose thing for exchange' type="hero is-info" />
+        <Hero text="Choose thing for exchange" type="hero is-info" />
         <CardBlock cardList={cardList} />
-      </>
+      </div>
     );
   }
 }
 
 const mapStateToProps = state => ({
-  value: state.things.userThings,
+  userThingsMap: state.things.userThings,
   thingForExchange: state.things.thingForExchange,
   message: state.message,
 });
@@ -67,7 +74,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   getUserThings: () => dispatch(getUserThings()),
   deleteThingForExchange: () => dispatch(deleteThingForExchange()),
-  createApplication: (idThingOffered, idThingDesired, idUserAnswer) => dispatch(createApplication(idThingOffered, idThingDesired, idUserAnswer)),
+  createApplication: (idThingOffered, idThingDesired, idUserAnswer) =>
+    dispatch(createApplication(idThingOffered, idThingDesired, idUserAnswer)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ThingsForExchange);

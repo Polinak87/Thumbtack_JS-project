@@ -1,14 +1,14 @@
 import React from 'react';
 import { render, fireEvent, cleanup } from 'react-testing-library';
 import Hero from '../../components/hero';
-import ButtonAddRemoveFromMarket from  '../../scenes/profile/buttonAddRemoveFromMarket';
+import ButtonAddRemoveFromMarket from '../../scenes/profile/buttonAddRemoveFromMarket';
 import Card from '../../scenes/profile/card';
 
 afterEach(cleanup);
 
 it('should has hero name', () => {
   const heroText = 'Your inventory';
-  const { getByText } = render(<Hero heroText={heroText}/>);
+  const { getByText } = render(<Hero heroText={heroText} />);
   expect(getByText(heroText).textContent).toBe(heroText);
 });
 
@@ -25,19 +25,21 @@ it('snapshort of button', () => {
 });
 
 it('snapshort of card', () => {
-  const id=1;
-  const name='summer dress';
-  const description='light';
-  const categoryName='dresses';
-  const onMarket=true;
-  const onMarketAt='2019-05-15T05:21:56.000Z';
-  const { container } = render(<Card
-                                id={id}
-                                name={name}
-                                description={description}
-                                categoryName={categoryName}
-                                onMarket={onMarket}
-                                onMarketAt={onMarketAt}/>);
+  const id = 1;
+  const name = 'summer dress';
+  const description = 'light';
+  const categoryName = 'dresses';
+  const onMarket = true;
+  const onMarketAt = '2019-05-15T05:21:56.000Z';
+  const { container } = render(
+    <Card
+      id={id}
+      name={name}
+      description={description}
+      categoryName={categoryName}
+      onMarket={onMarket}
+      onMarketAt={onMarketAt}
+    />,
+  );
   expect(container.firstChild).toMatchSnapshot();
 });
-

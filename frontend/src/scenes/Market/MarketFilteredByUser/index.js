@@ -1,8 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import Card from '../Card'
+import Card from '../Card';
 import Hero from '../../../components/Hero';
-import store from '../../../store/index';
 import { getMarketThingsOfOneUser } from '../../../store/actions/things';
 import { addThingForExchange } from '../../../store/actions/things';
 import CardBlock from '../../../components/CardBlock';
@@ -24,50 +23,55 @@ class MarketFilteredByUser extends React.Component {
       idThingDesired: id,
       idUserAnswer: userId,
     });
-    this.props.history.replace('/things-for-exchange');
   }
 
-
   render() {
-    let currentUserId = store.getState().user.id;
-    let cardList = [];
-    for (let userThing of this.props.value.values()) {
-      cardList.push(
-        <Column key={userThing.id}>
+    const { currentUserId, marketThingsMap } = this.props;
+    const marketThingsArray = Array.from(marketThingsMap.values());
+
+    let cardList = marketThingsArray.map(MarketThing => {
+      const { Thing, id, onMarketAt, userId, User } = MarketThing;
+      const { image, name, description, Category } = Thing;
+      const { name: categoryName } = Category;
+      return (
+        <Column key={MarketThing.id}>
           <Card
-            image={userThing.Thing.image}
-            id={userThing.id}
-            name={userThing.Thing.name}
-            description={userThing.Thing.description}
-            categoryName={userThing.Thing.Category.name}
-            onMarketAt={userThing.onMarketAt}
-            user={userThing.User}
-            userId={userThing.userId}
+            image={image}
+            id={id}
+            name={name}
+            description={description}
+            categoryName={categoryName}
+            onMarketAt={onMarketAt}
+            /* проверить нужен ли в итоге юзер*/
+            user={User}
+            userId={userId}
             currentUserId={currentUserId}
-            onClick={this.onClick} />
+            onClick={this.onClick}
+          />
         </Column>
-      )
-    };
+      );
+    });
 
     return (
       <>
         <br />
-        <Hero text='Market of User' type="hero is-primary" />
+        <Hero text="Market of User" type="hero is-primary" />
         <br />
-        <CardBlock cardList={cardList}/>
+        <CardBlock cardList={cardList} />
       </>
     );
   }
 }
 
 const mapStateToProps = state => ({
-  value: state.things.marketThingsOfOneUser,
+  currentUserId: state.user.id,
+  marketThingsMap: state.things.marketThingsOfOneUser,
   filtrationByUser: state.main.filterbyUser.id,
 });
 
 const mapDispatchToProps = dispatch => ({
-  getMarketThingsOfOneUser: (user) => dispatch(getMarketThingsOfOneUser(user)),
-  addThingForExchange: (thingForExchange) => dispatch(addThingForExchange(thingForExchange)),
+  getMarketThingsOfOneUser: user => dispatch(getMarketThingsOfOneUser(user)),
+  addThingForExchange: thingForExchange => dispatch(addThingForExchange(thingForExchange)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MarketFilteredByUser);

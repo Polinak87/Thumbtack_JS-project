@@ -17,7 +17,9 @@ class Logout extends React.Component {
 
   render() {
     return (
-      <Button to='/home' className={light} onClick={this.onClick} value="Log out" />
+      <Button to="/home" className={light} onClick={this.onClick}>
+        Log out
+      </Button>
     );
   }
 }
@@ -27,4 +29,3 @@ const mapDispatchToProps = dispatch => ({
 });
 
 export default connect(null, mapDispatchToProps)(Logout);
-

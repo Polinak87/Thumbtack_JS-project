@@ -8,7 +8,16 @@ export default class Card extends React.Component {
   }
 
   render() {
-    const { image, id, name, description, categoryName, onMarket, onMarketAt, onClick } = this.props;
+    const {
+      image,
+      id,
+      name,
+      description,
+      categoryName,
+      onMarket,
+      onMarketAt,
+      onClick,
+    } = this.props;
 
     return (
       <div className="card">
@@ -19,13 +28,12 @@ export default class Card extends React.Component {
           description={description}
           categoryName={categoryName}
           onMarket={onMarket}
-          onMarketAt={onMarketAt}/>
-        <Button
-          className={large + " " + green}
-          value='Choose'
-          id={id}
-          onClick={onClick}/>
-      </div >
+          onMarketAt={onMarketAt}
+        />
+        <Button className={`${large} ${green}`} id={id} onClick={onClick}>
+          Choose
+        </Button>
+      </div>
     );
   }
 }

@@ -13,22 +13,49 @@ class Card extends React.Component {
 
   onClick(id) {
     const { addFiltrationByUser } = this.props;
-    addFiltrationByUser({id});
+    addFiltrationByUser({ id });
   }
 
   render() {
-    const { image, id, name, description, categoryName, onMarket, onMarketAt, user, userId, currentUserId, onClick } = this.props;
+    const {
+      image,
+      id,
+      name,
+      description,
+      categoryName,
+      onMarket,
+      onMarketAt,
+      user,
+      userId,
+      currentUserId,
+      onClick,
+    } = this.props;
     const { firstName, lastName } = user;
     const button = () => {
       if (currentUserId === userId) {
         return;
-      } return <Button to="/things-for-exchange" className={large + " " + green} value='Exchange' id={id} userId={userId} onClick={onClick} />
-    }
+      }
+      return (
+        <Button
+          to="/things-for-exchange"
+          className={`${large} ${green}`}
+          id={id}
+          userId={userId}
+          onClick={onClick}
+        >
+          Exchange
+        </Button>
+      );
+    };
 
     return (
       <div className="card">
         <div className="card-header">
-          <Link to="/market-things-filtered-by-user" className="card-header-title has-text-grey is-centered is-italic is-size-3" onClick={() => this.onClick(user.id)}>
+          <Link
+            to="/market-things-filtered-by-user"
+            className="card-header-title has-text-grey is-centered is-italic is-size-3"
+            onClick={() => this.onClick(user.id)}
+          >
             By {firstName} {lastName}
           </Link>
         </div>
@@ -39,17 +66,16 @@ class Card extends React.Component {
           description={description}
           categoryName={categoryName}
           onMarket={onMarket}
-          onMarketAt={onMarketAt} />
-        <>
-          {button()}
-        </>
-      </div >
+          onMarketAt={onMarketAt}
+        />
+        {button()}
+      </div>
     );
   }
 }
 
 const mapDispatchToProps = dispatch => ({
-  addFiltrationByUser: (id) => dispatch(addFiltrationByUser(id)),
+  addFiltrationByUser: id => dispatch(addFiltrationByUser(id)),
 });
 
 export default connect(null, mapDispatchToProps)(Card);

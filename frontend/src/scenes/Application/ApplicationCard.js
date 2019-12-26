@@ -8,7 +8,14 @@ export default class ApplicationCard extends React.Component {
   }
 
   render() {
-    const { titleRight, titleLeft, applicationType, onClickComplete, onClickReject, onClickCancel} = this.props;
+    const {
+      titleRight,
+      titleLeft,
+      applicationType,
+      onClickComplete,
+      onClickReject,
+      onClickCancel,
+    } = this.props;
     const { id, ThingDesired, ThingOffered, status } = this.props.application;
 
     console.log(ThingDesired);

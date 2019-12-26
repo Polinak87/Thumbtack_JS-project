@@ -19,15 +19,19 @@ export default class Card extends React.Component {
       onClickAdd,
       onClickRemove,
     } = this.props;
-  
+
     let button;
     if (onMarket) {
       button = (
-        <Button className={large + " " + red} value="Remove from market" id={id} onClick={onClickRemove}/>
+        <Button className={`${large} ${red}`} id={id} onClick={onClickRemove}>
+          Remove from market
+        </Button>
       );
     } else {
       button = (
-        <Button className={large + " " + green} value="Add to market" id={id} onClick={onClickAdd}/>
+        <Button className={`${large} ${green}`} id={id} onClick={onClickAdd}>
+          Add to market
+        </Button>
       );
     }
 

@@ -6,12 +6,22 @@ import CardBlock from '../../components/CardBlock';
 import Column from '../../components/Column';
 
 export default function Application(props) {
-  let cardList = [];
-  const { heroText, value, applicationType, titleLeft, titleRight, onClickComplete, onClickReject, onFilterChange, onClickCancel } = props;
+  const {
+    heroText,
+    applicationsMap,
+    applicationType,
+    titleLeft,
+    titleRight,
+    onClickComplete,
+    onClickReject,
+    onFilterChange,
+    onClickCancel,
+  } = props;
+  const applicationsArray = Array.from(applicationsMap.values());
 
-  for (let application of value.values()) {
+  let cardList = applicationsArray.map(application => {
     const { id } = application;
-    cardList.push(
+    return (
       <Column key={id}>
         <ApplicationCard
           application={application}
@@ -22,9 +32,9 @@ export default function Application(props) {
           onClickReject={onClickReject}
           onClickCancel={onClickCancel}
         />
-      </Column>,
+      </Column>
     );
-  }
+  });
 
   return (
     <div>
@@ -33,5 +43,5 @@ export default function Application(props) {
       <FilterByStatus onChange={onFilterChange} />
       <CardBlock cardList={cardList} />
     </div>
-  )
+  );
 }

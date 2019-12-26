@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route } from "react-router-dom";
+import { Route } from 'react-router-dom';
 import startingPage from '../scenes/StartingPage';
 import Login from '../scenes/StartingPage/Login';
 import RegistrationForm from '../scenes/StartingPage/Registration';
@@ -8,12 +8,11 @@ import Profile from '../scenes/Profile';
 import AddNewThingForm from '../scenes/AddNewThing';
 import Market from '../scenes/Market';
 import MarketFilteredByUser from '../scenes/Market/MarketFilteredByUser';
-import ThingsForExchange from '../scenes/Market/Exchange'
+import ThingsForExchange from '../scenes/Market/Exchange';
 import ApplicationOutbox from '../scenes/Application/Outbox';
 import ApplicationInbox from '../scenes/Application/Inbox';
 
 export default function Routers(props) {
-
   return (
     <div>
       <Route path="/home" component={startingPage} />
@@ -30,4 +29,3 @@ export default function Routers(props) {
     </div>
   );
 }
-

@@ -17,7 +17,7 @@ class ApplicationOutbox extends React.Component {
 
   componentDidMount() {
     this.props.getOutboxApplications('all');
-  };
+  }
 
   onClickCancel(id) {
     const { cancelApplication } = this.props;
@@ -25,12 +25,12 @@ class ApplicationOutbox extends React.Component {
   }
 
   render() {
-    const { value } = this.props;
+    const { applicationsMap } = this.props;
     return (
       <Application
         heroText="Your outbox applications"
         onFilterChange={this.onFilterChange}
-        value={value}
+        applicationsMap={applicationsMap}
         applicationType="outbox"
         titleLeft="Thing you want to have"
         titleRight="Thing you want to change"
@@ -42,7 +42,7 @@ class ApplicationOutbox extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  value: state.applications.outbox,
+  applicationsMap: state.applications.outbox,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -51,4 +51,3 @@ const mapDispatchToProps = dispatch => ({
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ApplicationOutbox);
-

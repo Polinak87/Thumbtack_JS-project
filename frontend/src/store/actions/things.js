@@ -18,30 +18,29 @@ export const addNewThing = (name, description, categoryId, file) => {
     formData.append('description', description);
     formData.append('categoryId', categoryId);
 
-    axios.post('/api/addnewthing', formData,
-      {
+    axios
+      .post('/api/addnewthing', formData, {
         headers: {
-          'Content-Type': 'multipart/form-data'
-        }
+          'Content-Type': 'multipart/form-data',
+        },
       })
-      .then((response) => {
+      .then(response => {
         dispatch(updateUserThing(response.data));
         dispatch(addMessage({ text: 'New thing is added to your inventory.' }));
       });
   };
-}
+};
 
-export const addThingFromCatalog = (id) => {
+export const addThingFromCatalog = id => {
   return dispatch => {
-    axios.post('api/addthingfromcatalog', { id })
-      .then((response) => {
-        dispatch(updateUserThing(response.data));
-        dispatch(addMessage({ text: 'Thing is added to your inventory.' }));
-      });
-  }
-}
+    axios.post('api/addthingfromcatalog', { id }).then(response => {
+      dispatch(updateUserThing(response.data));
+      dispatch(addMessage({ text: 'Thing is added to your inventory.' }));
+    });
+  };
+};
 
-export const addThingForExchange = (thingForExchange) => ({
+export const addThingForExchange = thingForExchange => ({
   type: ADD_THING_FOR_EXCHANGE,
   thingForExchange,
 });
@@ -52,51 +51,49 @@ export const deleteThingForExchange = () => ({
 
 export const getUserThings = () => {
   return dispatch => {
-    axios.get('/api/userthings')
-      .then((response) => {
-        const { data } = response;
-        dispatch(addUserThings(createMap(data)));
-      })
+    axios.get('/api/userthings').then(response => {
+      const { data } = response;
+      dispatch(addUserThings(createMap(data)));
+    });
   };
 };
 
-export const addThingToMartet = (id) => {
+export const addThingToMartet = id => {
   return dispatch => {
-    axios.post('/api/addthingtomarket', { id })
-      .then((response) => {
-        dispatch(updateUserThing(response.data));
-      });
-  }
-}
+    axios.post('/api/addthingtomarket', { id }).then(response => {
+      dispatch(updateUserThing(response.data));
+    });
+  };
+};
 
-export const removeThingFromMartet = (id) => {
+export const removeThingFromMartet = id => {
   return dispatch => {
-    axios.post('/api/removethingfrommarket', { id })
-      .then((response) => {
-        dispatch(updateUserThing(response.data));
-      });
-  }
-}
+    axios.post('/api/removethingfrommarket', { id }).then(response => {
+      dispatch(updateUserThing(response.data));
+    });
+  };
+};
 
 export const addUserThings = userThings => ({
   type: ADD_USER_THINGS,
   userThings,
 });
 
-export const updateUserThing = (userThing) => ({
+export const updateUserThing = userThing => ({
   type: UPDATE_USER_THING,
   userThing,
 });
 
 export const getMarketThings = (filtrationType, sortingType) => {
   return dispatch => {
-    axios.get('/api/marketthings', {
-      params: {
-        filtrationType,
-        sortingType,
-      }
-    })
-      .then((response) => {
+    axios
+      .get('/api/marketthings', {
+        params: {
+          filtrationType,
+          sortingType,
+        },
+      })
+      .then(response => {
         const { data } = response;
         dispatch(addMarketThings(createMap(data)));
       });
@@ -110,17 +107,18 @@ export const addMarketThings = marketThings => ({
 
 export const getMarketThingsOfOneUser = user => {
   return dispatch => {
-    axios.get('/api/marketthingsfilteredbyuser', {
-      params: {
-        user,
-      }
-    })
-      .then((response) => {
+    axios
+      .get('/api/marketthingsfilteredbyuser', {
+        params: {
+          user,
+        },
+      })
+      .then(response => {
         const { data } = response;
         dispatch(addMarketThingsOfOneUser(createMap(data)));
       });
-  }
-}
+  };
+};
 
 export const addMarketThingsOfOneUser = marketThingsOfOneUser => ({
   type: ADD_MARKET_THINGS_OF_ONE_USER,
@@ -129,12 +127,11 @@ export const addMarketThingsOfOneUser = marketThingsOfOneUser => ({
 
 export const getCatalog = () => {
   return dispatch => {
-    axios.get('/api/catalog')
-      .then((response) => {
-        const { data } = response;
-        dispatch(addCatalog(createMap(data)));
-      });
-  }
+    axios.get('/api/catalog').then(response => {
+      const { data } = response;
+      dispatch(addCatalog(createMap(data)));
+    });
+  };
 };
 
 export const addCatalog = catalog => ({

@@ -8,7 +8,6 @@ import { addThingToMartet } from '../../store/actions/things';
 import { removeThingFromMartet } from '../../store/actions/things';
 import Column from '../../components/Column';
 
-
 class Profile extends React.Component {
   constructor(props) {
     super(props);
@@ -29,13 +28,14 @@ class Profile extends React.Component {
   }
 
   render() {
-    let cardList = [];
-    const { value } = this.props;
-    for (let UserThing of value.values()) {
+    const { userThingsMap } = this.props;
+    const userThingsArray = Array.from(userThingsMap.values());
+
+    let cardList = userThingsArray.map(UserThing => {
       const { Thing, id, onMarket, onMarketAt } = UserThing;
       const { image, name, description, Category } = Thing;
       const { name: categoryName } = Category;
-      cardList.push(
+      return (
         <Column key={UserThing.id}>
           <Card
             image={image}
@@ -46,15 +46,16 @@ class Profile extends React.Component {
             onMarket={onMarket}
             onMarketAt={onMarketAt}
             onClickAdd={this.onClickAdd}
-            onClickRemove={this.onClickRemove} />
+            onClickRemove={this.onClickRemove}
+          />
         </Column>
-      )
-    };
+      );
+    });
 
     return (
       <>
         <br />
-        <Hero text='Your inventory' type="hero is-primary" />
+        <Hero text="Your inventory" type="hero is-primary" />
         <CardBlock cardList={cardList} />
       </>
     );
@@ -62,13 +63,13 @@ class Profile extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  value: state.things.userThings,
+  userThingsMap: state.things.userThings,
 });
 
 const mapDispatchToProps = dispatch => ({
   getUserThings: () => dispatch(getUserThings()),
-  addThingToMartet: (id) => dispatch(addThingToMartet(id)),
-  removeThingFromMartet: (id) => dispatch(removeThingFromMartet(id)),
+  addThingToMartet: id => dispatch(addThingToMartet(id)),
+  removeThingFromMartet: id => dispatch(removeThingFromMartet(id)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Profile);

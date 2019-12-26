@@ -7,7 +7,7 @@ import { deleteSortingType } from '../../store/actions/main';
 import CardBlock from '../../components/CardBlock';
 import FilterByCategory from './FilterByCategory';
 import Sorting from './Sorting';
-import Card from './Card'
+import Card from './Card';
 import Hero from '../../components/Hero';
 import Column from '../../components/Column';
 
@@ -36,14 +36,15 @@ class Market extends React.Component {
   }
 
   render() {
-    const { currentUserId, value } = this.props;
-    let cardList = [];
-    for (let userThing of value.values()) {
-      const { Thing, id, onMarketAt } = userThing;
+    const { currentUserId, marketThingsMap } = this.props;
+    const marketThingsArray = Array.from(marketThingsMap.values());
+
+    let cardList = marketThingsArray.map(MarketThing => {
+      const { Thing, id, onMarketAt, userId, User } = MarketThing;
       const { image, name, description, Category } = Thing;
       const { name: categoryName } = Category;
-      cardList.push(
-        <Column key={userThing.id}>
+      return (
+        <Column key={MarketThing.id}>
           <Card
             image={image}
             id={id}
@@ -52,18 +53,19 @@ class Market extends React.Component {
             categoryName={categoryName}
             onMarketAt={onMarketAt}
             /* проверить нужен ли в итоге юзер*/
-            user={userThing.User}
-            userId={userThing.userId}
+            user={User}
+            userId={userId}
             currentUserId={currentUserId}
-            onClick={this.onClick} />
+            onClick={this.onClick}
+          />
         </Column>
-      )
-    };
+      );
+    });
 
     return (
-      <>
+      <div>
         <br />
-        <Hero text='Market' type="hero is-primary" />
+        <Hero text="Market" type="hero is-primary" />
         <br />
         <div className="is-inline-flex">
           <FilterByCategory />
@@ -71,23 +73,24 @@ class Market extends React.Component {
         </div>
         <br />
         <CardBlock cardList={cardList} />
-      </>
+      </div>
     );
   }
 }
 
 const mapStateToProps = state => ({
   currentUserId: state.user.id,
-  value: state.things.marketThings,
+  marketThingsMap: state.things.marketThings,
   filtrationType: state.main.filterByCategory.category,
   sortingType: state.main.sortByDate.type,
 });
 
 const mapDispatchToProps = dispatch => ({
-  getMarketThings: (filtrationType, sortingType) => dispatch(getMarketThings(filtrationType, sortingType)),
+  getMarketThings: (filtrationType, sortingType) =>
+    dispatch(getMarketThings(filtrationType, sortingType)),
   deleteFiltrationType: () => dispatch(deleteFiltrationType()),
   deleteSortingType: () => dispatch(deleteSortingType()),
-  addThingForExchange: (thingForExchange) => dispatch(addThingForExchange(thingForExchange)),
+  addThingForExchange: thingForExchange => dispatch(addThingForExchange(thingForExchange)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Market);

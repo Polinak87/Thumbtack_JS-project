@@ -24,22 +24,25 @@ class FilterByCategory extends React.Component {
 
   render() {
     const { categoryList } = this.props;
-    let categoryOptons = [];
-    categoryList.forEach((cat, index) => {
-      categoryOptons.push(
-        <option key={cat.id} value={cat.id}>{cat.name} </option>
+    let categoryOptons = categoryList.map(cat => {
+      return (
+        <option key={cat.id} value={cat.id}>
+          {cat.name}{' '}
+        </option>
       );
     });
 
     return (
       <div className="select is-primary">
         <select onChange={this.onChange}>
-          <option key='0' value='all'>all </option>
+          <option key="0" value="all">
+            all{' '}
+          </option>
           {categoryOptons}
         </select>
       </div>
-    )
-  };
+    );
+  }
 }
 
 const mapStateToProps = state => ({
@@ -50,8 +53,9 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   getCategories: () => dispatch(getCategories()),
-  addFiltrationType: (filtrationType) => dispatch(addFiltrationType(filtrationType)),
-  getMarketThings: (filtrationType, sortingType) => dispatch(getMarketThings(filtrationType, sortingType)),
+  addFiltrationType: filtrationType => dispatch(addFiltrationType(filtrationType)),
+  getMarketThings: (filtrationType, sortingType) =>
+    dispatch(getMarketThings(filtrationType, sortingType)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(FilterByCategory);

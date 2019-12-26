@@ -8,7 +8,6 @@ export default class StartingPage extends React.Component {
   }
 
   render() {
-
     return (
       <div className="columns is-centered">
         <Column>
@@ -17,11 +16,17 @@ export default class StartingPage extends React.Component {
               <div className="container has-text-centered">
                 <h1 className="title has-text-success is-size-1">A thing's new life</h1>
                 <br />
-                <em className="title has-text-grey">Exchange things you don't use any more for things you like</em>
+                <em className="title has-text-grey">
+                  Exchange things you don't use any more for things you like
+                </em>
                 <div className="box">
-                  <Button to="/registration" className={large + " " + green} value="Registration"/>
+                  <Button to="/registration" className={`${large} ${green}`}>
+                    Registration
+                  </Button>
                   <br />
-                  <Button to="/login" className={large + " " + green} value="Login" />
+                  <Button to="/login" className={`${large} ${green}`}>
+                    Login
+                  </Button>
                 </div>
               </div>
             </div>

@@ -6,7 +6,7 @@
   "scripts": {
     "eslint": "eslint --color ./",
     "test": "jest",
-    "prettier": "prettier src/**/*.js"
+    "prettier": "prettier --write src/**/*.js"
   },
   "author": "",
   "license": "ISC",

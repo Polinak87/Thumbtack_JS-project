@@ -20,12 +20,13 @@ class Catalog extends React.Component {
   onClick(id) {
     const { addThingFromCatalog } = this.props;
     addThingFromCatalog(id);
-  };
+  }
 
   render() {
-    let cardList = [];
-    for (let Thing of this.props.value.values()) {
-      cardList.push(
+    const { catalog } = this.props;
+    const catalogArray = Array.from(catalog.values());
+    let cardList = catalogArray.map(Thing => {
+      return (
         <Column key={Thing.id}>
           <Card
             image={Thing.image}
@@ -33,26 +34,24 @@ class Catalog extends React.Component {
             name={Thing.name}
             description={Thing.description}
             categoryName={Thing.Category.name}
-            onClick={this.onClick} />
+            onClick={this.onClick}
+          />
         </Column>
-      )
-    };
+      );
+    });
 
-    return (
-      <CardBlock cardList={cardList} />
-    );
+    return <CardBlock cardList={cardList} />;
   }
 }
 
 const mapStateToProps = state => ({
-  value: state.things.catalog,
+  catalog: state.things.catalog,
   a: state.things.userThings,
 });
 
 const mapDispatchToProps = dispatch => ({
   getCatalog: () => dispatch(getCatalog()),
-  addThingFromCatalog: (id) => dispatch(addThingFromCatalog(id)),
+  addThingFromCatalog: id => dispatch(addThingFromCatalog(id)),
 });
-
 
 export default connect(mapStateToProps, mapDispatchToProps)(Catalog);

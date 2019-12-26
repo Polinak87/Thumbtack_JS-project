@@ -9,14 +9,19 @@ export const UPDATE_OUTBOX_APPLICATIONS = 'UPDATE_OUTBOX_APPLICATIONS';
 
 export const createApplication = (idThingOffered, idThingDesired, idUserAnswer) => {
   return dispatch => {
-    axios.post('/api/createapplication', { idThingOffered, idThingDesired, idUserAnswer })
-      .then((response) => {
+    axios
+      .post('/api/createapplication', { idThingOffered, idThingDesired, idUserAnswer })
+      .then(response => {
         const { data } = response;
         updateOutboxApplications(createMap(data));
-        dispatch(addMessage({ text: ' Your application is sent. You can track it in your outbox applications.' }));
+        dispatch(
+          addMessage({
+            text: ' Your application is sent. You can track it in your outbox applications.',
+          }),
+        );
       });
-  }
-}
+  };
+};
 
 export const getInboxApplications = status => {
   return dispatch => {
@@ -35,12 +40,13 @@ export const getInboxApplications = status => {
 
 export const getOutboxApplications = status => {
   return dispatch => {
-    axios.get('/api/applicationsoutbox', {
-      params: {
-        status,
-      },
-    })
-      .then((response) => {
+    axios
+      .get('/api/applicationsoutbox', {
+        params: {
+          status,
+        },
+      })
+      .then(response => {
         const { data } = response;
         dispatch(addOutboxApplications(createMap(data)));
       });
@@ -49,47 +55,44 @@ export const getOutboxApplications = status => {
 
 export const rejectApplication = id => {
   return dispatch => {
-    axios.put('/api/rejectapplication', { id })
-      .then(response => {
-        const { currentApplication, message } = response.data;
-        dispatch(updateInboxApplications(createMap(currentApplication)));
-        if (message !== '') {
-          dispatch(addMessage({ text: message }));
-        }
-      });
-  }
-}
+    axios.put('/api/rejectapplication', { id }).then(response => {
+      const { currentApplication, message } = response.data;
+      dispatch(updateInboxApplications(createMap(currentApplication)));
+      if (message !== '') {
+        dispatch(addMessage({ text: message }));
+      }
+    });
+  };
+};
 export const cancelApplication = id => {
   return dispatch => {
-    axios.put('/api/canceleapplication', { id })
-      .then(response => {
-        const { currentApplication, message } = response.data;
-        dispatch(updateOutboxApplications(createMap(currentApplication)));
-        if (message !== '') {
-          dispatch(addMessage({ text: message }));
-        }
-      });
-  }
-}
+    axios.put('/api/canceleapplication', { id }).then(response => {
+      const { currentApplication, message } = response.data;
+      dispatch(updateOutboxApplications(createMap(currentApplication)));
+      if (message !== '') {
+        dispatch(addMessage({ text: message }));
+      }
+    });
+  };
+};
 
 // нужен ли arrayForUpdate
 export const completeApplication = id => {
   return dispatch => {
-    axios.put('/api/completeapplication', { id })
-      .then(response => {
-        let { data } = response;
-        let arrayForUpdate = [];
-        for (let i = 0; i < data.length; i++) {
-          const { application, message } = data[i];
-          arrayForUpdate.push(application);
-          if (message !== '') {
-            dispatch(addMessage({ text: message }));
-          }
+    axios.put('/api/completeapplication', { id }).then(response => {
+      let { data } = response;
+      let arrayForUpdate = [];
+      for (let i = 0; i < data.length; i++) {
+        const { application, message } = data[i];
+        arrayForUpdate.push(application);
+        if (message !== '') {
+          dispatch(addMessage({ text: message }));
         }
-        dispatch(updateInboxApplications(createMap(arrayForUpdate)));
-      });
-  }
-}
+      }
+      dispatch(updateInboxApplications(createMap(arrayForUpdate)));
+    });
+  };
+};
 
 export const addInboxApplications = inboxApplications => ({
   type: ADD_INBOX_APPLICATIONS,
@@ -110,4 +113,3 @@ export const updateInboxApplications = updateddata => ({
   type: UPDATE_INBOX_APPLICATIONS,
   updateddata,
 });
-
