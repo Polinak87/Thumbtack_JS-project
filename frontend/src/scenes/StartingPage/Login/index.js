@@ -5,6 +5,7 @@ import FormField from '../../../components/FormField';
 import Button, { green, large } from '../../../components/Button';
 import Avatar from '../Avatar';
 import Column from '../../../components/Column';
+import { addMessage } from '../../../store/actions/main';
 
 class Login extends React.Component {
   constructor(props) {
@@ -13,7 +14,7 @@ class Login extends React.Component {
       email: '',
       password: '',
     };
-    this.handleSubmit = this.handleSubmit.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
     this.onChange = this.onChange.bind(this);
   }
 
@@ -21,11 +22,21 @@ class Login extends React.Component {
     this.setState({ [event.target.name]: event.target.value });
   }
 
-  handleSubmit(event) {
+  onSubmit(event) {
     event.preventDefault();
     const { email, password } = this.state;
-    const { login } = this.props;
-    login(email, password, this.props);
+    const { login, addMessage } = this.props;
+
+    login(email, password, this.props).then(() => {
+      this.props.history.push('/profile');
+    })
+      .catch(function (error) {
+        if (error.response.status === 401) {
+          addMessage({ text: error.response.data });
+        } else {
+          addMessage({ text: 'Something is wrang. Try again or contact technical support.' });
+        }
+      });
   }
 
   render() {
@@ -38,7 +49,7 @@ class Login extends React.Component {
                 <h3 className="title has-text-grey">Login</h3>
                 <div className="box">
                   <Avatar />
-                  <form className="" name="LoginForm" onSubmit={this.handleSubmit}>
+                  <form className="" name="LoginForm" onSubmit={this.onSubmit}>
                     <FormField
                       type="email"
                       name="email"
@@ -73,6 +84,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   login: (email, password, props) => dispatch(login(email, password, props)),
+  addMessage: (text) => dispatch(addMessage(text)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

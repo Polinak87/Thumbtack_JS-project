@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { registration } from '../../../store/actions/user';
+import { addMessage } from '../../../store/actions/main';
 import Button, { green, large } from '../../../components/Button';
 import FormField from '../../../components/FormField';
 import Avatar from '../Avatar';
@@ -26,12 +27,18 @@ class Registration extends React.Component {
   handleSubmit(event) {
     event.preventDefault();
     const { firstName, lastName, email, password } = this.state;
-    const { registration } = this.props;
-    registration(firstName, lastName, email, password, this.props);
-    // делает переход даже в случае ошибки
-    // .then(() => {
-    //   this.props.history.push('/profile');
-    // });
+    const { registration, addMessage } = this.props;
+    registration(firstName, lastName, email, password, this.props)
+      .then(() => {
+        this.props.history.push('/profile');
+      })
+      .catch(function (error) {
+        if (error.response.status === 401) {
+          addMessage({ text: error.response.data });
+        } else {
+          addMessage({ text: 'Something is wrang. Try again or contact technical support.' });
+        }
+      });
   }
 
   render() {
@@ -94,6 +101,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   registration: (firstName, lastName, email, password, props) =>
     dispatch(registration(firstName, lastName, email, password, props)),
+    addMessage: (text) => dispatch(addMessage(text)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Registration);
