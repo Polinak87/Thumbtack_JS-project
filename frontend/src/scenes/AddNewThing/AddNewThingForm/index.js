@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { getCategories } from '../../../store/actions/main';
 import { addNewThing } from '../../../store/actions/things';
 import FormField from '../../../components/FormField';
-import Select from '../../../components/Select';
+import Select, {fullwidth} from '../../../components/Select';
 import Button, { green, large } from '../../../components/Button';
 import FileInput from './FileInput';
 
@@ -73,6 +73,7 @@ class AddNewThingForm extends React.Component {
         />
         <FileInput onChange={this.handleChangeFile} fileName={this.state.file.name} />
         <Select
+          className={`${green} ${fullwidth}`}
           onChange={this.handleChange}
           value={this.state.categoryId}
           categoryOptons={categoryOptons}

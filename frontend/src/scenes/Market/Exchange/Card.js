@@ -27,7 +27,7 @@ export default function Card(props) {
       />
       <Button className={`${large} ${green}`} id={id} onClick={onClick}>
         Choose
-        </Button>
+      </Button>
     </div>
   );
 }

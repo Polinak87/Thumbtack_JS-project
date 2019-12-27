@@ -1,32 +1,28 @@
 import React from 'react';
+import Select, { aquamarine } from '../../components/Select';
 
-export default class FilterByStatus extends React.Component {
-  render() {
-    const { onChange } = this.props;
-    return (
-      <div className="field">
-        <div className="control is-expanded">
-          <div className="is-inline select is-primary">
-            <select onChange={onChange}>
-              <option key="all" value="all">
-                all
-              </option>
-              <option key="completed" value="completed">
-                completed
-              </option>
-              <option key="rejected" value="rejected">
-                rejected
-              </option>
-              <option key="pending" value="pending">
-                pending
-              </option>
-              <option key="canceled" value="canceled">
-                canceled
-              </option>
-            </select>
-          </div>
-        </div>
-      </div>
-    );
+export default function FilterByStatus(props) {
+  const { onChange } = props;
+
+  const status = {
+    all: 'all',
+    completed: 'completed',
+    rejected: 'rejected',
+    pending: 'pending',
+    canceled: 'canceled',
   }
+
+  const categoryOptons = [];
+
+  for (let variant in status) {
+    categoryOptons.push(
+      <option key={status[variant]} value={status[variant]}>
+        {status[variant]}
+      </option>
+    )
+  }
+
+  return (
+    <Select className={aquamarine} onChange={onChange} categoryOptons={categoryOptons} />
+  );
 }

@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { addFiltrationType } from '../../store/actions/main';
 import { getMarketThings } from '../../store/actions/things';
 import { getCategories } from '../../store/actions/main';
+import Select, {aquamarine} from '../../components/Select';
 
 class FilterByCategory extends React.Component {
   constructor(props) {
@@ -31,16 +32,14 @@ class FilterByCategory extends React.Component {
         </option>
       );
     });
+    categoryOptons.push(
+      <option key="0" value="all">
+        all
+      </option>
+    );
 
     return (
-      <div className="select is-primary">
-        <select onChange={this.onChange}>
-          <option key="0" value="all">
-            all
-          </option>
-          {categoryOptons}
-        </select>
-      </div>
+      <Select className={aquamarine} categoryOptons={categoryOptons} onChange={this.onChange}/>
     );
   }
 }

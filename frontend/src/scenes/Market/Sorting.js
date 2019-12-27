@@ -2,8 +2,10 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { addSortingType } from '../../store/actions/main';
 import { getMarketThings } from '../../store/actions/things';
+import Select, { aquamarine } from '../../components/Select';
 
 function Sorting(props) {
+
   const onChange = () => {
     const { addSortingType, getMarketThings, filtrationType } = props;
     const sortingType = event.target.value;
@@ -11,21 +13,23 @@ function Sorting(props) {
     getMarketThings(filtrationType, sortingType);
   }
 
+  const type = {
+    DESC: 'by date descending',
+    ASC: 'by date ascending',
+  }
+
+  let categoryOptons = [];
+
+  for (let variant in type) {
+    categoryOptons.push(
+      <option key={type[variant]} value={variant}>
+        {type[variant]}
+      </option>
+    )
+  }
+
   return (
-    <div className="field">
-      <div className="control is-expanded">
-        <div className="select is-primary">
-          <select onChange={onChange}>
-            <option key="by date descending" value="DESC">
-              by date descending
-              </option>
-            <option key="by date ascending" value="ASC">
-              by date ascending
-              </option>
-          </select>
-        </div>
-      </div>
-    </div>
+    <Select className={aquamarine} categoryOptons={categoryOptons} onChange={onChange} />
   );
 }
 
