@@ -1,7 +1,7 @@
 import React from 'react';
 import ApplicationCard from './ApplicationCard';
 import FilterByStatus from './FilterByStatus';
-import Hero from '../../components/Hero';
+import Hero, {aquamarine} from '../../components/Hero';
 import CardBlock from '../../components/CardBlock';
 import Column from '../../components/Column';
 
@@ -39,7 +39,7 @@ export default function Application(props) {
   return (
     <div>
       <br />
-      <Hero text={heroText} type="hero is-primary" />
+      <Hero className={aquamarine} text={heroText} />
       <FilterByStatus onChange={onFilterChange} />
       <CardBlock cardList={cardList} />
     </div>

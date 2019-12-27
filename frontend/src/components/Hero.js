@@ -1,15 +1,22 @@
 import React from 'react';
+import classNames from 'classnames';
 
-export default class Hero extends React.Component {
-  render() {
-    return (
-      <section className={this.props.type}>
-        <div className="hero-body">
-          <div className="container">
-            <h1 className="title">{this.props.text}</h1>
-          </div>
+export const aquamarine = 'is-primary';
+export const blue = 'is-info';
+
+export default function Hero({ className, text}) {
+
+  const classes = () => {
+    return classNames('hero', className);
+  };
+
+  return (
+    <section className={classes()}>
+      <div className="hero-body">
+        <div className="container">
+          <h1 className="title">{text}</h1>
         </div>
-      </section>
-    );
-  }
+      </div>
+    </section>
+  );
 }

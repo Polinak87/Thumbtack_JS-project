@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Card from '../Card';
-import Hero from '../../../components/Hero';
+import Hero, {aquamarine} from '../../../components/Hero';
 import { getMarketThingsOfOneUser } from '../../../store/actions/things';
 import { addThingForExchange } from '../../../store/actions/things';
 import CardBlock from '../../../components/CardBlock';
@@ -55,7 +55,7 @@ class MarketFilteredByUser extends React.Component {
     return (
       <>
         <br />
-        <Hero text="Market of User" type="hero is-primary" />
+        <Hero className={aquamarine} text="Market of User" />
         <br />
         <CardBlock cardList={cardList} />
       </>

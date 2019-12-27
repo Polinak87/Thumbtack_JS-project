@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Card from './Card';
-import Hero from '../../components/Hero';
+import Hero, {aquamarine} from '../../components/Hero';
 import CardBlock from '../../components/CardBlock';
 import { getUserThings } from '../../store/actions/things';
 import { addThingToMartet } from '../../store/actions/things';
@@ -53,11 +53,11 @@ class Profile extends React.Component {
     });
 
     return (
-      <>
+      <div>
         <br />
-        <Hero text="Your inventory" type="hero is-primary" />
-        <CardBlock cardList={cardList} />
-      </>
+        <Hero className={aquamarine} text="Your inventory"/>
+        <CardBlock cardList={cardList}/>
+      </div>
     );
   }
 }

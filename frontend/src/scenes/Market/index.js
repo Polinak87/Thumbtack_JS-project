@@ -9,7 +9,7 @@ import CardBlock from '../../components/CardBlock';
 import FilterByCategory from './FilterByCategory';
 import Sorting from './Sorting';
 import Card from './Card';
-import Hero from '../../components/Hero';
+import Hero, {aquamarine} from '../../components/Hero';
 import Column from '../../components/Column';
 
 class Market extends React.Component {
@@ -73,7 +73,7 @@ class Market extends React.Component {
     return (
       <div>
         <br />
-        <Hero text="Market" type="hero is-primary" />
+        <Hero className={aquamarine} text="Market"/>
         <br />
         <div className="is-inline-flex">
           <FilterByCategory />

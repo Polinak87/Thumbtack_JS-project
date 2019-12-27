@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Card from './Card';
-import Hero from '../../../components/Hero';
+import Hero, {blue} from '../../../components/Hero';
 import { deleteThingForExchange } from '../../../store/actions/things';
 import { createApplication } from '../../../store/actions/applications';
 import { getUserThings } from '../../../store/actions/things';
@@ -57,7 +57,7 @@ class ThingsForExchange extends React.Component {
     return (
       <div>
         <br />
-        <Hero text="Choose thing for exchange" type="hero is-info" />
+        <Hero className={blue} text="Choose thing for exchange" />
         <CardBlock cardList={cardList} />
       </div>
     );
