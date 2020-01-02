@@ -13,21 +13,23 @@ class App extends React.Component {
     const { user, getCurrentUser } = this.props;
     if (isEmpty(user)) {
       getCurrentUser().catch(error => {
-        const { pathname } = this.props.location;
+        const { location, history } = this.props;
+        const { pathname } = location;
         const isRedirectPathname = ['/login', '/home', '/registration'];
         if (!isRedirectPathname.includes(pathname)) {
-          this.props.history.push('/home');
+          history.push('/home');
         }
       });
     }
   }
 
   render() {
+    const { message } = this.props;
     return (
       <div className="app">
         <NavBar />
         <Routers />
-        {!isEmpty(this.props.message) && <Infomessage />}
+        {!isEmpty(message) && <Infomessage />}
       </div>
     );
   }
@@ -40,7 +42,6 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   getCurrentUser: () => dispatch(getCurrentUser()),
-  dispatch,
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));

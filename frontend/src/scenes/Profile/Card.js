@@ -20,13 +20,13 @@ export default function Card(props) {
     button = (
       <Button className={`${large} ${red}`} id={id} onClick={onClickRemove}>
         Remove from market
-        </Button>
+      </Button>
     );
   } else {
     button = (
       <Button className={`${large} ${green}`} id={id} onClick={onClickAdd}>
         Add to market
-        </Button>
+      </Button>
     );
   }
 

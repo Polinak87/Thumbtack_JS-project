@@ -25,15 +25,18 @@ class Catalog extends React.Component {
   render() {
     const { catalog } = this.props;
     const catalogArray = Array.from(catalog.values());
+
     let cardList = catalogArray.map(Thing => {
+      const { id, name, image, description, Category } = Thing;
+      const { name: categoryName } = Category;
       return (
-        <Column key={Thing.id}>
+        <Column key={id}>
           <Card
-            image={Thing.image}
-            id={Thing.id}
-            name={Thing.name}
-            description={Thing.description}
-            categoryName={Thing.Category.name}
+            image={image}
+            id={id}
+            name={name}
+            description={description}
+            categoryName={categoryName}
             onClick={this.onClick}
           />
         </Column>

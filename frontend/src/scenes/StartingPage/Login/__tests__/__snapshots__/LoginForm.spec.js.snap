@@ -1,0 +1,47 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LoginForm renders correctly 1`] = `
+<form
+  class=""
+  name="LoginForm"
+>
+  <div
+    class="field"
+  >
+    <div
+      class="control"
+    >
+      <input
+        class="input"
+        name="email"
+        placeholder="Your Email"
+        required=""
+        type="email"
+        value=""
+      />
+    </div>
+  </div>
+  <div
+    class="field"
+  >
+    <div
+      class="control"
+    >
+      <input
+        class="input"
+        name="password"
+        placeholder="Your Password"
+        required=""
+        type="password"
+        value=""
+      />
+    </div>
+  </div>
+  <button
+    class="button is-block is-large is-fullwidth is-success"
+    type="submit"
+  >
+    Log in
+  </button>
+</form>
+`;

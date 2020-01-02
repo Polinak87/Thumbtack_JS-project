@@ -2,10 +2,9 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { registration } from '../../../store/actions/user';
 import { addMessage } from '../../../store/actions/main';
-import Button, { green, large } from '../../../components/Button';
-import FormField from '../../../components/FormField';
 import Avatar from '../Avatar';
 import Column from '../../../components/Column';
+import RegistrationForm from './RegistrationForm';
 
 class Registration extends React.Component {
   constructor(props) {
@@ -16,7 +15,7 @@ class Registration extends React.Component {
       email: '',
       password: '',
     };
-    this.handleSubmit = this.handleSubmit.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
     this.onChange = this.onChange.bind(this);
   }
 
@@ -24,13 +23,13 @@ class Registration extends React.Component {
     this.setState({ [event.target.name]: event.target.value });
   }
 
-  handleSubmit(event) {
+  onSubmit(event) {
     event.preventDefault();
     const { firstName, lastName, email, password } = this.state;
     const { registration, addMessage } = this.props;
     registration(firstName, lastName, email, password, this.props)
       .then(() => {
-        this.props.history.push('/profile');
+        this.props.history.push('/add-new-thing');
       })
       .catch(function (error) {
         if (error.response.status === 401) {
@@ -51,39 +50,7 @@ class Registration extends React.Component {
                 <h3 className="title has-text-grey">Registration</h3>
                 <div className="box">
                   <Avatar />
-                  <form className="" name="RegistrationForm" onSubmit={this.handleSubmit}>
-                    <FormField
-                      type="text"
-                      name="firstName"
-                      placeholder="First name"
-                      onChange={this.onChange}
-                      value={this.state.firstName}
-                    />
-                    <FormField
-                      type="text"
-                      name="lastName"
-                      placeholder="Last name"
-                      onChange={this.onChange}
-                      value={this.state.lastName}
-                    />
-                    <FormField
-                      type="email"
-                      name="email"
-                      placeholder="Email"
-                      onChange={this.onChange}
-                      value={this.state.email}
-                    />
-                    <FormField
-                      type="password"
-                      name="password"
-                      placeholder="Password"
-                      onChange={this.onChange}
-                      value={this.state.password}
-                    />
-                    <Button className={`${large} ${green}`} type="submit">
-                      Register
-                    </Button>
-                  </form>
+                  <RegistrationForm onChange={this.onChange} onSubmit={this.onSubmit}/>
                 </div>
               </div>
             </div>
@@ -101,7 +68,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   registration: (firstName, lastName, email, password, props) =>
     dispatch(registration(firstName, lastName, email, password, props)),
-    addMessage: (text) => dispatch(addMessage(text)),
+  addMessage: (text) => dispatch(addMessage(text)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Registration);

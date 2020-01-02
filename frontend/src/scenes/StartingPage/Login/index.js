@@ -1,11 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { login } from '../../../store/actions/user';
-import FormField from '../../../components/FormField';
-import Button, { green, large } from '../../../components/Button';
 import Avatar from '../Avatar';
 import Column from '../../../components/Column';
 import { addMessage } from '../../../store/actions/main';
+import LoginForm from './LoginForm';
 
 class Login extends React.Component {
   constructor(props) {
@@ -49,25 +48,7 @@ class Login extends React.Component {
                 <h3 className="title has-text-grey">Login</h3>
                 <div className="box">
                   <Avatar />
-                  <form className="" name="LoginForm" onSubmit={this.onSubmit}>
-                    <FormField
-                      type="email"
-                      name="email"
-                      placeholder="Your Email"
-                      onChange={this.onChange}
-                      value={this.state.email}
-                    />
-                    <FormField
-                      type="password"
-                      name="password"
-                      placeholder="Your Password"
-                      onChange={this.onChange}
-                      value={this.state.password}
-                    />
-                    <Button className={`${large} ${green}`} type="submit">
-                      Log in
-                    </Button>
-                  </form>
+                  <LoginForm onSubmit={this.onSubmit} onChange={this.onChange}/>
                 </div>
               </div>
             </div>

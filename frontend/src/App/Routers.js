@@ -15,17 +15,17 @@ import ApplicationInbox from '../scenes/Application/Inbox';
 export default function Routers(props) {
   return (
     <div>
-      <Route path="/home" component={startingPage} />
-      <Route path="/login" component={Login} />
-      <Route path="/registration" component={RegistrationForm} />
-      <Route path="/logout" component={Logout} />
-      <Route path="/profile" component={Profile} />
-      <Route path="/add-new-thing" component={AddNewThingForm} />
-      <Route path="/market" component={Market} />
-      <Route path="/market-things-filtered-by-user" component={MarketFilteredByUser} />
-      <Route path="/things-for-exchange" component={ThingsForExchange} />
-      <Route path="/applications-outbox" component={ApplicationOutbox} />
-      <Route path="/applications-inbox" component={ApplicationInbox} />
+      <Route path="/home" component={startingPage}/>
+      <Route path="/login" component={Login}/>
+      <Route path="/registration" component={RegistrationForm}/>
+      <Route path="/logout" component={Logout}/>
+      <Route path="/profile" component={Profile}/>
+      <Route path="/add-new-thing" component={AddNewThingForm}/>
+      <Route path="/market" component={Market}/>
+      <Route path="/market-things-filtered-by-user" component={MarketFilteredByUser}/>
+      <Route path="/things-for-exchange" component={ThingsForExchange}/>
+      <Route path="/applications-outbox" component={ApplicationOutbox}/>
+      <Route path="/applications-inbox" component={ApplicationInbox}/>
     </div>
   );
 }

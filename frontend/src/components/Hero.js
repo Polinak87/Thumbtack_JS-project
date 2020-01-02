@@ -4,8 +4,7 @@ import classNames from 'classnames';
 export const aquamarine = 'is-primary';
 export const blue = 'is-info';
 
-export default function Hero({ className, text}) {
-
+export default function Hero({ className, text }) {
   const classes = () => {
     return classNames('hero', className);
   };

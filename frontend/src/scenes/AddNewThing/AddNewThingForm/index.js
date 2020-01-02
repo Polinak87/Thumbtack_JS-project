@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { getCategories } from '../../../store/actions/main';
 import { addNewThing } from '../../../store/actions/things';
 import FormField from '../../../components/FormField';
-import Select, {fullwidth} from '../../../components/Select';
+import Select, { fullwidth } from '../../../components/Select';
 import Button, { green, large } from '../../../components/Button';
 import FileInput from './FileInput';
 
@@ -17,65 +17,69 @@ class AddNewThingForm extends React.Component {
       categoryId: defaultCategoryId,
       file: {},
     };
-    this.handleChange = this.handleChange.bind(this);
-    this.handleChangeFile = this.handleChangeFile.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
+    this.onChange = this.onChange.bind(this);
+    this.onChangeFile = this.onChangeFile.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
   }
 
   componentDidMount() {
-    this.props.getCategories();
+    const { getCategories } = this.props;
+    getCategories();
   }
 
-  handleChange() {
+  onChange() {
     this.setState({ [event.target.name]: event.target.value });
   }
 
-  handleChangeFile(event) {
+  onChangeFile(event) {
     this.setState({ file: event.target.files[0] });
   }
 
-  handleSubmit(event) {
+  onSubmit(event) {
     event.preventDefault();
     const { name, description, categoryId, file } = this.state;
-    this.props.addNewThing(name, description, categoryId, file);
+    const { addNewThing } = this.props;
+    addNewThing(name, description, categoryId, file);
   }
 
   render() {
     const { categoryList } = this.props;
     let categoryOptons = categoryList.map(cat => {
+      const { id, name } = cat;
       return (
-        <option key={cat.id} value={cat.id}>
-          {cat.name}{' '}
+        <option key={id} value={id}>
+          {name}
         </option>
       );
     });
-
+    const { name, description, categoryId, file } = this.state;
+    const { name: fileName } = file;
     return (
       <form
         className=""
         name="AddNewThingForm"
         encType="multipart/form-data"
-        onSubmit={this.handleSubmit}
+        onSubmit={this.onSubmit}
       >
         <FormField
           type="text"
           name="name"
           placeholder="Name"
-          onChange={this.handleChange}
-          value={this.state.name}
+          onChange={this.onChange}
+          value={name}
         />
         <FormField
           type="text"
           name="description"
           placeholder="Description"
-          onChange={this.handleChange}
-          value={this.state.description}
+          onChange={this.onChange}
+          value={description}
         />
-        <FileInput onChange={this.handleChangeFile} fileName={this.state.file.name} />
+        <FileInput onChange={this.onChangeFile} fileName={fileName} />
         <Select
           className={`${green} ${fullwidth}`}
-          onChange={this.handleChange}
-          value={this.state.categoryId}
+          onChange={this.onChange}
+          value={categoryId}
           categoryOptons={categoryOptons}
         />
         <Button className={`${large} ${green}`} type="submit">

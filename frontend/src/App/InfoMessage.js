@@ -2,33 +2,29 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { deleteMessage } from '../store/actions/main';
 
-class InfoMessage extends React.Component {
-  constructor(props) {
-    super(props);
-    this.onClose = this.onClose.bind(this);
-  }
+function InfoMessage(props) {
+  const { message, deleteMessage } = props;
+  const { text } = message;
 
-  onClose() {
+  const onClose = () => {
     event.preventDefault();
-    this.props.deleteMessage();
+    deleteMessage();
   }
 
-  render() {
-    return (
-      <div className="modal is-active">
-        <div className="modal-background"></div>
-        <div className="modal-content">
-          <article className="message is-info is-medium" name="modalMessage">
-            <div className="message-header">
-              <p>Info</p>
-              <button className="delete" onClick={this.onClose} />
-            </div>
-            <div className="message-body">{this.props.message.text}</div>
-          </article>
-        </div>
+  return (
+    <div className="modal is-active">
+      <div className="modal-background"></div>
+      <div className="modal-content">
+        <article className="message is-info is-medium" name="modalMessage">
+          <div className="message-header">
+            <p>Info</p>
+            <button className="delete" onClick={onClose} />
+          </div>
+          <div className="message-body">{text}</div>
+        </article>
       </div>
-    );
-  }
+    </div>
+  );
 }
 
 const mapStateToProps = state => ({

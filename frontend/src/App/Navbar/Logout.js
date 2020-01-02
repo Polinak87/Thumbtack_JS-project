@@ -3,25 +3,17 @@ import { connect } from 'react-redux';
 import Button, { light } from '../../components/Button';
 import { logout } from '../../store/actions/user';
 
-class Logout extends React.Component {
-  constructor(props) {
-    super(props);
-    this.onClick = this.onClick.bind(this);
-  }
-
-  onClick() {
-    event.preventDefault();
-    const { logout } = this.props;
+function Logout(props) {
+  const onClick = () => {
+    const { logout } = props;
     logout();
   }
 
-  render() {
-    return (
-      <Button to="/home" className={light} onClick={this.onClick}>
-        Log out
-      </Button>
-    );
-  }
+  return (
+    <Button to="/home" className={light} onClick={onClick}>
+      Log out
+    </Button>
+  );
 }
 
 const mapDispatchToProps = dispatch => ({
