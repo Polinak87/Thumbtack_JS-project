@@ -1,13 +1,15 @@
-import { ADD_MESSAGE } from '../actions/main';
-import { DELETE_MESSAGE } from '../actions/main';
-import { ADD_CATEGORIES } from '../actions/main';
-import { ADD_SORTINGTYPE } from '../actions/main';
-import { DELETE_SORTINGTYPE } from '../actions/main';
-import { ADD_FILTRATIONTYPE } from '../actions/main';
-import { DELETE_FILTRATIONTYPE } from '../actions/main';
-import { ADD_FILTRATION_BY_USER } from '../actions/main';
-import { DELETE_FILTRATION_BY_USER } from '../actions/main';
 import { DELETE_USER } from '../actions/user';
+import {
+  ADD_MESSAGE,
+  DELETE_MESSAGE,
+  ADD_CATEGORIES,
+  ADD_SORTINGTYPE,
+  DELETE_SORTINGTYPE,
+  ADD_FILTRATIONTYPE,
+  DELETE_FILTRATIONTYPE,
+  ADD_FILTRATION_BY_USER,
+  DELETE_FILTRATION_BY_USER,
+} from '../actions/main';
 
 const defaultState = {
   message: {},
@@ -44,7 +46,6 @@ const main = (state = defaultState, action) => {
         ...state,
         sortByDate: defaultState.sortByDate,
       };
-
     case ADD_FILTRATIONTYPE:
       return {
         ...state,

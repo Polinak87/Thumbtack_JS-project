@@ -2,11 +2,10 @@ import React from 'react';
 import { connect } from 'react-redux';
 import Card from './Card';
 import Hero, {blue} from '../../../components/Hero';
-import { deleteThingForExchange } from '../../../store/actions/things';
-import { createApplication } from '../../../store/actions/applications';
-import { getUserThings } from '../../../store/actions/things';
 import CardBlock from '../../../components/CardBlock';
 import Column from '../../../components/Column';
+import { deleteThingForExchange, getUserThings } from '../../../store/actions/things';
+import { createApplication } from '../../../store/actions/applications';
 
 class ThingsForExchange extends React.Component {
   constructor(props) {
@@ -15,7 +14,8 @@ class ThingsForExchange extends React.Component {
   }
 
   componentDidMount() {
-    this.props.getUserThings();
+    const { getUserThings } = this.props;
+    getUserThings();
   }
 
   componentWillUnmount() {
@@ -24,9 +24,9 @@ class ThingsForExchange extends React.Component {
   }
 
   onClick(id) {
-    const idThingOffered = id;
     const { createApplication, thingForExchange } = this.props;
     const { idThingDesired, idUserAnswer } = thingForExchange;
+    const idThingOffered = id;
     createApplication(idThingOffered, idThingDesired, idUserAnswer);
   }
 

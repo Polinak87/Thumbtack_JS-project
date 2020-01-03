@@ -5,7 +5,6 @@ import { getMarketThings } from '../../store/actions/things';
 import Select, { aquamarine } from '../../components/Select';
 
 function Sorting(props) {
-
   const onChange = () => {
     const { addSortingType, getMarketThings, filtrationType } = props;
     const sortingType = event.target.value;
@@ -29,7 +28,7 @@ function Sorting(props) {
   }
 
   return (
-    <Select className={aquamarine} categoryOptons={categoryOptons} onChange={onChange} />
+    <Select className={aquamarine} categoryOptons={categoryOptons} onChange={onChange}/>
   );
 }
 

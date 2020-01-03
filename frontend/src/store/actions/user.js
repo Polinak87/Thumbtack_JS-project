@@ -8,7 +8,8 @@ export const registration = (firstName, lastName, email, password) => {
     return axios
       .post('/api/registration', { firstName, lastName, email, password })
       .then(response => {
-        dispatch(addUser(response.data));
+        const { data } = response;
+        dispatch(addUser(data));
       });
   };
 };
@@ -18,7 +19,8 @@ export const login = (email, password) => {
     return axios
       .post('/api/login', { email, password })
       .then(response => {
-        dispatch(addUser(response.data));
+        const { data } = response;
+        dispatch(addUser(data));
       });
   };
 };
@@ -34,7 +36,8 @@ export const logout = () => {
 export const getCurrentUser = () => {
   return dispatch => {
     return axios.get('api/getcurrentuser').then(response => {
-      dispatch(addUser(response.data));
+      const { data } = response;
+      dispatch(addUser(data));
     });
   };
 };

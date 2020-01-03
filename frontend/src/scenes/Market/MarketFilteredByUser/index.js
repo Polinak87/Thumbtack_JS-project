@@ -1,11 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Card from '../Card';
-import Hero, {aquamarine} from '../../../components/Hero';
-import { getMarketThingsOfOneUser } from '../../../store/actions/things';
-import { addThingForExchange } from '../../../store/actions/things';
+import Hero, { aquamarine } from '../../../components/Hero';
 import CardBlock from '../../../components/CardBlock';
 import Column from '../../../components/Column';
+import { getMarketThingsOfOneUser, addThingForExchange } from '../../../store/actions/things';
 
 class MarketFilteredByUser extends React.Component {
   constructor(props) {
@@ -19,7 +18,8 @@ class MarketFilteredByUser extends React.Component {
   }
 
   onClick(id, userId) {
-    this.props.addThingForExchange({
+    const { addThingForExchange } = this.props; 
+    addThingForExchange({
       idThingDesired: id,
       idUserAnswer: userId,
     });
@@ -53,12 +53,12 @@ class MarketFilteredByUser extends React.Component {
     });
 
     return (
-      <>
-        <br />
-        <Hero className={aquamarine} text="Market of User" />
-        <br />
-        <CardBlock cardList={cardList} />
-      </>
+      <div>
+        <br/>
+        <Hero className={aquamarine} text="Market of User"/>
+        <br/>
+        <CardBlock cardList={cardList}/>
+      </div>
     );
   }
 }

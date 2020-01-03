@@ -1,5 +1,7 @@
-import { ADD_USER } from '../actions/user';
-import { DELETE_USER } from '../actions/user';
+import {
+  ADD_USER,
+  DELETE_USER,
+ } from '../actions/user';
 
 const user = (state = {}, action) => {
   switch (action.type) {

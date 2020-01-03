@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 import { registration } from '../../../store/actions/user';
 import { addMessage } from '../../../store/actions/main';
 import Avatar from '../Avatar';
-import Column from '../../../components/Column';
 import RegistrationForm from './RegistrationForm';
+import Column from '../../../components/Column';
 
 class Registration extends React.Component {
   constructor(props) {
@@ -26,14 +26,15 @@ class Registration extends React.Component {
   onSubmit(event) {
     event.preventDefault();
     const { firstName, lastName, email, password } = this.state;
-    const { registration, addMessage } = this.props;
-    registration(firstName, lastName, email, password, this.props)
+    const { registration, addMessage, history } = this.props;
+    registration(firstName, lastName, email, password)
       .then(() => {
-        this.props.history.push('/add-new-thing');
+        history.push('/add-new-thing');
       })
-      .catch(function (error) {
-        if (error.response.status === 401) {
-          addMessage({ text: error.response.data });
+      .catch((error) => {
+        const { status, data } = error.response;
+        if (status === 401) {
+          addMessage({ text: data });
         } else {
           addMessage({ text: 'Something is wrang. Try again or contact technical support.' });
         }

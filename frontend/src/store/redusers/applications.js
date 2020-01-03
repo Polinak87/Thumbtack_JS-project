@@ -1,8 +1,10 @@
-import { ADD_INBOX_APPLICATIONS } from '../actions/applications';
-import { ADD_OUTBOX_APPLICATIONS } from '../actions/applications';
-import { UPDATE_INBOX_APPLICATIONS } from '../actions/applications';
-import { UPDATE_OUTBOX_APPLICATIONS } from '../actions/applications';
 import { DELETE_USER } from '../actions/user';
+import {
+  ADD_INBOX_APPLICATIONS,
+  ADD_OUTBOX_APPLICATIONS,
+  UPDATE_INBOX_APPLICATIONS,
+  UPDATE_OUTBOX_APPLICATIONS,
+} from '../actions/applications';
 
 const defaultState = {
   inbox: new Map(),

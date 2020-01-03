@@ -17,11 +17,11 @@ export default function (props) {
               <div className="box">
                 <Button to="/registration" className={`${large} ${green}`}>
                   Registration
-                  </Button>
+                </Button>
                 <br />
                 <Button to="/login" className={`${large} ${green}`}>
                   Login
-                  </Button>
+                </Button>
               </div>
             </div>
           </div>

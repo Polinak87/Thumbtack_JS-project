@@ -1,8 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Application from '../Aplication';
-import { getOutboxApplications } from '../../../store/actions/applications';
-import { cancelApplication } from '../../../store/actions/applications';
+import { getOutboxApplications, cancelApplication } from '../../../store/actions/applications';
 
 class ApplicationOutbox extends React.Component {
   constructor(props) {
@@ -12,11 +11,13 @@ class ApplicationOutbox extends React.Component {
   }
 
   onFilterChange() {
-    this.props.getOutboxApplications(event.target.value);
+    const { getOutboxApplications } = this.props; 
+    getOutboxApplications(event.target.value);
   }
 
   componentDidMount() {
-    this.props.getOutboxApplications('all');
+    const { getOutboxApplications } = this.props; 
+    getOutboxApplications('all');
   }
 
   onClickCancel(id) {

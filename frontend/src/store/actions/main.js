@@ -13,7 +13,8 @@ export const DELETE_MESSAGE = 'DELETE_MESSAGE';
 export const getCategories = () => {
   return dispatch => {
     axios.get('/api/category').then(response => {
-      dispatch(addCategoryList(response.data));
+      const { data } = response;
+      dispatch(addCategoryList(data));
     });
   };
 };

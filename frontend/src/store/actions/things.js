@@ -25,7 +25,8 @@ export const addNewThing = (name, description, categoryId, file) => {
         },
       })
       .then(response => {
-        dispatch(updateUserThing(response.data));
+        const { data } = response;
+        dispatch(updateUserThing(data));
         dispatch(addMessage({ text: 'New thing is added to your inventory.' }));
       });
   };
@@ -34,7 +35,8 @@ export const addNewThing = (name, description, categoryId, file) => {
 export const addThingFromCatalog = id => {
   return dispatch => {
     axios.post('api/addthingfromcatalog', { id }).then(response => {
-      dispatch(updateUserThing(response.data));
+      const { data } = response;
+      dispatch(updateUserThing(data));
       dispatch(addMessage({ text: 'Thing is added to your inventory.' }));
     });
   };
@@ -61,7 +63,8 @@ export const getUserThings = () => {
 export const addThingToMartet = id => {
   return dispatch => {
     axios.post('/api/addthingtomarket', { id }).then(response => {
-      dispatch(updateUserThing(response.data));
+      const { data } = response;
+      dispatch(updateUserThing(data));
     });
   };
 };
@@ -69,7 +72,8 @@ export const addThingToMartet = id => {
 export const removeThingFromMartet = id => {
   return dispatch => {
     axios.post('/api/removethingfrommarket', { id }).then(response => {
-      dispatch(updateUserThing(response.data));
+      const { data } = response;
+      dispatch(updateUserThing(data));
     });
   };
 };

@@ -1,10 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { login } from '../../../store/actions/user';
-import Avatar from '../Avatar';
-import Column from '../../../components/Column';
 import { addMessage } from '../../../store/actions/main';
+import Avatar from '../Avatar';
 import LoginForm from './LoginForm';
+import Column from '../../../components/Column';
 
 class Login extends React.Component {
   constructor(props) {
@@ -24,14 +24,15 @@ class Login extends React.Component {
   onSubmit(event) {
     event.preventDefault();
     const { email, password } = this.state;
-    const { login, addMessage } = this.props;
+    const { login, addMessage, history } = this.props;
 
-    login(email, password, this.props).then(() => {
-      this.props.history.push('/profile');
+    login(email, password).then(() => {
+      history.push('/profile');
     })
-      .catch(function (error) {
-        if (error.response.status === 401) {
-          addMessage({ text: error.response.data });
+      .catch((error) => {
+        const { status, data } = error.response;
+        if (status === 401) {
+          addMessage({ text: data });
         } else {
           addMessage({ text: 'Something is wrang. Try again or contact technical support.' });
         }

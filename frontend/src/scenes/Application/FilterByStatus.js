@@ -23,6 +23,6 @@ export default function FilterByStatus(props) {
   }
 
   return (
-    <Select className={aquamarine} onChange={onChange} categoryOptons={categoryOptons} />
+    <Select className={aquamarine} onChange={onChange} categoryOptons={categoryOptons}/>
   );
 }

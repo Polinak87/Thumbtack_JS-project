@@ -1,12 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Card from './Card';
-import Hero, {aquamarine} from '../../components/Hero';
+import Hero, { aquamarine } from '../../components/Hero';
 import CardBlock from '../../components/CardBlock';
-import { getUserThings } from '../../store/actions/things';
-import { addThingToMartet } from '../../store/actions/things';
-import { removeThingFromMartet } from '../../store/actions/things';
 import Column from '../../components/Column';
+import {
+  getUserThings,
+  addThingToMartet,
+  removeThingFromMartet,
+} from '../../store/actions/things';
 
 class Profile extends React.Component {
   constructor(props) {
@@ -16,15 +18,18 @@ class Profile extends React.Component {
   }
 
   componentDidMount() {
-    this.props.getUserThings();
+    const { getUserThings } = this.props;
+    getUserThings();
   }
 
   onClickAdd(id) {
-    this.props.addThingToMartet(id);
+    const { addThingToMartet } = this.props;
+    addThingToMartet(id);
   }
 
   onClickRemove(id) {
-    this.props.removeThingFromMartet(id);
+    const { removeThingFromMartet } = this.props;
+    removeThingFromMartet(id);
   }
 
   render() {
@@ -54,7 +59,7 @@ class Profile extends React.Component {
 
     return (
       <div>
-        <br />
+        <br/>
         <Hero className={aquamarine} text="Your inventory"/>
         <CardBlock cardList={cardList}/>
       </div>

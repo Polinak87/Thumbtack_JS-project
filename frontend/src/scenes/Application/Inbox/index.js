@@ -1,9 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Application from '../Aplication';
-import { getInboxApplications } from '../../../store/actions/applications';
-import { rejectApplication } from '../../../store/actions/applications';
-import { completeApplication } from '../../../store/actions/applications';
+import {
+  getInboxApplications,
+  rejectApplication,
+  completeApplication,
+} from '../../../store/actions/applications';
 
 class ApplicationInbox extends React.Component {
   constructor(props) {
@@ -14,11 +16,13 @@ class ApplicationInbox extends React.Component {
   }
 
   componentDidMount() {
-    this.props.getInboxApplications('all');
+    const { getInboxApplications } = this.props; 
+    getInboxApplications('all');
   }
 
   onFilterChange() {
-    this.props.getInboxApplications(event.target.value);
+    const { getInboxApplications } = this.props;
+    getInboxApplications(event.target.value);
   }
 
   onClickComplete(id) {

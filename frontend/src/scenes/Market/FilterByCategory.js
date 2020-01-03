@@ -1,9 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { addFiltrationType } from '../../store/actions/main';
+import { addFiltrationType, getCategories } from '../../store/actions/main';
 import { getMarketThings } from '../../store/actions/things';
-import { getCategories } from '../../store/actions/main';
-import Select, {aquamarine} from '../../components/Select';
+import Select, { aquamarine } from '../../components/Select';
 
 class FilterByCategory extends React.Component {
   constructor(props) {

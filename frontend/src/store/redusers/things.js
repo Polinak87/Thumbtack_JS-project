@@ -1,11 +1,13 @@
-import { ADD_USER_THINGS } from '../actions/things';
-import { UPDATE_USER_THING } from '../actions/things';
-import { ADD_THING_FOR_EXCHANGE } from '../actions/things';
-import { DELETE_THING_FOR_EXCHANGE } from '../actions/things';
-import { ADD_MARKET_THINGS } from '../actions/things';
-import { ADD_MARKET_THINGS_OF_ONE_USER } from '../actions/things';
-import { ADD_CATALOG } from '../actions/things';
 import { DELETE_USER } from '../actions/user';
+import {
+  ADD_USER_THINGS,
+  UPDATE_USER_THING,
+  ADD_THING_FOR_EXCHANGE,
+  DELETE_THING_FOR_EXCHANGE,
+  ADD_MARKET_THINGS,
+  ADD_MARKET_THINGS_OF_ONE_USER,
+  ADD_CATALOG,
+} from '../actions/things';
 
 const defaultState = {
   userThings: new Map(),

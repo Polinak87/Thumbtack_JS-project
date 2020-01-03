@@ -3,8 +3,7 @@ import { connect } from 'react-redux';
 import Card from './Card';
 import CardBlock from '../../../components/CardBlock';
 import Column from '../../../components/Column';
-import { getCatalog } from '../../../store/actions/things';
-import { addThingFromCatalog } from '../../../store/actions/things';
+import { getCatalog, addThingFromCatalog } from '../../../store/actions/things';
 
 class Catalog extends React.Component {
   constructor(props) {

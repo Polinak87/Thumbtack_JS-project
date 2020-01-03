@@ -1,7 +1,6 @@
 import React from 'react';
 import ThingInfo from '../../../components/ThingInfo';
-import Button from '../../../components/Button';
-import { green, large } from '../../../components/Button';
+import Button, { green, large } from '../../../components/Button';
 
 export default function Card({ image, id, name, description, categoryName, onClick }) {
   return (
@@ -15,7 +14,7 @@ export default function Card({ image, id, name, description, categoryName, onCli
       />
       <Button className={`${large} ${green}`} id={id} onClick={onClick}>
         Add to inventory
-        </Button>
+      </Button>
     </div>
   );
 }

@@ -1,16 +1,17 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { getMarketThings } from '../../store/actions/things';
-import { addThingForExchange } from '../../store/actions/things';
-import { deleteFiltrationType } from '../../store/actions/main';
-import { deleteSortingType } from '../../store/actions/main';
-import { addFiltrationByUser } from '../../store/actions/main';
 import CardBlock from '../../components/CardBlock';
 import FilterByCategory from './FilterByCategory';
 import Sorting from './Sorting';
 import Card from './Card';
-import Hero, {aquamarine} from '../../components/Hero';
+import Hero, { aquamarine } from '../../components/Hero';
 import Column from '../../components/Column';
+import { getMarketThings, addThingForExchange } from '../../store/actions/things';
+import {
+  deleteFiltrationType,
+  deleteSortingType,
+  addFiltrationByUser,
+} from '../../store/actions/main';
 
 class Market extends React.Component {
   constructor(props) {
@@ -31,7 +32,8 @@ class Market extends React.Component {
   }
 
   onButtonClick(id, userId) {
-    this.props.addThingForExchange({
+    const { addThingForExchange } = this.props;
+    addThingForExchange({
       idThingDesired: id,
       idUserAnswer: userId,
     });
@@ -72,15 +74,15 @@ class Market extends React.Component {
 
     return (
       <div>
-        <br />
+        <br/>
         <Hero className={aquamarine} text="Market"/>
-        <br />
+        <br/>
         <div className="is-inline-flex">
-          <FilterByCategory />
-          <Sorting />
+          <FilterByCategory/>
+          <Sorting/>
         </div>
-        <br />
-        <CardBlock cardList={cardList} />
+        <br/>
+        <CardBlock cardList={cardList}/>
       </div>
     );
   }
