@@ -1,11 +1,11 @@
 import React from 'react';
 
-export default function CardBlock({ cardList }) {
+export default function ColumnsMultiline({ children }) {
   return (
     <div>
       <br />
       <section className="section">
-        <div className="columns is-multiline">{cardList}</div>
+        <div className="columns is-multiline">{children}</div>
       </section>
     </div>
   );

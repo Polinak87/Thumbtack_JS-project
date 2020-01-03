@@ -1,9 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import Card from '../Card';
+import Card from '../../../components/Card';
+import Header from '../../../components/Card/Header'
 import Hero, { aquamarine } from '../../../components/Hero';
-import CardBlock from '../../../components/CardBlock';
-import Column from '../../../components/Column';
+import ColumnsMultiline from '../../../components/ColumnsMultiline';
+import Button, { green, large } from '../../../components/Button';
 import { getMarketThingsOfOneUser, addThingForExchange } from '../../../store/actions/things';
 
 class MarketFilteredByUser extends React.Component {
@@ -18,7 +19,7 @@ class MarketFilteredByUser extends React.Component {
   }
 
   onClick(id, userId) {
-    const { addThingForExchange } = this.props; 
+    const { addThingForExchange } = this.props;
     addThingForExchange({
       idThingDesired: id,
       idUserAnswer: userId,
@@ -29,35 +30,58 @@ class MarketFilteredByUser extends React.Component {
     const { currentUserId, marketThingsMap } = this.props;
     const marketThingsArray = Array.from(marketThingsMap.values());
 
-    let cardList = marketThingsArray.map(MarketThing => {
-      const { Thing, id, onMarketAt, userId, User } = MarketThing;
-      const { image, name, description, Category } = Thing;
-      const { name: categoryName } = Category;
-      return (
-        <Column key={MarketThing.id}>
-          <Card
-            image={image}
-            id={id}
-            name={name}
-            description={description}
-            categoryName={categoryName}
-            onMarketAt={onMarketAt}
-            /* проверить нужен ли в итоге юзер*/
-            user={User}
-            userId={userId}
-            currentUserId={currentUserId}
-            onClick={this.onClick}
-          />
-        </Column>
+    let cardList = marketThingsArray.map(userThing => {
+      const { Thing:thing, id, userId,  User:user, onMarket, onMarketAt } = userThing;
+      const { image, name, description, Category:category } = thing;
+      const { name: categoryName } = category;
+      const { firstName, lastName } = user;
+
+      const header = (
+        <Header>
+          <div className="card-header-title has-text-grey is-centered is-italic is-size-3">
+            By {firstName} {lastName}
+          </div>
+        </Header>
       );
+
+      const button = () => {
+        if (currentUserId === userId) {
+          return;
+        }
+        return (
+          <Button
+            to="/things-for-exchange"
+            className={`${large} ${green}`}
+            id={id}
+            userId={userId}
+            onClick={this.onClick}
+          >
+            Exchange
+          </Button>
+        );
+      };
+      return (
+        <Card 
+        key={id}
+        header={header}
+        id={id}
+        image={image}
+        name={name}
+        description={description}
+        categoryName={categoryName}
+        onMarket={onMarket}
+        onMarketAt={onMarketAt}
+        button={button()}
+        />
+      )
     });
 
     return (
       <div>
-        <br/>
-        <Hero className={aquamarine} text="Market of User"/>
-        <br/>
-        <CardBlock cardList={cardList}/>
+        <br />
+        <Hero className={aquamarine} text='Market of user' />
+        <br />
+        <ColumnsMultiline>{cardList}</ColumnsMultiline>
       </div>
     );
   }

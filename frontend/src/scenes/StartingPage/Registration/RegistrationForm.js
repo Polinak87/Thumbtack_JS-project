@@ -1,29 +1,29 @@
 import React from 'react';
-import FormField from '../../../components/FormField';
+import FormFieldText from '../../../components/FormFieldText';
 import Button, { green, large } from '../../../components/Button';
 
 export default function RegistrationForm({ onChange, onSubmit }) {
   return (
     <form className="" name="RegistrationForm" onSubmit={onSubmit}>
-      <FormField
+      <FormFieldText
         type="text"
         name="firstName"
         placeholder="First name"
         onChange={onChange}
       />
-      <FormField
+      <FormFieldText
         type="text"
         name="lastName"
         placeholder="Last name"
         onChange={onChange}
       />
-      <FormField
+      <FormFieldText
         type="email"
         name="email"
         placeholder="Email"
         onChange={onChange}
       />
-      <FormField
+      <FormFieldText
         type="password"
         name="password"
         placeholder="Password"

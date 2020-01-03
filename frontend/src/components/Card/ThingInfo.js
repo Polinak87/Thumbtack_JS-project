@@ -1,7 +1,14 @@
 import React from 'react';
 
-export default function ThingInfo(props) {
-  const { id, image, name, description, categoryName, onMarket, onMarketAt } = props;
+export default function ThingInfo({
+  id,
+  image,
+  name,
+  description,
+  categoryName,
+  onMarket,
+  onMarketAt,
+}) {
 
   let dateTime;
 
@@ -14,7 +21,7 @@ export default function ThingInfo(props) {
   return (
     <div>
       <div className="card-image">
-        <figure className="image is-4by3">
+        <figure className="image is-square">
           <img src={image} alt="Thing image" />
         </figure>
       </div>

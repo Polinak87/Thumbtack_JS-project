@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function FormField({ type, name, placeholder, onChange, value }) {
+export default function FormFieldText({ type, name, placeholder, onChange, value }) {
   return (
     <div className="field">
       <div className="control">

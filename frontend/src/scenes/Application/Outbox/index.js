@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import Application from '../Aplication';
+import Applications from '../Aplications';
 import { getOutboxApplications, cancelApplication } from '../../../store/actions/applications';
 
 class ApplicationOutbox extends React.Component {
@@ -28,7 +28,7 @@ class ApplicationOutbox extends React.Component {
   render() {
     const { applicationsMap } = this.props;
     return (
-      <Application
+      <Applications
         heroText="Your outbox applications"
         onFilterChange={this.onFilterChange}
         applicationsMap={applicationsMap}

@@ -2,10 +2,10 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { getCategories } from '../../../store/actions/main';
 import { addNewThing } from '../../../store/actions/things';
-import FormField from '../../../components/FormField';
+import FormFieldText from '../../../components/FormFieldText';
 import Select, { fullwidth } from '../../../components/Select';
 import Button, { green, large } from '../../../components/Button';
-import FileInput from './FileInput';
+import FormFieldFile from './FormFieldFile';
 
 class AddNewThingForm extends React.Component {
   constructor(props) {
@@ -61,21 +61,21 @@ class AddNewThingForm extends React.Component {
         encType="multipart/form-data"
         onSubmit={this.onSubmit}
       >
-        <FormField
+        <FormFieldText
           type="text"
           name="name"
           placeholder="Name"
           onChange={this.onChange}
           value={name}
         />
-        <FormField
+        <FormFieldText
           type="text"
           name="description"
           placeholder="Description"
           onChange={this.onChange}
           value={description}
         />
-        <FileInput onChange={this.onChangeFile} fileName={fileName} />
+        <FormFieldFile onChange={this.onChangeFile} fileName={fileName} />
         <Select
           className={`${green} ${fullwidth}`}
           onChange={this.onChange}

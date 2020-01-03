@@ -1,9 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import Card from './Card';
-import Hero, {blue} from '../../../components/Hero';
-import CardBlock from '../../../components/CardBlock';
-import Column from '../../../components/Column';
+import Card from '../../../components/Card';
+import Hero, { blue } from '../../../components/Hero';
+import ColumnsMultiline from '../../../components/ColumnsMultiline';
+import Button, { green, red, large } from '../../../components/Button';
 import { deleteThingForExchange, getUserThings } from '../../../store/actions/things';
 import { createApplication } from '../../../store/actions/applications';
 
@@ -34,31 +34,37 @@ class ThingsForExchange extends React.Component {
     const { userThingsMap } = this.props;
     const userThingsArray = Array.from(userThingsMap.values());
 
-    let cardList = userThingsArray.map(UserThing => {
-      const { Thing, id, onMarket, onMarketAt } = UserThing;
-      const { image, name, description, Category } = Thing;
-      const { name: categoryName } = Category;
+    let cardList = userThingsArray.map(userThing => {
+      const { Thing:thing, id, onMarket, onMarketAt } = userThing;
+      const { image, name, description, Category:category } = thing;
+      const { name: categoryName } = category;
+
+      const button = (
+        <Button className={`${large} ${green}`} id={id} onClick={this.onClick}>
+          Choose
+        </Button>
+      );
+
       return (
-        <Column key={UserThing.id}>
-          <Card
-            image={image}
-            id={id}
-            name={name}
-            description={description}
-            categoryName={categoryName}
-            onMarket={onMarket}
-            onMarketAt={onMarketAt}
-            onClick={this.onClick}
-          />
-        </Column>
+        <Card 
+        key={id}
+        id={id}
+        image={image}
+        name={name}
+        description={description}
+        categoryName={categoryName}
+        onMarket={onMarket}
+        onMarketAt={onMarketAt}
+        button={button}
+        />
       );
     });
 
     return (
       <div>
         <br />
-        <Hero className={blue} text="Choose thing for exchange" />
-        <CardBlock cardList={cardList} />
+        <Hero className={blue} text="Choose thing for exchange"/>
+        <ColumnsMultiline>{cardList}</ColumnsMultiline>
       </div>
     );
   }

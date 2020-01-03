@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import Application from '../Aplication';
+import Applications from '../Aplications';
 import {
   getInboxApplications,
   rejectApplication,
@@ -38,7 +38,7 @@ class ApplicationInbox extends React.Component {
   render() {
     const { applicationsMap } = this.props;
     return (
-      <Application
+      <Applications
         heroText="Your inbox applications"
         onFilterChange={this.onFilterChange}
         applicationsMap={applicationsMap}

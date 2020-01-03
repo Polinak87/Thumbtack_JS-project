@@ -1,17 +1,17 @@
 import React from 'react';
-import FormField from '../../../components/FormField';
+import FormFieldText from '../../../components/FormFieldText';
 import Button, { green, large } from '../../../components/Button';
 
 export default function LoginForm({ onChange, onSubmit }) {
   return (
     <form className="" name="LoginForm" onSubmit={onSubmit}>
-      <FormField
+      <FormFieldText
         type="email"
         name="email"
         placeholder="Your Email"
         onChange={onChange}
       />
-      <FormField
+      <FormFieldText
         type="password"
         name="password"
         placeholder="Your Password"

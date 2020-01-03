@@ -1,11 +1,11 @@
 import React from 'react';
-import ApplicationCard from './ApplicationCard';
+import Card from './Card';
 import FilterByStatus from './FilterByStatus';
 import Hero, {aquamarine} from '../../components/Hero';
-import CardBlock from '../../components/CardBlock';
+import ColumnsMultiline from '../../components/ColumnsMultiline';
 import Column from '../../components/Column';
 
-export default function Application(props) {
+export default function Applications(props) {
   const {
     heroText,
     applicationsMap,
@@ -23,7 +23,7 @@ export default function Application(props) {
     const { id } = application;
     return (
       <Column key={id}>
-        <ApplicationCard
+        <Card
           application={application}
           applicationType={applicationType}
           titleLeft={titleLeft}
@@ -41,7 +41,7 @@ export default function Application(props) {
       <br />
       <Hero className={aquamarine} text={heroText} />
       <FilterByStatus onChange={onFilterChange} />
-      <CardBlock cardList={cardList} />
+      <ColumnsMultiline>{cardList}</ColumnsMultiline>
     </div>
   );
 }

@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import Card from './Card';
-import CardBlock from '../../../components/CardBlock';
-import Column from '../../../components/Column';
+import Card from '../../../components/Card';
+import ColumnsMultiline from '../../../components/ColumnsMultiline';
+import Button, { green, large } from '../../../components/Button';
 import { getCatalog, addThingFromCatalog } from '../../../store/actions/things';
 
 class Catalog extends React.Component {
@@ -25,24 +25,28 @@ class Catalog extends React.Component {
     const { catalog } = this.props;
     const catalogArray = Array.from(catalog.values());
 
-    let cardList = catalogArray.map(Thing => {
-      const { id, name, image, description, Category } = Thing;
-      const { name: categoryName } = Category;
+    let cardList = catalogArray.map(thing => {
+      const { id, image, name, description, Category:category } = thing;
+      const { name: categoryName } = category;
+      const button = (
+        <Button className={`${large} ${green}`} id={id} onClick={this.onClick}>
+          Add to inventory
+        </Button>
+      );
       return (
-        <Column key={id}>
-          <Card
-            image={image}
-            id={id}
-            name={name}
-            description={description}
-            categoryName={categoryName}
-            onClick={this.onClick}
-          />
-        </Column>
+        <Card 
+        key={id}
+        id={id}
+        image={image}
+        name={name}
+        description={description}
+        categoryName={categoryName}
+        button={button}
+        />
       );
     });
 
-    return <CardBlock cardList={cardList} />;
+    return <ColumnsMultiline>{cardList}</ColumnsMultiline>
   }
 }
 
