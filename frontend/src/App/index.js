@@ -2,7 +2,7 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import isEmpty from 'lodash.isempty';
-import '../styles/components/App.scss';
+import '../styles/App.scss';
 import Routers from './Routers';
 import NavBar from './Navbar';
 import Infomessage from './InfoMessage';
