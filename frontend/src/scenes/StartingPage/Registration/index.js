@@ -2,9 +2,13 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { registration } from '../../../store/actions/user';
 import { addMessage } from '../../../store/actions/main';
+import Column from '../../../components/Columns/Column';
+import ColumnsSentered from '../../../components/Columns/ColumnsSentered';
+import Box from '../../../components/Box';
+import Title2, { greyText } from '../../../components/Titles/Title2';
+import Hero, { fullheight } from '../../../components/Hero';
 import Avatar from '../Avatar';
 import RegistrationForm from './RegistrationForm';
-import Column from '../../../components/Column';
 
 class Registration extends React.Component {
   constructor(props) {
@@ -43,21 +47,17 @@ class Registration extends React.Component {
 
   render() {
     return (
-      <div className="columns is-centered">
+      <ColumnsSentered>
         <Column>
-          <section className="hero is-success is-fullheight">
-            <div className="hero-body">
-              <div className="container has-text-centered">
-                <h3 className="title has-text-grey">Registration</h3>
-                <div className="box">
-                  <Avatar />
-                  <RegistrationForm onChange={this.onChange} onSubmit={this.onSubmit}/>
-                </div>
-              </div>
-            </div>
-          </section>
+          <Hero className={fullheight}>
+            <Title2 className={greyText}>Registration</Title2>
+            <Box>
+              <Avatar />
+              <RegistrationForm onChange={this.onChange} onSubmit={this.onSubmit} />
+            </Box>
+          </Hero>
         </Column>
-      </div>
+      </ColumnsSentered>
     );
   }
 }

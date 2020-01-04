@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Card from '../../../components/Card';
 import Header from '../../../components/Card/Header'
 import Hero, { aquamarine } from '../../../components/Hero';
-import ColumnsMultiline from '../../../components/ColumnsMultiline';
+import ColumnsMultiline from '../../../components/Columns/ColumnsMultiline';
 import Button, { green, large } from '../../../components/Button';
 import { getMarketThingsOfOneUser, addThingForExchange } from '../../../store/actions/things';
 

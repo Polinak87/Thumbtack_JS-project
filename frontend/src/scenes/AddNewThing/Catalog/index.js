@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Card from '../../../components/Card';
-import ColumnsMultiline from '../../../components/ColumnsMultiline';
+import ColumnsMultiline from '../../../components/Columns/ColumnsMultiline';
 import Button, { green, large } from '../../../components/Button';
 import { getCatalog, addThingFromCatalog } from '../../../store/actions/things';
 

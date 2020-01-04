@@ -76,7 +76,6 @@ export const cancelApplication = id => {
   };
 };
 
-// нужен ли arrayForUpdate
 export const completeApplication = id => {
   return dispatch => {
     axios.put('/api/completeapplication', { id }).then(response => {

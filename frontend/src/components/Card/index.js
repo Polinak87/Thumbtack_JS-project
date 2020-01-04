@@ -1,6 +1,6 @@
 import React from 'react';
 import ThingInfo from './ThingInfo';
-import Column from '../Column';
+import Column from '../Columns/Column';
 
 export default function Card(props) {
   const {

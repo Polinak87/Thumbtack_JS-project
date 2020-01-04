@@ -2,6 +2,7 @@ import React from 'react';
 import CardFooterItem from './CardFooterItem';
 import CardButton from './CardButton';
 import Header from '../../components/Card/Header'
+import Title2 from '../../components/Titles/Title2';
 
 export default function Card(props) {
   const {
@@ -19,7 +20,7 @@ export default function Card(props) {
   return (
     <div className="card">
       <Header>
-        <h6 className="title">Status of application: {status}</h6>
+        <Title2>Status of application: {status}</Title2>
       </Header>
       <footer className="card-footer">
         <CardFooterItem

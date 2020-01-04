@@ -1,9 +1,11 @@
 import React from 'react';
 import Card from './Card';
 import FilterByStatus from './FilterByStatus';
-import Hero, {aquamarine} from '../../components/Hero';
-import ColumnsMultiline from '../../components/ColumnsMultiline';
-import Column from '../../components/Column';
+import Hero, { aquamarine } from '../../components/Hero';
+import ColumnsMultiline from '../../components/Columns/ColumnsMultiline';
+import Column from '../../components/Columns/Column';
+import InlineBlock from '../../components/InlineBlock';
+import Label from '../../components/Label';
 
 export default function Applications(props) {
   const {
@@ -17,6 +19,7 @@ export default function Applications(props) {
     onFilterChange,
     onClickCancel,
   } = props;
+
   const applicationsArray = Array.from(applicationsMap.values());
 
   let cardList = applicationsArray.map(application => {
@@ -40,7 +43,11 @@ export default function Applications(props) {
     <div>
       <br />
       <Hero className={aquamarine} text={heroText} />
-      <FilterByStatus onChange={onFilterChange} />
+      <br />
+      <InlineBlock>
+        <Label>Status of application</Label>
+        <FilterByStatus onChange={onFilterChange} />
+      </InlineBlock>
       <ColumnsMultiline>{cardList}</ColumnsMultiline>
     </div>
   );

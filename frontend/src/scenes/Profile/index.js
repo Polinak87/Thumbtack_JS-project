@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import Card from '../../components/Card';
 import Hero, { aquamarine } from '../../components/Hero';
-import ColumnsMultiline from '../../components/ColumnsMultiline';
+import ColumnsMultiline from '../../components/Columns/ColumnsMultiline';
 import Button, { green, red, large } from '../../components/Button';
 import {
   getUserThings,
@@ -73,7 +73,7 @@ class Profile extends React.Component {
 
     return (
       <div>
-        <br />
+        <br/>
         <Hero className={aquamarine} text="Your inventory"/>
         <ColumnsMultiline>{cardList}</ColumnsMultiline>
       </div>

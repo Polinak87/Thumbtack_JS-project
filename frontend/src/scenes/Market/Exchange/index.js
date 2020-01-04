@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import Card from '../../../components/Card';
 import Hero, { blue } from '../../../components/Hero';
-import ColumnsMultiline from '../../../components/ColumnsMultiline';
+import ColumnsMultiline from '../../../components/Columns/ColumnsMultiline';
 import Button, { green, red, large } from '../../../components/Button';
 import { deleteThingForExchange, getUserThings } from '../../../store/actions/things';
 import { createApplication } from '../../../store/actions/applications';
