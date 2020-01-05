@@ -1,10 +1,10 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import ColumnsMultiline from '../../components/Columns/ColumnsMultiline';
 import FilterByCategory from './FilterByCategory';
 import Sorting from './Sorting';
 import Card from '../../components/Card';
+import ThingInfo from '../../components/Card/ThingInfo';
 import Header from '../../components/Card/Header';
 import Hero, { aquamarine } from '../../components/Hero';
 import Button, { green, large } from '../../components/Button';
@@ -59,14 +59,11 @@ class Market extends React.Component {
       const { firstName, lastName } = user;
 
       const header = (
-        <Header>
-          <Link
-            to="/market-things-filtered-by-user"
-            className="card-header-title has-text-grey is-centered is-italic is-size-3"
-            onClick={() => this.onTitleClick(userId)}
-          >
-            By {firstName} {lastName}
-          </Link>
+        <Header
+          to="/market-things-filtered-by-user"
+          onClick={() => this.onTitleClick(userId)}
+        >
+          By {firstName} {lastName}
         </Header>
       );
 
@@ -91,15 +88,18 @@ class Market extends React.Component {
         <Card
           key={id}
           header={header}
-          id={id}
-          image={image}
-          name={name}
-          description={description}
-          categoryName={categoryName}
-          onMarket={onMarket}
-          onMarketAt={onMarketAt}
           button={button()}
-        />
+        >
+          <ThingInfo
+            id={id}
+            image={image}
+            name={name}
+            description={description}
+            categoryName={categoryName}
+            onMarket={onMarket}
+            onMarketAt={onMarketAt}
+          />
+        </Card>
       )
     });
 

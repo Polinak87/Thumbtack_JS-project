@@ -1,4 +1,5 @@
 import React from 'react';
+import Content from './Content';
 
 export default function ThingInfo({
   id,
@@ -25,7 +26,7 @@ export default function ThingInfo({
           <img src={image} alt="Thing image" />
         </figure>
       </div>
-      <div className="card-content">
+      <Content>
         id: {id}
         <br />
         Name: {name}
@@ -35,7 +36,7 @@ export default function ThingInfo({
         Description: {description}
         <br />
         {dateTime}
-      </div>
+      </Content>
     </div>
   );
 }

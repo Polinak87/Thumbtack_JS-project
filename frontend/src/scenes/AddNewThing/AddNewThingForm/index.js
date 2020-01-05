@@ -5,7 +5,7 @@ import { addNewThing } from '../../../store/actions/things';
 import FormFieldText from '../../../components/FormFieldText';
 import Select, { fullwidth } from '../../../components/Select';
 import Button, { green, large } from '../../../components/Button';
-import FormFieldFile from './FormFieldFile';
+import FormFieldFile from '../../../components/FormFieldFile';
 
 class AddNewThingForm extends React.Component {
   constructor(props) {

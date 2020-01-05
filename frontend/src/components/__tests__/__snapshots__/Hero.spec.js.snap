@@ -8,7 +8,7 @@ exports[`Hero renders correctly 1`] = `
     class="hero-body"
   >
     <div
-      class="container"
+      class="container has-text-centered"
     >
       <h1
         class="title"

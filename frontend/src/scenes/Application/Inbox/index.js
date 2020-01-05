@@ -44,7 +44,7 @@ class ApplicationInbox extends React.Component {
         applicationsMap={applicationsMap}
         applicationType="inbox"
         titleLeft="Thing you have now"
-        titleRight="Thing you are offered to get"
+        titleRight="Thing you can get"
         onClickComplete={this.onClickComplete}
         onClickReject={this.onClickReject}
       />

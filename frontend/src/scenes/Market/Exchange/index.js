@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Card from '../../../components/Card';
+import ThingInfo from '../../../components/Card/ThingInfo';
 import Hero, { blue } from '../../../components/Hero';
 import ColumnsMultiline from '../../../components/Columns/ColumnsMultiline';
 import Button, { green, red, large } from '../../../components/Button';
@@ -35,8 +36,8 @@ class ThingsForExchange extends React.Component {
     const userThingsArray = Array.from(userThingsMap.values());
 
     let cardList = userThingsArray.map(userThing => {
-      const { Thing:thing, id, onMarket, onMarketAt } = userThing;
-      const { image, name, description, Category:category } = thing;
+      const { Thing: thing, id, onMarket, onMarketAt } = userThing;
+      const { image, name, description, Category: category } = thing;
       const { name: categoryName } = category;
 
       const button = (
@@ -46,24 +47,27 @@ class ThingsForExchange extends React.Component {
       );
 
       return (
-        <Card 
-        key={id}
-        id={id}
-        image={image}
-        name={name}
-        description={description}
-        categoryName={categoryName}
-        onMarket={onMarket}
-        onMarketAt={onMarketAt}
-        button={button}
-        />
+        <Card
+          key={id}
+          button={button}
+        >
+          <ThingInfo
+            id={id}
+            image={image}
+            name={name}
+            description={description}
+            categoryName={categoryName}
+            onMarket={onMarket}
+            onMarketAt={onMarketAt}
+          />
+        </Card>
       );
     });
 
     return (
       <div>
         <br />
-        <Hero className={blue} text="Choose thing for exchange"/>
+        <Hero className={blue} text="Choose thing for exchange" />
         <ColumnsMultiline>{cardList}</ColumnsMultiline>
       </div>
     );

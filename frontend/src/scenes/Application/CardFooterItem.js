@@ -1,13 +1,15 @@
 import React from 'react';
 import ThingInfo from '../../components/Card/ThingInfo';
+import FooterItem from '../../components/Card/FooterItem';
+import Content, { full } from '../../components/Card/Content';
 
 export default function CardFooterItem({ userThing, title }) {
   const { Thing:thing, id, onMarket, onMarketAt } = userThing;
   const { image, name, description, Category:category } = thing;
   const { name: categoryName } = category;
   return (
-    <div className="card-footer-item">
-      <div className="card-is-full">
+    <FooterItem>
+      <Content className={full}>
         <p>{title}</p>
         <br />
         <ThingInfo
@@ -19,7 +21,7 @@ export default function CardFooterItem({ userThing, title }) {
           onMarket={onMarket}
           onMarketAt={onMarketAt}
         />
-      </div>
-    </div>
+      </Content>
+    </FooterItem>
   );
 }

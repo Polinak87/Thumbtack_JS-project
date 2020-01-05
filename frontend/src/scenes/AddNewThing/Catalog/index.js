@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Card from '../../../components/Card';
+import ThingInfo from '../../../components/Card/ThingInfo';
 import ColumnsMultiline from '../../../components/Columns/ColumnsMultiline';
 import Button, { green, large } from '../../../components/Button';
 import { getCatalog, addThingFromCatalog } from '../../../store/actions/things';
@@ -34,15 +35,18 @@ class Catalog extends React.Component {
         </Button>
       );
       return (
-        <Card 
-        key={id}
-        id={id}
-        image={image}
-        name={name}
-        description={description}
-        categoryName={categoryName}
-        button={button}
-        />
+        <Card
+          key={id}
+          button={button}
+        >
+          <ThingInfo
+            id={id}
+            image={image}
+            name={name}
+            description={description}
+            categoryName={categoryName}
+          />
+        </Card>
       );
     });
 

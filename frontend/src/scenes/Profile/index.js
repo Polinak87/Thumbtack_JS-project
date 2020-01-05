@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Card from '../../components/Card';
+import ThingInfo from '../../components/Card/ThingInfo';
 import Hero, { aquamarine } from '../../components/Hero';
 import ColumnsMultiline from '../../components/Columns/ColumnsMultiline';
 import Button, { green, red, large } from '../../components/Button';
@@ -57,17 +58,20 @@ class Profile extends React.Component {
       }
 
       return (
-        <Card 
-        key={id}
-        id={id}
-        image={image}
-        name={name}
-        description={description}
-        categoryName={categoryName}
-        onMarket={onMarket}
-        onMarketAt={onMarketAt}
-        button={button}
-        />
+        <Card
+          key={id}
+          button={button}
+        >
+          <ThingInfo
+            id={id}
+            image={image}
+            name={name}
+            description={description}
+            categoryName={categoryName}
+            onMarket={onMarket}
+            onMarketAt={onMarketAt}
+          />
+        </Card>
       );
     });
 

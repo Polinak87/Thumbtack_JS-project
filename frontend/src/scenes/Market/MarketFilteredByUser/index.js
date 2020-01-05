@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import Card from '../../../components/Card';
 import Header from '../../../components/Card/Header'
+import ThingInfo from '../../../components/Card/ThingInfo';
 import Hero, { aquamarine } from '../../../components/Hero';
 import ColumnsMultiline from '../../../components/Columns/ColumnsMultiline';
 import Button, { green, large } from '../../../components/Button';
@@ -31,8 +32,8 @@ class MarketFilteredByUser extends React.Component {
     const marketThingsArray = Array.from(marketThingsMap.values());
 
     let cardList = marketThingsArray.map(userThing => {
-      const { Thing:thing, id, userId,  User:user, onMarket, onMarketAt } = userThing;
-      const { image, name, description, Category:category } = thing;
+      const { Thing: thing, id, userId, User: user, onMarket, onMarketAt } = userThing;
+      const { image, name, description, Category: category } = thing;
       const { name: categoryName } = category;
       const { firstName, lastName } = user;
 
@@ -61,18 +62,21 @@ class MarketFilteredByUser extends React.Component {
         );
       };
       return (
-        <Card 
-        key={id}
-        header={header}
-        id={id}
-        image={image}
-        name={name}
-        description={description}
-        categoryName={categoryName}
-        onMarket={onMarket}
-        onMarketAt={onMarketAt}
-        button={button()}
-        />
+        <Card
+          key={id}
+          header={header}
+          button={button()}
+        >
+          <ThingInfo
+            id={id}
+            image={image}
+            name={name}
+            description={description}
+            categoryName={categoryName}
+            onMarket={onMarket}
+            onMarketAt={onMarketAt}
+          />
+        </Card>
       )
     });
 

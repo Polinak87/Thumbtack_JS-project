@@ -7,7 +7,7 @@ import ColumnsSentered from '../../../components/Columns/ColumnsSentered';
 import Box from '../../../components/Box';
 import Title2, { greyText } from '../../../components/Titles/Title2';
 import Hero, { fullheight } from '../../../components/Hero';
-import Avatar from '../Avatar';
+import Avatar from '../../../components/Avatar';
 import RegistrationForm from './RegistrationForm';
 
 class Registration extends React.Component {
