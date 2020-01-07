@@ -11,7 +11,6 @@ describe('Actions with things', () => {
   beforeAll(async () => {
     this.app = app.callback();
     await sequelize.sync({ force: true });
-
     await Category.create({ name: 'dresses' });
     await Category.create({ name: 'rings' });
 
@@ -38,47 +37,24 @@ describe('Actions with things', () => {
 
     await agent1
       .post('/api/addnewthing')
-      .send({
-        name: 'winter dress',
-        description: 'pretty',
-        categoryId: 1,
-        userId: 1,
-        onMarket: false,
-        onMarketAt: null,
-      });
+      .field({ name: 'winter dress' })
+      .field({ description: 'pretty' })
+      .field({ categoryId: 1 })
+      .attach('file', 'backend/tests/routers/test-image.png');
 
     await agent1
       .post('/api/addnewthing')
-      .send({
-        name: 'summer dress',
-        description: 'light',
-        categoryId: 1,
-        userId: 1,
-        onMarket: false,
-        onMarketAt: null,
-      });
-
-    await agent1
-      .post('/api/addnewthing')
-      .send({
-        name: 'gold ring',
-        description: 'modern style',
-        categoryId: 2,
-        userId: 1,
-        onMarket: false,
-        onMarketAt: null,
-      });
+      .field({ name: 'gold ring' })
+      .field({ description: 'modern style' })
+      .field({ categoryId: 2 })
+      .attach('file', 'backend/tests/routers/test-image.png');
 
     await agent2
       .post('/api/addnewthing')
-      .send({
-        name: 'silver ring',
-        description: 'modern style',
-        categoryId: 2,
-        userId: 2,
-        onMarket: false,
-        onMarketAt: null,
-      });
+      .field({ name: 'silver ring' })
+      .field({ description: 'modern style' })
+      .field({ categoryId: 2 })
+      .attach('file', 'backend/tests/routers/test-image.png');
 
     await agent1
       .post('/api/logout');
@@ -104,27 +80,45 @@ describe('Actions with things', () => {
     const response = await agent
       .get('/api/userthings');
 
-    const array = response.body;
+    const { statusCode, body } = response;
 
-    expect(response.statusCode).toBe(200);
-    expect(response.body).toHaveLength(3);
-    expect(array[0].name).toBe('winter dress');
-    expect(array[1].name).toBe('summer dress');
-    expect(array[2].name).toBe('gold ring');
-    expect(array[0].description).toBe('pretty');
-    expect(array[1].description).toBe('light');
-    expect(array[2].description).toBe('modern style');
-    expect(array[0].categoryId).toBe(1);
-    expect(array[1].categoryId).toBe(1);
-    expect(array[2].categoryId).toBe(2);
-    expect(array[0].userId).toBe(1);
-    expect(array[1].userId).toBe(1);
-    expect(array[2].userId).toBe(1);
-    expect(array[0].onMarket).toBeNull();
-    expect(array[1].onMarket).toBeNull();
-    expect(array[2].onMarket).toBeNull();
-    expect(array[0].onMarketAt).toBeNull();
-    expect(array[1].onMarketAt).toBeNull();
-    expect(array[2].onMarketAt).toBeNull();
+    expect(statusCode).toBe(200);
+    expect(body).toHaveLength(2);
+
+    let {
+      Thing: thing,
+      id,
+      onMarket,
+      onMarketAt,
+    } = body[0];
+    let { image, name, description, Category: category } = thing;
+    let { name: categoryName } = category;
+
+    expect(statusCode).toBe(200);
+    expect(id).toBe(1);
+    expect(image).toBeDefined();
+    expect(name).toBe('winter dress');
+    expect(description).toBe('pretty');
+    expect(categoryName).toBe('dresses');
+    expect(onMarket).toBeFalsy();
+    expect(onMarketAt).toBeNull();
+
+    ({
+      Thing: thing,
+      id,
+      onMarket,
+      onMarketAt,
+    } = body[1]);
+    ({ image, name, description, Category: category } = thing);
+    ({ name: categoryName } = category);
+
+    expect(statusCode).toBe(200);
+    expect(id).toBe(2);
+    expect(image).toBeDefined();
+    expect(name).toBe('gold ring');
+    expect(description).toBe('modern style');
+    expect(categoryName).toBe('rings');
+    expect(onMarket).toBeFalsy();
+    expect(onMarketAt).toBeNull();
   });
 });

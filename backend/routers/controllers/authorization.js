@@ -51,7 +51,7 @@ const login = async (ctx) => {
 
 const logout = async (ctx) => {
   await ctx.logout();
-  ctx.status = 200;
+  ctx.status = 302;
 
   return ctx.redirect('/home');
 };

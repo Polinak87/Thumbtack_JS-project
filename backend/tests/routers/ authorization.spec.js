@@ -50,7 +50,7 @@ describe('Users', () => {
     const response = await agent
       .post('/api/logout');
 
-    expect(response.statusCode).toBe(200);
+    expect(response.statusCode).toBe(302);
   });
 
   test('login', async () => {
@@ -83,6 +83,7 @@ describe('Users', () => {
     });
   });
 
+  // переписать, когда будет условие аутентификации на бэке
   test('when authenticated', async () => {
     const agent = await request.agent(this.app);
 

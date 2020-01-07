@@ -1,6 +1,6 @@
 'use strict';
 
-const { Thing, UserThing, Category } = require('../../models');
+const { Thing, User, UserThing, Category } = require('../../models');
 
 const addNewThing = async (ctx) => {
   const { name, description, categoryId } = ctx.req.body;
@@ -25,6 +25,8 @@ const addNewThing = async (ctx) => {
       include: [{
         model: Category,
       }],
+    }, {
+      model: User,
     }],
     where: {
       id: userThing.id,
@@ -70,6 +72,8 @@ const addThingToMarket = async (ctx) => {
       include: [{
         model: Category,
       }],
+    }, {
+      model: User,
     }],
     where: {
       id: thingId,
