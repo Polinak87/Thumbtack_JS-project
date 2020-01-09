@@ -32,25 +32,17 @@ describe('get applications', () => {
 
     await agent1
       .post('/api/addnewthing')
-      .send({
-        name: 'winter dress',
-        description: 'pretty',
-        categoryId: 1,
-        userId: 1,
-        onMarket: false,
-        onMarketAt: null,
-      });
+      .field({ name: 'winter dress' })
+      .field({ description: 'pretty' })
+      .field({ categoryId: 1 })
+      .attach('file', 'backend/tests/routers/test-image.png');
 
     await agent1
       .post('/api/addnewthing')
-      .send({
-        name: 'summer dress',
-        description: 'light',
-        categoryId: 1,
-        userId: 1,
-        onMarket: false,
-        onMarketAt: null,
-      });
+      .field({ name: 'summer dress' })
+      .field({ description: 'light' })
+      .field({ categoryId: 1 })
+      .attach('file', 'backend/tests/routers/test-image.png');
 
     await agent1
       .post('/api/addthingtomarket')
@@ -67,18 +59,14 @@ describe('get applications', () => {
 
     await agent2
       .post('/api/addnewthing')
-      .send({
-        name: 'gold ring',
-        description: 'modern style',
-        categoryId: 2,
-        userId: 2,
-        onMarket: false,
-        onMarketAt: null,
-      });
+      .field({ name: 'gold ring' })
+      .field({ description: 'modern style' })
+      .field({ categoryId: 2 })
+      .attach('file', 'backend/tests/routers/test-image.png');
 
     await agent2
       .post('/api/addthingtomarket')
-      .send({ id: 2 });
+      .send({ id: 3 });
 
     await agent1
       .post('/api/createapplication')
@@ -119,22 +107,25 @@ describe('get applications', () => {
         });
 
       const response = await agent
-        .get('/api/applicationsoutbox');
+        .get('/api/applicationsoutbox')
+        .query({
+          status: 'all',
+        });
 
-      const array = response.body;
+      const { statusCode, body } = response;
 
-      expect(response.statusCode).toBe(200);
-      expect(array).toHaveLength(2);
-      expect(array[0].idUserAuthor).toBe(1);
-      expect(array[1].idUserAuthor).toBe(1);
-      expect(array[0].idThingOffered).toBe(1);
-      expect(array[1].idThingOffered).toBe(2);
-      expect(array[0].idUserAnswer).toBe(2);
-      expect(array[1].idUserAnswer).toBe(2);
-      expect(array[0].idThingDesired).toBe(3);
-      expect(array[1].idThingDesired).toBe(3);
-      expect(array[0].status).toBe('pending');
-      expect(array[1].status).toBe('pending');
+      expect(statusCode).toBe(200);
+      expect(body).toHaveLength(2);
+      expect(body[0].idUserAuthor).toBe(1);
+      expect(body[1].idUserAuthor).toBe(1);
+      expect(body[0].idThingOffered).toBe(1);
+      expect(body[1].idThingOffered).toBe(2);
+      expect(body[0].idUserAnswer).toBe(2);
+      expect(body[1].idUserAnswer).toBe(2);
+      expect(body[0].idThingDesired).toBe(3);
+      expect(body[1].idThingDesired).toBe(3);
+      expect(body[0].status).toBe('pending');
+      expect(body[1].status).toBe('pending');
     });
 
     test('get inbox applications', async () => {
@@ -148,22 +139,25 @@ describe('get applications', () => {
         });
 
       const response = await agent
-        .get('/api/applicationsinbox');
+        .get('/api/applicationsinbox')
+        .query({
+          status: 'all',
+        });
 
-      const array = response.body;
+      const { statusCode, body } = response;
 
-      expect(response.statusCode).toBe(200);
-      expect(array).toHaveLength(2);
-      expect(array[0].idUserAuthor).toBe(1);
-      expect(array[1].idUserAuthor).toBe(1);
-      expect(array[0].idThingOffered).toBe(1);
-      expect(array[1].idThingOffered).toBe(2);
-      expect(array[0].idUserAnswer).toBe(2);
-      expect(array[1].idUserAnswer).toBe(2);
-      expect(array[0].idThingDesired).toBe(3);
-      expect(array[1].idThingDesired).toBe(3);
-      expect(array[0].status).toBe('pending');
-      expect(array[1].status).toBe('pending');
+      expect(statusCode).toBe(200);
+      expect(body).toHaveLength(2);
+      expect(body[0].idUserAuthor).toBe(1);
+      expect(body[1].idUserAuthor).toBe(1);
+      expect(body[0].idThingOffered).toBe(1);
+      expect(body[1].idThingOffered).toBe(2);
+      expect(body[0].idUserAnswer).toBe(2);
+      expect(body[1].idUserAnswer).toBe(2);
+      expect(body[0].idThingDesired).toBe(3);
+      expect(body[1].idThingDesired).toBe(3);
+      expect(body[0].status).toBe('pending');
+      expect(body[1].status).toBe('pending');
     });
 
     test('get filtered outbox applications', async () => {
@@ -183,23 +177,21 @@ describe('get applications', () => {
         });
 
       const response = await agent
-        .post('/api/applicationsoutboxfiltered')
-        .send({
-          params: {
-            status: 'canceled',
-          },
+        .get('/api/applicationsoutbox')
+        .query({
+          status: 'canceled',
         });
 
-      const array = response.body;
+      const { statusCode, body } = response;
 
-      expect(response.statusCode).toBe(200);
-      expect(array).toHaveLength(1);
-      expect(array[0].id).toBe(1);
-      expect(array[0].idUserAuthor).toBe(1);
-      expect(array[0].idThingOffered).toBe(1);
-      expect(array[0].idUserAnswer).toBe(2);
-      expect(array[0].idThingDesired).toBe(3);
-      expect(array[0].status).toBe('canceled');
+      expect(statusCode).toBe(200);
+      expect(body).toHaveLength(1);
+      expect(body[0].id).toBe(1);
+      expect(body[0].idUserAuthor).toBe(1);
+      expect(body[0].idThingOffered).toBe(1);
+      expect(body[0].idUserAnswer).toBe(2);
+      expect(body[0].idThingDesired).toBe(3);
+      expect(body[0].status).toBe('canceled');
     });
     test('get filtered inbox applications', async () => {
       const agent = await request.agent(this.app);
@@ -218,23 +210,21 @@ describe('get applications', () => {
         });
 
       const response = await agent
-        .post('/api/applicationsinboxfiltered')
-        .send({
-          params: {
-            status: 'rejected',
-          },
+        .get('/api/applicationsinbox')
+        .query({
+          status: 'rejected',
         });
 
-      const array = response.body;
+      const { statusCode, body } = response;
 
-      expect(response.statusCode).toBe(200);
-      expect(array).toHaveLength(1);
-      expect(array[0].id).toBe(2);
-      expect(array[0].idUserAuthor).toBe(1);
-      expect(array[0].idThingOffered).toBe(2);
-      expect(array[0].idUserAnswer).toBe(2);
-      expect(array[0].idThingDesired).toBe(3);
-      expect(array[0].status).toBe('rejected');
+      expect(statusCode).toBe(200);
+      expect(body).toHaveLength(1);
+      expect(body[0].id).toBe(2);
+      expect(body[0].idUserAuthor).toBe(1);
+      expect(body[0].idThingOffered).toBe(2);
+      expect(body[0].idUserAnswer).toBe(2);
+      expect(body[0].idThingDesired).toBe(3);
+      expect(body[0].status).toBe('rejected');
     });
   });
 });

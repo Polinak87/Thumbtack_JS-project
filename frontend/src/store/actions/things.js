@@ -12,7 +12,7 @@ export const ADD_CATALOG = 'ADD_CATALOG';
 
 export const addNewThing = (name, description, categoryId, file) => {
   return dispatch => {
-    let formData = new FormData();
+    const formData = new FormData();
     formData.append('file', file);
     formData.append('name', name);
     formData.append('description', description);

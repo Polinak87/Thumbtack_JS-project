@@ -8,7 +8,7 @@
     "start": "nodemon --watch backend ./backend/server.js",
     "debug": "nodemon --watch backend --inspect ./backend/app.js",
     "dev": "concurrently \"npm run webpack\" \"npm run start\"",
-    "test": "jest --runInBand",
+    "test": "NODE_ENV='test' jest --runInBand",
     "docker-build": "docker-compose build --no-cache",
     "docker-start": "docker-compose up",
     "docker-clean": "docker-compose stop && docker-compose down --rmi local --volumes --remove-orphans",

@@ -54,6 +54,8 @@ const addThingFromCatalog = async (ctx) => {
       include: [{
         model: Category,
       }],
+    }, {
+      model: User,
     }],
     where: {
       id: newUserThingId,
@@ -97,6 +99,8 @@ const removeThingFromMarket = async (ctx) => {
       include: [{
         model: Category,
       }],
+    }, {
+      model: User,
     }],
     where: {
       id: thingId,

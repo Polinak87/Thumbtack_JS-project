@@ -104,15 +104,36 @@ describe('Actions with things', () => {
   });
 
   test('Remove thing from market', async () => {
-    const id = 1;
     const agent = await request.agent(this.app);
     const response = await agent
       .post('/api/removethingfrommarket')
-      .send({ id });
+      .send({ id: 1 });
 
     expect(response.statusCode).toBe(200);
     expect(response.body.onMarket).toBe(false);
     expect(response.body.onMarketAt).toBeNull();
+
+    const { statusCode, body } = response;
+    const {
+      Thing: thing,
+      User: user,
+      id,
+      onMarket,
+      onMarketAt,
+    } = body;
+    const { image, name, description, Category: category } = thing;
+    const { name: categoryName } = category;
+    const { id: userId } = user;
+
+    expect(statusCode).toBe(200);
+    expect(id).toBe(1);
+    expect(image).toBeDefined();
+    expect(name).toBe('bag');
+    expect(description).toBe('red leather');
+    expect(categoryName).toBe('bags');
+    expect(onMarket).toBeFalsy();
+    expect(onMarketAt).toBeNull();
+    expect(userId).toBe(1);
   });
 });
 

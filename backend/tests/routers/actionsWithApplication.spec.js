@@ -32,14 +32,10 @@ describe('Actions with applications', () => {
 
     await agent1
       .post('/api/addnewthing')
-      .send({
-        name: 'winter dress',
-        description: 'pretty',
-        categoryId: 1,
-        userId: 1,
-        onMarket: false,
-        onMarketAt: null,
-      });
+      .field({ name: 'winter dress' })
+      .field({ description: 'pretty' })
+      .field({ categoryId: 1 })
+      .attach('file', 'backend/tests/routers/test-image.png');
 
     await agent1
       .post('/api/addthingtomarket')
@@ -56,14 +52,10 @@ describe('Actions with applications', () => {
 
     await agent2
       .post('/api/addnewthing')
-      .send({
-        name: 'gold ring',
-        description: 'modern style',
-        categoryId: 2,
-        userId: 2,
-        onMarket: false,
-        onMarketAt: null,
-      });
+      .field({ name: 'gold ring' })
+      .field({ description: 'modern style' })
+      .field({ categoryId: 2 })
+      .attach('file', 'backend/tests/routers/test-image.png');
 
     await agent2
       .post('/api/addthingtomarket')
@@ -105,9 +97,11 @@ describe('Actions with applications', () => {
           id: 1,
         });
 
-      const { status, message } = response.body;
+      const { statusCode, body } = response;
+      const { currentApplication, message } = body;
+      const { status } = currentApplication;
 
-      expect(response.statusCode).toBe(200);
+      expect(statusCode).toBe(200);
       expect(message).toBe('');
       expect(status).toBe('canceled');
     });
@@ -127,9 +121,12 @@ describe('Actions with applications', () => {
         .send({
           id: 1,
         });
-      const { status, message } = response.body;
 
-      expect(response.statusCode).toBe(200);
+      const { statusCode, body } = response;
+      const { currentApplication, message } = body;
+      const { status } = currentApplication;
+
+      expect(statusCode).toBe(200);
       expect(message).toBe('');
       expect(status).toBe('rejected');
     });
@@ -145,17 +142,18 @@ describe('Actions with applications', () => {
           password: 'ggg',
         });
 
-      const applicationResponse = await agent2
+      let response = await agent2
         .put('/api/completeapplication')
         .send({
           id: 1,
         });
 
-      const applicationArray = applicationResponse.body;
-      const { id, status, message } = applicationArray[0];
+      let { statusCode, body } = response;
+      const { application, message } = body[0];
+      const { id, status } = application;
 
-      expect(applicationResponse.statusCode).toBe(200);
-      expect(applicationArray).toHaveLength(1);
+      expect(statusCode).toBe(200);
+      expect(body).toHaveLength(1);
       expect(id).toBe(1);
       expect(status).toBe('completed');
       expect(message).toBe('');
@@ -167,35 +165,53 @@ describe('Actions with applications', () => {
           password: 'ggg',
         });
 
-      const thingResponseForFirstUser = await agent1
+      response = await agent1
         .get('/api/userthings');
 
-      const thingArrayOfFirstUser = thingResponseForFirstUser.body;
+      ({ statusCode, body } = response);
 
-      expect(thingResponseForFirstUser.statusCode).toBe(200);
-      expect(thingArrayOfFirstUser).toHaveLength(1);
-      expect(thingArrayOfFirstUser[0].id).toBe(2);
-      expect(thingArrayOfFirstUser[0].name).toBe('gold ring');
-      expect(thingArrayOfFirstUser[0].description).toBe('modern style');
-      expect(thingArrayOfFirstUser[0].categoryId).toBe(2);
-      expect(thingArrayOfFirstUser[0].userId).toBe(1);
-      expect(thingArrayOfFirstUser[0].onMarket).toBe(false);
-      expect(thingArrayOfFirstUser[0].onMarketAt).toBeNull();
+      let {
+        Thing: thing,
+        id: thingId,
+        onMarket,
+        onMarketAt,
+      } = body[0];
+      let { image, name, description, Category: category } = thing;
+      let { id: categoryId } = category;
 
-      const thingResponseForSecondtUser = await agent2
+      expect(statusCode).toBe(200);
+      expect(body).toHaveLength(1);
+      expect(thingId).toBe(2);
+      expect(image).toBeDefined();
+      expect(name).toBe('gold ring');
+      expect(description).toBe('modern style');
+      expect(categoryId).toBe(2);
+      expect(onMarket).toBe(false);
+      expect(onMarketAt).toBeNull();
+
+      response = await agent2
         .get('/api/userthings');
 
-      const thingArrayOfSecondtUser = thingResponseForSecondtUser.body;
+      ({ statusCode, body } = response);
 
-      expect(thingResponseForSecondtUser.statusCode).toBe(200);
-      expect(thingArrayOfSecondtUser).toHaveLength(1);
-      expect(thingArrayOfSecondtUser[0].id).toBe(1);
-      expect(thingArrayOfSecondtUser[0].name).toBe('winter dress');
-      expect(thingArrayOfSecondtUser[0].description).toBe('pretty');
-      expect(thingArrayOfSecondtUser[0].categoryId).toBe(1);
-      expect(thingArrayOfSecondtUser[0].userId).toBe(2);
-      expect(thingArrayOfSecondtUser[0].onMarket).toBe(false);
-      expect(thingArrayOfFirstUser[0].onMarketAt).toBeNull();
+      ({
+        Thing: thing,
+        id: thingId,
+        onMarket,
+        onMarketAt,
+      } = body[0]);
+      ({ image, name, description, Category: category } = thing);
+      ({ id: categoryId } = category);
+
+      expect(statusCode).toBe(200);
+      expect(body).toHaveLength(1);
+      expect(id).toBe(1);
+      expect(image).toBeDefined();
+      expect(name).toBe('winter dress');
+      expect(description).toBe('pretty');
+      expect(categoryId).toBe(1);
+      expect(onMarket).toBe(false);
+      expect(onMarketAt).toBeNull();
     });
   });
 
@@ -230,9 +246,11 @@ describe('Actions with applications', () => {
           id: 1,
         });
 
-      const { status, message } = response.body;
+      const { statusCode, body } = response;
+      const { currentApplication, message } = body;
+      const { status } = currentApplication;
 
-      expect(response.statusCode).toBe(200);
+      expect(statusCode).toBe(200);
       expect(message).toBe('Ops, another user has just answered on your application for exchange this thing.');
       expect(status).toBe('completed');
     });
@@ -267,9 +285,11 @@ describe('Actions with applications', () => {
           id: 1,
         });
 
-      const { status, message } = response.body;
+      const { statusCode, body } = response;
+      const { currentApplication, message } = body;
+      const { status } = currentApplication;
 
-      expect(response.statusCode).toBe(200);
+      expect(statusCode).toBe(200);
       expect(message).toBe('Ops, the other user has just canceled the application.');
       expect(status).toBe('canceled');
     });
@@ -304,11 +324,12 @@ describe('Actions with applications', () => {
           id: 1,
         });
 
-      const array = response.body;
-      const { id, status, message } = array[0];
+      const { statusCode, body } = response;
+      const { application, message } = body[0];
+      const { status, id } = application;
 
-      expect(response.statusCode).toBe(200);
-      expect(array).toHaveLength(1);
+      expect(statusCode).toBe(200);
+      expect(body).toHaveLength(1);
       expect(id).toBe(1);
       expect(status).toBe('canceled');
       expect(message).toBe('Very sorry, the other user has just canceled the application.');

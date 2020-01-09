@@ -94,7 +94,6 @@ describe('Actions with things', () => {
     let { image, name, description, Category: category } = thing;
     let { name: categoryName } = category;
 
-    expect(statusCode).toBe(200);
     expect(id).toBe(1);
     expect(image).toBeDefined();
     expect(name).toBe('winter dress');
@@ -112,7 +111,6 @@ describe('Actions with things', () => {
     ({ image, name, description, Category: category } = thing);
     ({ name: categoryName } = category);
 
-    expect(statusCode).toBe(200);
     expect(id).toBe(2);
     expect(image).toBeDefined();
     expect(name).toBe('gold ring');

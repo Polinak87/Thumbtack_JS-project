@@ -38,25 +38,17 @@ describe('Actions with things', () => {
 
     await agent1
       .post('/api/addnewthing')
-      .send({
-        name: 'winter dress',
-        description: 'pretty',
-        categoryId: 1,
-        userId: 1,
-        onMarket: false,
-        onMarketAt: null,
-      });
+      .field({ name: 'winter dress' })
+      .field({ description: 'pretty' })
+      .field({ categoryId: 1 })
+      .attach('file', 'backend/tests/routers/test-image.png');
 
     await agent2
       .post('/api/addnewthing')
-      .send({
-        name: 'gold ring',
-        description: 'modern style',
-        categoryId: 2,
-        userId: 2,
-        onMarket: false,
-        onMarketAt: null,
-      });
+      .field({ name: 'gold ring' })
+      .field({ description: 'modern style' })
+      .field({ categoryId: 2 })
+      .attach('file', 'backend/tests/routers/test-image.png');
 
     await agent1
       .post('/api/logout');
@@ -95,15 +87,17 @@ describe('Actions with things', () => {
         idUserAnswer: 2,
       });
 
+    const { statusCode, body } = response;
+
     const {
       idUserAuthor,
       idThingOffered,
       idUserAnswer,
       idThingDesired,
       status,
-    } = response.body;
+    } = body;
 
-    expect(response.statusCode).toBe(200);
+    expect(statusCode).toBe(200);
     expect(idUserAuthor).toBe(1);
     expect(idThingOffered).toBe(1);
     expect(idUserAnswer).toBe(2);
