@@ -8,7 +8,11 @@ const {
   Category,
 } = require('../../models');
 
+const { checkAuthentication } = require('./authorization');
+
 const getUserThings = async (ctx, next) => {
+  await checkAuthentication(ctx);
+
   const currentUserId = ctx.state.user.id;
 
   ctx.body = await UserThing.findAll({
@@ -26,6 +30,7 @@ const getUserThings = async (ctx, next) => {
 };
 
 const getMarketThings = async (ctx, next) => {
+  await checkAuthentication(ctx);
   const query = urlapi.parse(ctx.request.url).query;
   const categoryForFiltration = query.substring((query.indexOf('=') + 1), query.indexOf('&'));
   const sortingType = query.substring((query.lastIndexOf('=') + 1), query.length);
@@ -73,6 +78,7 @@ const getMarketThings = async (ctx, next) => {
 };
 
 const getMarketThingsOfOneUser = async (ctx, next) => {
+  await checkAuthentication(ctx);
   const query = urlapi.parse(ctx.request.url).query;
   const userForFiltration = query.substring((query.indexOf('=') + 1), query.length);
 
@@ -96,6 +102,7 @@ const getMarketThingsOfOneUser = async (ctx, next) => {
 };
 
 const getCatalogThings = async (ctx, next) => {
+  await checkAuthentication(ctx);
   ctx.body = await Thing.findAll({
     include: [{
       model: Category,

@@ -26,9 +26,9 @@ describe('Users', () => {
         password: 'ggg',
       });
 
-    await expect(response.statusCode).toBe(200);
+    expect(response.statusCode).toBe(200);
 
-    await expect(response.body).toEqual({
+    expect(response.body).toEqual({
       firstName: 'Masha',
       id: 1,
       lastName: 'Kozlova',
@@ -76,28 +76,42 @@ describe('Users', () => {
       });
 
     expect(response.statusCode).toBe(200);
-    await expect(response.body).toEqual({
+    expect(response.body).toEqual({
       firstName: 'John',
       id: 3,
       lastName: 'Kozlov',
     });
   });
 
-  // переписать, когда будет условие аутентификации на бэке
+  test('when not authenticated', async () => {
+    const agent = await request.agent(this.app);
+
+    const response = await agent
+      .get('/api/getcurrentuser');
+
+    expect(response.statusCode).toBe(401);
+    expect(response.text).toBe('Unauthenticated');
+  });
+
   test('when authenticated', async () => {
     const agent = await request.agent(this.app);
 
     await agent
-      .post('/login')
+      .post('/api/login')
       .send({
-        email: 'polinak87@mail.ru',
+        email: 'masha@mail.ru',
         password: 'ggg',
       });
 
     const response = await agent
-      .get('/profile');
+      .get('/api/getcurrentuser');
 
-    expect(response.statusCode).toBe(200);
-    await expect(response.body).toEqual({});
+    const { statusCode, body } = response;
+    const { firstName, lastName, id } = body;
+
+    expect(statusCode).toBe(200);
+    expect(firstName).toEqual('Masha');
+    expect(lastName).toEqual('Kozlova');
+    expect(id).toEqual(1);
   });
 });

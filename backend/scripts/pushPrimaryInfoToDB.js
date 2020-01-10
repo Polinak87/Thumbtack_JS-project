@@ -8,6 +8,8 @@ const {
   UserThing,
 } = require('../models');
 
+const PENDING = require('../routers/controllers/actionsWithApplication');
+
 sequelize.sync({ force: false }).then(async () => {
   await User.create({
     firstName: 'Polina',
@@ -56,6 +58,6 @@ sequelize.sync({ force: false }).then(async () => {
     idThingOffered: 1,
     idUserAnswer: 2,
     idThingDesired: 3,
-    status: 'pending',
+    status: PENDING,
   });
 });

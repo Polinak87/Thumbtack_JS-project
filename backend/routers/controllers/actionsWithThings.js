@@ -1,8 +1,10 @@
 'use strict';
 
 const { Thing, User, UserThing, Category } = require('../../models');
+const { checkAuthentication } = require('./authorization');
 
 const addNewThing = async (ctx) => {
+  await checkAuthentication(ctx);
   const { name, description, categoryId } = ctx.req.body;
   const userId = ctx.state.user.id;
 
@@ -37,6 +39,7 @@ const addNewThing = async (ctx) => {
 };
 
 const addThingFromCatalog = async (ctx) => {
+  await checkAuthentication(ctx);
   const { id } = ctx.request.body;
   const userId = ctx.state.user.id;
 
@@ -66,6 +69,7 @@ const addThingFromCatalog = async (ctx) => {
 };
 
 const addThingToMarket = async (ctx) => {
+  await checkAuthentication(ctx);
   const thingId = ctx.request.body.id;
 
   const thing = await UserThing.findOne({
@@ -91,6 +95,7 @@ const addThingToMarket = async (ctx) => {
 };
 
 const removeThingFromMarket = async (ctx) => {
+  await checkAuthentication(ctx);
   const thingId = ctx.request.body.id;
 
   const thing = await UserThing.findOne({

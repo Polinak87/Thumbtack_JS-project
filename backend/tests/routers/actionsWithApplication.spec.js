@@ -6,6 +6,11 @@ const {
   Category,
   sequelize,
 } = require('../../models');
+const {
+  CANCELED,
+  REJECTED,
+  COMPLETED,
+} = require('../../routers/controllers/actionsWithApplication');
 
 describe('Actions with applications', () => {
   beforeAll(async () => {
@@ -103,7 +108,7 @@ describe('Actions with applications', () => {
 
       expect(statusCode).toBe(200);
       expect(message).toBe('');
-      expect(status).toBe('canceled');
+      expect(status).toBe(CANCELED);
     });
 
     test('Reject application', async () => {
@@ -128,7 +133,7 @@ describe('Actions with applications', () => {
 
       expect(statusCode).toBe(200);
       expect(message).toBe('');
-      expect(status).toBe('rejected');
+      expect(status).toBe(REJECTED);
     });
 
     test('Complete application', async () => {
@@ -155,7 +160,7 @@ describe('Actions with applications', () => {
       expect(statusCode).toBe(200);
       expect(body).toHaveLength(1);
       expect(id).toBe(1);
-      expect(status).toBe('completed');
+      expect(status).toBe(COMPLETED);
       expect(message).toBe('');
 
       await agent1
@@ -252,7 +257,7 @@ describe('Actions with applications', () => {
 
       expect(statusCode).toBe(200);
       expect(message).toBe('Ops, another user has just answered on your application for exchange this thing.');
-      expect(status).toBe('completed');
+      expect(status).toBe(COMPLETED);
     });
 
     test('Reject application', async () => {
@@ -291,7 +296,7 @@ describe('Actions with applications', () => {
 
       expect(statusCode).toBe(200);
       expect(message).toBe('Ops, the other user has just canceled the application.');
-      expect(status).toBe('canceled');
+      expect(status).toBe(CANCELED);
     });
 
     test('Complete application', async () => {
@@ -331,7 +336,7 @@ describe('Actions with applications', () => {
       expect(statusCode).toBe(200);
       expect(body).toHaveLength(1);
       expect(id).toBe(1);
-      expect(status).toBe('canceled');
+      expect(status).toBe(CANCELED);
       expect(message).toBe('Very sorry, the other user has just canceled the application.');
     });
   });

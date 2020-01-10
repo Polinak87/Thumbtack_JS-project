@@ -3,6 +3,13 @@
 const passport = require('../../middlewares/passport');
 const { User } = require('../../models');
 
+const checkAuthentication = (ctx) => {
+  if (ctx.isUnauthenticated()) {
+    // ctx.redirect('/home');
+    ctx.throw(401, 'Unauthenticated');
+  }
+};
+
 // eslint-disable-next-line consistent-return
 const registration = async (ctx) => {
   if (ctx.isAuthenticated()) {
@@ -50,6 +57,7 @@ const login = async (ctx) => {
 };
 
 const logout = async (ctx) => {
+  checkAuthentication(ctx);
   await ctx.logout();
   ctx.status = 302;
 
@@ -57,9 +65,7 @@ const logout = async (ctx) => {
 };
 
 const getCurrentUser = async (ctx) => {
-  if (ctx.isUnauthenticated()) {
-    ctx.throw(401, 'Unauthenticated');
-  }
+  await checkAuthentication(ctx);
   ctx.body = await User.findOne({
     where: {
       id: ctx.state.user.id,
@@ -70,6 +76,7 @@ const getCurrentUser = async (ctx) => {
 
 module.exports = {
   getCurrentUser,
+  checkAuthentication,
   login,
   logout,
   registration,

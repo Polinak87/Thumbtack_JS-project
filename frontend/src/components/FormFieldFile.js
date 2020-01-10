@@ -5,7 +5,7 @@ export default function FormFieldFile({ onChange, fileName }) {
     <div className="field">
       <div className="file is-large is-success has-name is-fullwidth">
         <label className="file-label">
-          <input className="file-input" type="file" name="file" onChange={onChange} />
+          <input className="file-input" type="file" name="file" required onChange={onChange} />
           <span className="file-cta">
             <span className="file-label ">Choose a file</span>
           </span>

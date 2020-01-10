@@ -1,5 +1,10 @@
 'use strict';
 
+const PENDING = 'pending';
+const CANCELED = 'canceled';
+const REJECTED = 'rejected';
+const COMPLETED = 'completed';
+
 const {
   Application,
   UserThing,
@@ -7,7 +12,10 @@ const {
   Category,
 } = require('../../models');
 
+const { checkAuthentication } = require('./authorization');
+
 const createApplication = async (ctx) => {
+  await checkAuthentication(ctx);
   const { idThingOffered, idThingDesired, idUserAnswer } = ctx.request.body;
   const idUserAuthor = ctx.state.user.id;
 
@@ -16,12 +24,13 @@ const createApplication = async (ctx) => {
     idThingOffered,
     idUserAnswer,
     idThingDesired,
-    status: 'pending',
+    status: PENDING,
   });
   ctx.status = 200;
 };
 
 const canceleApplication = async (ctx) => {
+  await checkAuthentication(ctx);
   const { id } = ctx.request.body;
 
   const currentApplication = await Application.findOne({
@@ -47,15 +56,15 @@ const canceleApplication = async (ctx) => {
     where: { id },
   });
 
-  if (currentApplication.status === 'pending') {
+  if (currentApplication.status === PENDING) {
     await Application.update(
       {
-        status: 'canceled',
+        status: CANCELED,
       },
       { where: { id } },
     )
       .then(() => {
-        currentApplication.status = 'canceled';
+        currentApplication.status = CANCELED;
         ctx.body = {
           currentApplication,
           message: '',
@@ -72,6 +81,7 @@ const canceleApplication = async (ctx) => {
 };
 
 const rejectApplication = async (ctx) => {
+  await checkAuthentication(ctx);
   const { id } = ctx.request.body;
 
   const currentApplication = await Application.findOne({
@@ -97,8 +107,8 @@ const rejectApplication = async (ctx) => {
     where: { id },
   });
 
-  if (currentApplication.status === 'pending') {
-    currentApplication.status = 'rejected';
+  if (currentApplication.status === PENDING) {
+    currentApplication.status = REJECTED;
     currentApplication.save();
     ctx.body = {
       currentApplication,
@@ -115,6 +125,7 @@ const rejectApplication = async (ctx) => {
 };
 
 const completeApplication = async (ctx) => {
+  await checkAuthentication(ctx);
   const { id } = ctx.request.body;
 
   const currentApplication = await Application.findOne({
@@ -154,14 +165,14 @@ const completeApplication = async (ctx) => {
   ctx.body = [];
 
   switch (status) {
-    case 'pending':
+    case PENDING:
       await Application.update(
         {
-          status: 'completed',
+          status: COMPLETED,
         },
         { where: { id } },
       ).then(() => {
-        currentApplication.status = 'completed';
+        currentApplication.status = COMPLETED;
       });
 
       await ctx.body.push(
@@ -211,7 +222,7 @@ const completeApplication = async (ctx) => {
         }],
         where: {
           idThingOffered,
-          status: 'pending',
+          status: PENDING,
         },
       })
         .then((applications) => {
@@ -240,7 +251,7 @@ const completeApplication = async (ctx) => {
         }],
         where: {
           idThingDesired,
-          status: 'pending',
+          status: PENDING,
         },
       })
         .then((applications) => {
@@ -252,12 +263,12 @@ const completeApplication = async (ctx) => {
 
         await Application.update(
           {
-            status: 'rejected',
+            status: REJECTED,
           },
           { where: { id: ApplicationForReject.id } },
         )
           .then(() => {
-            ApplicationForReject.status = 'rejected';
+            ApplicationForReject.status = REJECTED;
           });
 
         await ctx.body.push(
@@ -273,12 +284,12 @@ const completeApplication = async (ctx) => {
 
         await Application.update(
           {
-            status: 'canceled',
+            status: CANCELED,
           },
           { where: { id: ApplicationForCancel.id } },
         )
           .then(() => {
-            ApplicationForCancel.status = 'canceled';
+            ApplicationForCancel.status = CANCELED;
           });
 
         if (ApplicationForCancel.idUserAnswer === ctx.state.user.id) {
@@ -294,7 +305,7 @@ const completeApplication = async (ctx) => {
       ctx.status = 200;
       break;
 
-    case 'canceled':
+    case CANCELED:
       await ctx.body.push(
         {
           application: currentApplication,
@@ -304,7 +315,7 @@ const completeApplication = async (ctx) => {
       ctx.status = 200;
       break;
 
-    case 'rejected':
+    case REJECTED:
       await ctx.body.push(
         {
           application: currentApplication,
@@ -327,4 +338,8 @@ module.exports = {
   canceleApplication,
   rejectApplication,
   completeApplication,
+  PENDING,
+  CANCELED,
+  REJECTED,
+  COMPLETED,
 };

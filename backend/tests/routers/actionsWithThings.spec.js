@@ -76,6 +76,14 @@ describe('Actions with things', () => {
 
   test('Add thing to market', async () => {
     const agent = await request.agent(this.app);
+
+    await agent
+      .post('/api/login')
+      .send({
+        email: 'polinak87@mail.ru',
+        password: 'ggg',
+      });
+
     const response = await agent
       .post('/api/addthingtomarket')
       .send({ id: 1 });
@@ -105,6 +113,14 @@ describe('Actions with things', () => {
 
   test('Remove thing from market', async () => {
     const agent = await request.agent(this.app);
+
+    await agent
+      .post('/api/login')
+      .send({
+        email: 'polinak87@mail.ru',
+        password: 'ggg',
+      });
+
     const response = await agent
       .post('/api/removethingfrommarket')
       .send({ id: 1 });

@@ -6,6 +6,11 @@ const {
   Category,
   sequelize,
 } = require('../../models');
+const {
+  PENDING,
+  REJECTED,
+  CANCELED,
+} = require('../../routers/controllers/actionsWithApplication');
 
 describe('get applications', () => {
   beforeAll(async () => {
@@ -124,8 +129,8 @@ describe('get applications', () => {
       expect(body[1].idUserAnswer).toBe(2);
       expect(body[0].idThingDesired).toBe(3);
       expect(body[1].idThingDesired).toBe(3);
-      expect(body[0].status).toBe('pending');
-      expect(body[1].status).toBe('pending');
+      expect(body[0].status).toBe(PENDING);
+      expect(body[1].status).toBe(PENDING);
     });
 
     test('get inbox applications', async () => {
@@ -156,8 +161,8 @@ describe('get applications', () => {
       expect(body[1].idUserAnswer).toBe(2);
       expect(body[0].idThingDesired).toBe(3);
       expect(body[1].idThingDesired).toBe(3);
-      expect(body[0].status).toBe('pending');
-      expect(body[1].status).toBe('pending');
+      expect(body[0].status).toBe(PENDING);
+      expect(body[1].status).toBe(PENDING);
     });
 
     test('get filtered outbox applications', async () => {
@@ -179,7 +184,7 @@ describe('get applications', () => {
       const response = await agent
         .get('/api/applicationsoutbox')
         .query({
-          status: 'canceled',
+          status: CANCELED,
         });
 
       const { statusCode, body } = response;
@@ -191,7 +196,7 @@ describe('get applications', () => {
       expect(body[0].idThingOffered).toBe(1);
       expect(body[0].idUserAnswer).toBe(2);
       expect(body[0].idThingDesired).toBe(3);
-      expect(body[0].status).toBe('canceled');
+      expect(body[0].status).toBe(CANCELED);
     });
     test('get filtered inbox applications', async () => {
       const agent = await request.agent(this.app);
@@ -212,7 +217,7 @@ describe('get applications', () => {
       const response = await agent
         .get('/api/applicationsinbox')
         .query({
-          status: 'rejected',
+          status: REJECTED,
         });
 
       const { statusCode, body } = response;
@@ -224,7 +229,7 @@ describe('get applications', () => {
       expect(body[0].idThingOffered).toBe(2);
       expect(body[0].idUserAnswer).toBe(2);
       expect(body[0].idThingDesired).toBe(3);
-      expect(body[0].status).toBe('rejected');
+      expect(body[0].status).toBe(REJECTED);
     });
   });
 });

@@ -6,6 +6,7 @@ const {
   Category,
   sequelize,
 } = require('../../models');
+const { PENDING } = require('../../routers/controllers/actionsWithApplication');
 
 describe('Actions with things', () => {
   beforeAll(async () => {
@@ -62,24 +63,32 @@ describe('Actions with things', () => {
   });
 
   test('Create application', async () => {
-    const agent = await request.agent(this.app);
+    const agent1 = await request.agent(this.app);
+    const agent2 = await request.agent(this.app);
 
-    await agent
+    await agent1
       .post('/api/login')
       .send({
         email: 'polinak87@mail.ru',
         password: 'ggg',
       });
 
-    await agent
+    await agent1
       .post('/api/addthingtomarket')
       .send({ id: 1 });
 
-    await agent
+    await agent2
+      .post('/api/login')
+      .send({
+        email: 'mitroshka@mail.ru',
+        password: 'ggg',
+      });
+
+    await agent2
       .post('/api/addthingtomarket')
       .send({ id: 2 });
 
-    const response = await agent
+    const response = await agent1
       .post('/api/createapplication')
       .send({
         idThingOffered: 1,
@@ -102,6 +111,6 @@ describe('Actions with things', () => {
     expect(idThingOffered).toBe(1);
     expect(idUserAnswer).toBe(2);
     expect(idThingDesired).toBe(2);
-    expect(status).toBe('pending');
+    expect(status).toBe(PENDING);
   });
 });

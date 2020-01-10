@@ -8,7 +8,10 @@ const {
   UserThing,
 } = require('../../models');
 
+const { checkAuthentication } = require('./authorization');
+
 const applicationsOutbox = async (ctx, next) => {
+  await checkAuthentication(ctx);
   const currentUserId = ctx.state.user.id;
   const query = urlapi.parse(ctx.request.url).query;
   const statusForFilter = query.substring((query.indexOf('=') + 1), query.length);
@@ -70,6 +73,7 @@ const applicationsOutbox = async (ctx, next) => {
 };
 
 const applicationsInbox = async (ctx, next) => {
+  await checkAuthentication(ctx);
   const currentUserId = ctx.state.user.id;
   const query = urlapi.parse(ctx.request.url).query;
   const statusForFilter = query.substring((query.indexOf('=') + 1), query.length);
