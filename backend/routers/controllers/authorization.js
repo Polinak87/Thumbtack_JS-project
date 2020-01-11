@@ -26,7 +26,7 @@ const registration = async (ctx) => {
         if (err) {
           ctx.throw(401, err.message);
         }
-        ctx.status = 200;
+        ctx.status = 201;
         ctx.body = newUser;
       });
     })(ctx);

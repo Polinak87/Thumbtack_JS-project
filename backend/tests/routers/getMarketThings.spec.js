@@ -87,7 +87,7 @@ describe('Actions with things', () => {
       });
 
     await agent1
-      .post('/api/addthingtomarket')
+      .put('/api/addthingtomarket')
       .send({ id: 1 });
 
     await agent2
@@ -98,7 +98,7 @@ describe('Actions with things', () => {
       });
 
     await agent2
-      .post('/api/addthingtomarket')
+      .put('/api/addthingtomarket')
       .send({ id: 4 });
 
     const response = await agent1

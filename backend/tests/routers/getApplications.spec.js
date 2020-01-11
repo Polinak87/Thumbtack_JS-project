@@ -50,7 +50,7 @@ describe('get applications', () => {
       .attach('file', 'backend/tests/routers/test-image.png');
 
     await agent1
-      .post('/api/addthingtomarket')
+      .put('/api/addthingtomarket')
       .send({ id: 1 });
 
     await agent2
@@ -70,7 +70,7 @@ describe('get applications', () => {
       .attach('file', 'backend/tests/routers/test-image.png');
 
     await agent2
-      .post('/api/addthingtomarket')
+      .put('/api/addthingtomarket')
       .send({ id: 3 });
 
     await agent1

@@ -26,7 +26,7 @@ const createApplication = async (ctx) => {
     idThingDesired,
     status: PENDING,
   });
-  ctx.status = 200;
+  ctx.status = 201;
 };
 
 const canceleApplication = async (ctx) => {

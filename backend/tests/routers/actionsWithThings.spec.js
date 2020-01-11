@@ -63,7 +63,7 @@ describe('Actions with things', () => {
     const { name: categoryName } = category;
     const { id: userId } = user;
 
-    expect(statusCode).toBe(200);
+    expect(statusCode).toBe(201);
     expect(id).toBe(1);
     expect(image).toBeDefined();
     expect(name).toBe('bag');
@@ -85,7 +85,7 @@ describe('Actions with things', () => {
       });
 
     const response = await agent
-      .post('/api/addthingtomarket')
+      .put('/api/addthingtomarket')
       .send({ id: 1 });
 
     const { statusCode, body } = response;
@@ -122,7 +122,7 @@ describe('Actions with things', () => {
       });
 
     const response = await agent
-      .post('/api/removethingfrommarket')
+      .put('/api/removethingfrommarket')
       .send({ id: 1 });
 
     expect(response.statusCode).toBe(200);

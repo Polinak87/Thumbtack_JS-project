@@ -74,7 +74,7 @@ describe('Actions with things', () => {
       });
 
     await agent1
-      .post('/api/addthingtomarket')
+      .put('/api/addthingtomarket')
       .send({ id: 1 });
 
     await agent2
@@ -85,7 +85,7 @@ describe('Actions with things', () => {
       });
 
     await agent2
-      .post('/api/addthingtomarket')
+      .put('/api/addthingtomarket')
       .send({ id: 2 });
 
     const response = await agent1
@@ -106,7 +106,7 @@ describe('Actions with things', () => {
       status,
     } = body;
 
-    expect(statusCode).toBe(200);
+    expect(statusCode).toBe(201);
     expect(idUserAuthor).toBe(1);
     expect(idThingOffered).toBe(1);
     expect(idUserAnswer).toBe(2);

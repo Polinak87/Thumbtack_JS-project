@@ -62,7 +62,7 @@ export const getUserThings = () => {
 
 export const addThingToMartet = id => {
   return dispatch => {
-    axios.post('/api/addthingtomarket', { id }).then(response => {
+    axios.put('/api/addthingtomarket', { id }).then(response => {
       const { data } = response;
       dispatch(updateUserThing(data));
     });
@@ -71,7 +71,7 @@ export const addThingToMartet = id => {
 
 export const removeThingFromMartet = id => {
   return dispatch => {
-    axios.post('/api/removethingfrommarket', { id }).then(response => {
+    axios.put('/api/removethingfrommarket', { id }).then(response => {
       const { data } = response;
       dispatch(updateUserThing(data));
     });

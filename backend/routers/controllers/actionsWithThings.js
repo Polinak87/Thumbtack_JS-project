@@ -35,7 +35,7 @@ const addNewThing = async (ctx) => {
     },
   });
 
-  ctx.status = 200;
+  ctx.status = 201;
 };
 
 const addThingFromCatalog = async (ctx) => {
@@ -65,7 +65,7 @@ const addThingFromCatalog = async (ctx) => {
     },
   });
 
-  ctx.status = 200;
+  ctx.status = 201;
 };
 
 const addThingToMarket = async (ctx) => {

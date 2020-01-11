@@ -26,7 +26,7 @@ describe('Users', () => {
         password: 'ggg',
       });
 
-    expect(response.statusCode).toBe(200);
+    expect(response.statusCode).toBe(201);
 
     expect(response.body).toEqual({
       firstName: 'Masha',
