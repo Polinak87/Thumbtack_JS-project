@@ -36,14 +36,14 @@ describe('Actions with applications', () => {
       });
 
     await agent1
-      .post('/api/addnewthing')
+      .post('/api/userthings')
       .field({ name: 'winter dress' })
       .field({ description: 'pretty' })
       .field({ categoryId: 1 })
       .attach('file', 'backend/tests/routers/test-image.png');
 
     await agent1
-      .put('/api/addthingtomarket')
+      .put('/api/userthings')
       .send({ id: 1 });
 
     await agent2
@@ -56,18 +56,18 @@ describe('Actions with applications', () => {
       });
 
     await agent2
-      .post('/api/addnewthing')
+      .post('/api/userthings')
       .field({ name: 'gold ring' })
       .field({ description: 'modern style' })
       .field({ categoryId: 2 })
       .attach('file', 'backend/tests/routers/test-image.png');
 
     await agent2
-      .put('/api/addthingtomarket')
+      .put('/api/userthings')
       .send({ id: 2 });
 
     await agent1
-      .post('/api/createapplication')
+      .post('/api/applications')
       .send({
         idThingOffered: 1,
         idThingDesired: 2,
@@ -86,7 +86,7 @@ describe('Actions with applications', () => {
   });
 
   describe('When status is pending', () => {
-    test('Cancele application', async () => {
+    test('cancel application', async () => {
       const agent = await request.agent(this.app);
 
       await agent
@@ -97,10 +97,7 @@ describe('Actions with applications', () => {
         });
 
       const response = await agent
-        .put('/api/canceleapplication')
-        .send({
-          id: 1,
-        });
+        .put('/api/applications/1/cancel');
 
       const { statusCode, body } = response;
       const { currentApplication, message } = body;
@@ -122,10 +119,7 @@ describe('Actions with applications', () => {
         });
 
       const response = await agent
-        .put('/api/rejectapplication')
-        .send({
-          id: 1,
-        });
+        .put('/api/applications/1/reject');
 
       const { statusCode, body } = response;
       const { currentApplication, message } = body;
@@ -148,10 +142,7 @@ describe('Actions with applications', () => {
         });
 
       let response = await agent2
-        .put('/api/completeapplication')
-        .send({
-          id: 1,
-        });
+        .put('/api/applications/1/complete');
 
       let { statusCode, body } = response;
       const { application, message } = body[0];
@@ -171,7 +162,7 @@ describe('Actions with applications', () => {
         });
 
       response = await agent1
-        .get('/api/userthings');
+        .get('/api/userthings/inventory');
 
       ({ statusCode, body } = response);
 
@@ -195,7 +186,7 @@ describe('Actions with applications', () => {
       expect(onMarketAt).toBeNull();
 
       response = await agent2
-        .get('/api/userthings');
+        .get('/api/userthings/inventory');
 
       ({ statusCode, body } = response);
 
@@ -221,7 +212,7 @@ describe('Actions with applications', () => {
   });
 
   describe('When status is not pending', () => {
-    test('Cancele application', async () => {
+    test('cancel application', async () => {
       const agent1 = await request.agent(this.app);
       const agent2 = await request.agent(this.app);
 
@@ -240,16 +231,10 @@ describe('Actions with applications', () => {
         });
 
       await agent2
-        .put('/api/completeapplication')
-        .send({
-          id: 1,
-        });
+        .put('/api/applications/1/complete');
 
       const response = await agent1
-        .put('/api/canceleapplication')
-        .send({
-          id: 1,
-        });
+        .put('/api/applications/1/cancel');
 
       const { statusCode, body } = response;
       const { currentApplication, message } = body;
@@ -279,16 +264,10 @@ describe('Actions with applications', () => {
         });
 
       await agent1
-        .put('/api/canceleapplication')
-        .send({
-          id: 1,
-        });
+        .put('/api/applications/1/cancel');
 
       const response = await agent2
-        .put('/api/rejectapplication')
-        .send({
-          id: 1,
-        });
+        .put('/api/applications/1/reject');
 
       const { statusCode, body } = response;
       const { currentApplication, message } = body;
@@ -318,16 +297,10 @@ describe('Actions with applications', () => {
         });
 
       await agent1
-        .put('/api/canceleapplication')
-        .send({
-          id: 1,
-        });
+        .put('/api/applications/1/cancel');
 
       const response = await agent2
-        .put('/api/completeapplication')
-        .send({
-          id: 1,
-        });
+        .put('/api/applications/1/complete');
 
       const { statusCode, body } = response;
       const { application, message } = body[0];

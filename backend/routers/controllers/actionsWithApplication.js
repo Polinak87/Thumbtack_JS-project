@@ -29,9 +29,9 @@ const createApplication = async (ctx) => {
   ctx.status = 201;
 };
 
-const canceleApplication = async (ctx) => {
+const cancelApplication = async (ctx) => {
   await checkAuthentication(ctx);
-  const { id } = ctx.request.body;
+  const { id } = ctx.params;
 
   const currentApplication = await Application.findOne({
     include: [{
@@ -82,8 +82,8 @@ const canceleApplication = async (ctx) => {
 
 const rejectApplication = async (ctx) => {
   await checkAuthentication(ctx);
-  const { id } = ctx.request.body;
 
+  const { id } = ctx.params;
   const currentApplication = await Application.findOne({
     include: [{
       model: UserThing,
@@ -126,8 +126,8 @@ const rejectApplication = async (ctx) => {
 
 const completeApplication = async (ctx) => {
   await checkAuthentication(ctx);
-  const { id } = ctx.request.body;
 
+  const { id } = ctx.params;
   const currentApplication = await Application.findOne({
     include: [{
       model: UserThing,
@@ -335,7 +335,7 @@ const completeApplication = async (ctx) => {
 
 module.exports = {
   createApplication,
-  canceleApplication,
+  cancelApplication,
   rejectApplication,
   completeApplication,
   PENDING,

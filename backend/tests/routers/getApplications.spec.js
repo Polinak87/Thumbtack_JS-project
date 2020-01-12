@@ -36,21 +36,21 @@ describe('get applications', () => {
       });
 
     await agent1
-      .post('/api/addnewthing')
+      .post('/api/userthings')
       .field({ name: 'winter dress' })
       .field({ description: 'pretty' })
       .field({ categoryId: 1 })
       .attach('file', 'backend/tests/routers/test-image.png');
 
     await agent1
-      .post('/api/addnewthing')
+      .post('/api/userthings')
       .field({ name: 'summer dress' })
       .field({ description: 'light' })
       .field({ categoryId: 1 })
       .attach('file', 'backend/tests/routers/test-image.png');
 
     await agent1
-      .put('/api/addthingtomarket')
+      .put('/api/userthings')
       .send({ id: 1 });
 
     await agent2
@@ -63,18 +63,18 @@ describe('get applications', () => {
       });
 
     await agent2
-      .post('/api/addnewthing')
+      .post('/api/userthings')
       .field({ name: 'gold ring' })
       .field({ description: 'modern style' })
       .field({ categoryId: 2 })
       .attach('file', 'backend/tests/routers/test-image.png');
 
     await agent2
-      .put('/api/addthingtomarket')
-      .send({ id: 3 });
+      .put('/api/userthings/3')
+      .send({ onMarket: true });
 
     await agent1
-      .post('/api/createapplication')
+      .post('/api/applications')
       .send({
         idThingOffered: 1,
         idThingDesired: 3,
@@ -82,7 +82,7 @@ describe('get applications', () => {
       });
 
     await agent1
-      .post('/api/createapplication')
+      .post('/api/applications')
       .send({
         idThingOffered: 2,
         idThingDesired: 3,
@@ -112,7 +112,7 @@ describe('get applications', () => {
         });
 
       const response = await agent
-        .get('/api/applicationsoutbox')
+        .get('/api/applications/outbox')
         .query({
           status: 'all',
         });
@@ -144,7 +144,7 @@ describe('get applications', () => {
         });
 
       const response = await agent
-        .get('/api/applicationsinbox')
+        .get('/api/applications/inbox')
         .query({
           status: 'all',
         });
@@ -176,13 +176,10 @@ describe('get applications', () => {
         });
 
       await agent
-        .put('/api/canceleapplication')
-        .send({
-          id: 1,
-        });
+        .put('/api/applications/1/cancel');
 
       const response = await agent
-        .get('/api/applicationsoutbox')
+        .get('/api/applications/outbox')
         .query({
           status: CANCELED,
         });
@@ -209,13 +206,10 @@ describe('get applications', () => {
         });
 
       await agent
-        .put('/api/rejectapplication')
-        .send({
-          id: 2,
-        });
+        .put('/api/applications/2/reject');
 
       const response = await agent
-        .get('/api/applicationsinbox')
+        .get('/api/applications/inbox')
         .query({
           status: REJECTED,
         });

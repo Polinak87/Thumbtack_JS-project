@@ -87,7 +87,7 @@ describe('Users', () => {
     const agent = await request.agent(this.app);
 
     const response = await agent
-      .get('/api/getcurrentuser');
+      .get('/api/user');
 
     expect(response.statusCode).toBe(401);
     expect(response.text).toBe('Unauthenticated');
@@ -104,7 +104,7 @@ describe('Users', () => {
       });
 
     const response = await agent
-      .get('/api/getcurrentuser');
+      .get('/api/user');
 
     const { statusCode, body } = response;
     const { firstName, lastName, id } = body;

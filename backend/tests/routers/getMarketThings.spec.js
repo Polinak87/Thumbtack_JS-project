@@ -37,28 +37,28 @@ describe('Actions with things', () => {
       });
 
     await agent1
-      .post('/api/addnewthing')
+      .post('/api/userthings')
       .field({ name: 'winter dress' })
       .field({ description: 'pretty' })
       .field({ categoryId: 1 })
       .attach('file', 'backend/tests/routers/test-image.png');
 
     await agent1
-      .post('/api/addnewthing')
+      .post('/api/userthings')
       .field({ name: 'summer dress' })
       .field({ description: 'light' })
       .field({ categoryId: 1 })
       .attach('file', 'backend/tests/routers/test-image.png');
 
     await agent1
-      .post('/api/addnewthing')
+      .post('/api/userthings')
       .field({ name: 'gold ring' })
       .field({ description: 'modern style' })
       .field({ categoryId: 2 })
       .attach('file', 'backend/tests/routers/test-image.png');
 
     await agent2
-      .post('/api/addnewthing')
+      .post('/api/userthings')
       .field({ name: 'silver ring' })
       .field({ description: 'modern style' })
       .field({ categoryId: 2 })
@@ -87,8 +87,8 @@ describe('Actions with things', () => {
       });
 
     await agent1
-      .put('/api/addthingtomarket')
-      .send({ id: 1 });
+      .put('/api/userthings/1')
+      .send({ onMarket: true });
 
     await agent2
       .post('/api/login')
@@ -98,11 +98,11 @@ describe('Actions with things', () => {
       });
 
     await agent2
-      .put('/api/addthingtomarket')
-      .send({ id: 4 });
+      .put('/api/userthings/4')
+      .send({ onMarket: true });
 
     const response = await agent1
-      .get('/api/marketthings')
+      .get('/api/userthings/market')
       .query({
         filtrationType: 'all',
         sortingType: 'DESC',

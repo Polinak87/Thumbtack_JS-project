@@ -3,7 +3,7 @@
 const { Thing, User, UserThing, Category } = require('../../models');
 const { checkAuthentication } = require('./authorization');
 
-const addNewThing = async (ctx) => {
+const downloadNewThing = async (ctx) => {
   await checkAuthentication(ctx);
   const { name, description, categoryId } = ctx.req.body;
   const userId = ctx.state.user.id;
@@ -40,7 +40,7 @@ const addNewThing = async (ctx) => {
 
 const addThingFromCatalog = async (ctx) => {
   await checkAuthentication(ctx);
-  const { id } = ctx.request.body;
+  const { id } = ctx.params;
   const userId = ctx.state.user.id;
 
   const newUserThing = await UserThing.create({
@@ -68,9 +68,10 @@ const addThingFromCatalog = async (ctx) => {
   ctx.status = 201;
 };
 
-const addThingToMarket = async (ctx) => {
+const addRemoveThingFromMarket = async (ctx) => {
   await checkAuthentication(ctx);
-  const thingId = ctx.request.body.id;
+  const { id: thingId } = ctx.params;
+  const { onMarket } = ctx.request.body;
 
   const thing = await UserThing.findOne({
     include: [{
@@ -86,34 +87,14 @@ const addThingToMarket = async (ctx) => {
     },
   });
 
-  thing.onMarket = true;
-  thing.onMarketAt = new Date();
-  await thing.save();
+  thing.onMarket = onMarket;
 
-  ctx.body = thing;
-  ctx.status = 200;
-};
+  if (onMarket) {
+    thing.onMarketAt = new Date();
+  } else {
+    thing.onMarketAt = null;
+  }
 
-const removeThingFromMarket = async (ctx) => {
-  await checkAuthentication(ctx);
-  const thingId = ctx.request.body.id;
-
-  const thing = await UserThing.findOne({
-    include: [{
-      model: Thing,
-      include: [{
-        model: Category,
-      }],
-    }, {
-      model: User,
-    }],
-    where: {
-      id: thingId,
-    },
-  });
-
-  thing.onMarket = false;
-  thing.onMarketAt = null;
   await thing.save();
 
   ctx.body = thing;
@@ -121,8 +102,7 @@ const removeThingFromMarket = async (ctx) => {
 };
 
 module.exports = {
-  addNewThing,
+  downloadNewThing,
   addThingFromCatalog,
-  addThingToMarket,
-  removeThingFromMarket,
+  addRemoveThingFromMarket,
 };

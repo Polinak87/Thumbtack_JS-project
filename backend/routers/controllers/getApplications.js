@@ -1,6 +1,5 @@
 'use strict';
 
-const urlapi = require('url');
 const {
   Thing,
   Category,
@@ -13,8 +12,9 @@ const { checkAuthentication } = require('./authorization');
 const applicationsOutbox = async (ctx, next) => {
   await checkAuthentication(ctx);
   const currentUserId = ctx.state.user.id;
-  const query = urlapi.parse(ctx.request.url).query;
-  const statusForFilter = query.substring((query.indexOf('=') + 1), query.length);
+  const query = ctx.request.querystring;
+  const params = new URLSearchParams(query);
+  const statusForFilter = params.get('status');
 
   if (!statusForFilter.localeCompare('all')) {
     ctx.body = await Application.findAll({
@@ -75,8 +75,9 @@ const applicationsOutbox = async (ctx, next) => {
 const applicationsInbox = async (ctx, next) => {
   await checkAuthentication(ctx);
   const currentUserId = ctx.state.user.id;
-  const query = urlapi.parse(ctx.request.url).query;
-  const statusForFilter = query.substring((query.indexOf('=') + 1), query.length);
+  const query = ctx.request.querystring;
+  const params = new URLSearchParams(query);
+  const statusForFilter = params.get('status');
 
   if (!statusForFilter.localeCompare('all')) {
     ctx.body = await Application.findAll({

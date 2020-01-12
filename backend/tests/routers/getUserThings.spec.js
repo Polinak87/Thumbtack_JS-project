@@ -36,21 +36,21 @@ describe('Actions with things', () => {
       });
 
     await agent1
-      .post('/api/addnewthing')
+      .post('/api/userthings')
       .field({ name: 'winter dress' })
       .field({ description: 'pretty' })
       .field({ categoryId: 1 })
       .attach('file', 'backend/tests/routers/test-image.png');
 
     await agent1
-      .post('/api/addnewthing')
+      .post('/api/userthings')
       .field({ name: 'gold ring' })
       .field({ description: 'modern style' })
       .field({ categoryId: 2 })
       .attach('file', 'backend/tests/routers/test-image.png');
 
     await agent2
-      .post('/api/addnewthing')
+      .post('/api/userthings')
       .field({ name: 'silver ring' })
       .field({ description: 'modern style' })
       .field({ categoryId: 2 })
@@ -78,7 +78,7 @@ describe('Actions with things', () => {
       });
 
     const response = await agent
-      .get('/api/userthings');
+      .get('/api/userthings/inventory');
 
     const { statusCode, body } = response;
 

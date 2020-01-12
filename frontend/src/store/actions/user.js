@@ -35,7 +35,7 @@ export const logout = () => {
 
 export const getCurrentUser = () => {
   return dispatch => {
-    return axios.get('api/getcurrentuser').then(response => {
+    return axios.get('/api/user').then(response => {
       const { data } = response;
       dispatch(addUser(data));
     });

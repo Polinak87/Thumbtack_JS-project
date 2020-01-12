@@ -10,7 +10,7 @@ export const UPDATE_OUTBOX_APPLICATIONS = 'UPDATE_OUTBOX_APPLICATIONS';
 export const createApplication = (idThingOffered, idThingDesired, idUserAnswer) => {
   return dispatch => {
     axios
-      .post('/api/createapplication', { idThingOffered, idThingDesired, idUserAnswer })
+      .post('/api/applications', { idThingOffered, idThingDesired, idUserAnswer })
       .then(response => {
         const { data } = response;
         updateOutboxApplications(createMap(data));
@@ -26,7 +26,7 @@ export const createApplication = (idThingOffered, idThingDesired, idUserAnswer) 
 export const getInboxApplications = status => {
   return dispatch => {
     axios
-      .get('/api/applicationsinbox', {
+      .get('/api/applications/inbox', {
         params: {
           status,
         },
@@ -41,7 +41,7 @@ export const getInboxApplications = status => {
 export const getOutboxApplications = status => {
   return dispatch => {
     axios
-      .get('/api/applicationsoutbox', {
+      .get('/api/applications/outbox', {
         params: {
           status,
         },
@@ -55,7 +55,7 @@ export const getOutboxApplications = status => {
 
 export const rejectApplication = id => {
   return dispatch => {
-    axios.put('/api/rejectapplication', { id }).then(response => {
+    axios.put(`/api/applications/${id}/reject`).then(response => {
       const { currentApplication, message } = response.data;
       dispatch(updateInboxApplications(createMap(currentApplication)));
       if (message !== '') {
@@ -66,7 +66,7 @@ export const rejectApplication = id => {
 };
 export const cancelApplication = id => {
   return dispatch => {
-    axios.put('/api/canceleapplication', { id }).then(response => {
+    axios.put(`/api/applications/${id}/cancel`).then(response => {
       const { currentApplication, message } = response.data;
       dispatch(updateOutboxApplications(createMap(currentApplication)));
       if (message !== '') {
@@ -78,7 +78,7 @@ export const cancelApplication = id => {
 
 export const completeApplication = id => {
   return dispatch => {
-    axios.put('/api/completeapplication', { id }).then(response => {
+    axios.put(`/api/applications/${id}/complete`).then(response => {
       let { data } = response;
       let arrayForUpdate = [];
       for (let i = 0; i < data.length; i++) {

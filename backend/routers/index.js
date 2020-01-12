@@ -11,17 +11,16 @@ const {
   registration,
 } = require('./controllers/authorization');
 
-const { getCategorys } = require('./controllers/getCategorys');
+const { getCategories } = require('./controllers/getCategories');
 
 const {
-  addNewThing,
+  downloadNewThing,
   addThingFromCatalog,
-  addThingToMarket,
-  removeThingFromMarket,
+  addRemoveThingFromMarket,
 } = require('./controllers/actionsWithThings');
 
 const {
-  getUserThings,
+  getInventoryThings,
   getMarketThings,
   getMarketThingsOfOneUser,
   getCatalogThings,
@@ -29,7 +28,7 @@ const {
 
 const {
   createApplication,
-  canceleApplication,
+  cancelApplication,
   rejectApplication,
   completeApplication,
 } = require('./controllers/actionsWithApplication');
@@ -44,28 +43,24 @@ const router = new Router();
 router.post('/api/registration', registration);
 router.post('/api/login', login);
 router.post('/api/logout', logout);
-router.get('/api/getcurrentuser', getCurrentUser);
+router.get('/api/user', getCurrentUser);
 
-router.get('/api/category', getCategorys);
+router.get('/api/categories', getCategories);
 
-router.post('/api/addthingfromcatalog', addThingFromCatalog);
-router.post('/api/addnewthing', upload.single('file'), addNewThing);
+router.post('/api/userthings/from-catalog/:id', addThingFromCatalog);
+router.post('/api/userthings', upload.single('file'), downloadNewThing);
+router.put('/api/userthings/:id', addRemoveThingFromMarket);
+router.get('/api/userthings/inventory', getInventoryThings);
+router.get('/api/userthings/market', getMarketThings);
+router.get('/api/userthings/market/by-user', getMarketThingsOfOneUser);
+router.get('/api/things', getCatalogThings);
 
-router.post('/api/addthingtomarket', addThingToMarket);
-router.post('/api/removethingfrommarket', removeThingFromMarket);
-
-router.get('/api/userthings', getUserThings);
-router.get('/api/marketthings', getMarketThings);
-router.get('/api/marketthingsfilteredbyuser', getMarketThingsOfOneUser);
-router.get('/api/catalog', getCatalogThings);
-
-router.post('/api/createapplication', createApplication);
-router.put('/api/canceleapplication', canceleApplication);
-router.put('/api/rejectapplication', rejectApplication);
-router.put('/api/completeapplication', completeApplication);
-
-router.get('/api/applicationsoutbox', applicationsOutbox);
-router.get('/api/applicationsinbox', applicationsInbox);
+router.post('/api/applications', createApplication);
+router.put('/api/applications/:id/cancel', cancelApplication);
+router.put('/api/applications/:id/reject', rejectApplication);
+router.put('/api/applications/:id/complete', completeApplication);
+router.get('/api/applications/outbox', applicationsOutbox);
+router.get('/api/applications/inbox', applicationsInbox);
 
 module.exports = {
   router,

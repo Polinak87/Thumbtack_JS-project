@@ -8,7 +8,7 @@ const {
   UserThing,
 } = require('../models');
 
-const PENDING = require('../routers/controllers/actionsWithApplication');
+const { PENDING } = require('../routers/controllers/actionsWithApplication');
 
 sequelize.sync({ force: false }).then(async () => {
   await User.create({

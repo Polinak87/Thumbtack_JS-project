@@ -45,7 +45,7 @@ describe('Actions with things', () => {
       });
 
     const response = await agent
-      .get('/api/category');
+      .get('/api/categories');
 
     const array = response.body;
 

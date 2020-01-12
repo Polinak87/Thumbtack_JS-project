@@ -19,7 +19,7 @@ export const addNewThing = (name, description, categoryId, file) => {
     formData.append('categoryId', categoryId);
 
     axios
-      .post('/api/addnewthing', formData, {
+      .post('/api/userthings', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
@@ -34,7 +34,7 @@ export const addNewThing = (name, description, categoryId, file) => {
 
 export const addThingFromCatalog = id => {
   return dispatch => {
-    axios.post('api/addthingfromcatalog', { id }).then(response => {
+    axios.post(`/api/userthings/from-catalog/${ id }`).then(response => {
       const { data } = response;
       dispatch(updateUserThing(data));
       dispatch(addMessage({ text: 'Thing is added to your inventory.' }));
@@ -53,7 +53,7 @@ export const deleteThingForExchange = () => ({
 
 export const getUserThings = () => {
   return dispatch => {
-    axios.get('/api/userthings').then(response => {
+    axios.get('/api/userthings/inventory').then(response => {
       const { data } = response;
       dispatch(addUserThings(createMap(data)));
     });
@@ -62,7 +62,7 @@ export const getUserThings = () => {
 
 export const addThingToMartet = id => {
   return dispatch => {
-    axios.put('/api/addthingtomarket', { id }).then(response => {
+    axios.put(`/api/userthings/${id}`, { onMarket: true }).then(response => {
       const { data } = response;
       dispatch(updateUserThing(data));
     });
@@ -71,7 +71,7 @@ export const addThingToMartet = id => {
 
 export const removeThingFromMartet = id => {
   return dispatch => {
-    axios.put('/api/removethingfrommarket', { id }).then(response => {
+    axios.put(`/api/userthings/${id}`, { onMarket: false }).then(response => {
       const { data } = response;
       dispatch(updateUserThing(data));
     });
@@ -91,7 +91,7 @@ export const updateUserThing = userThing => ({
 export const getMarketThings = (filtrationType, sortingType) => {
   return dispatch => {
     axios
-      .get('/api/marketthings', {
+      .get('/api/userthings/market', {
         params: {
           filtrationType,
           sortingType,
@@ -112,7 +112,7 @@ export const addMarketThings = marketThings => ({
 export const getMarketThingsOfOneUser = user => {
   return dispatch => {
     axios
-      .get('/api/marketthingsfilteredbyuser', {
+      .get('/api/userthings/market/by-user', {
         params: {
           user,
         },
@@ -131,7 +131,7 @@ export const addMarketThingsOfOneUser = marketThingsOfOneUser => ({
 
 export const getCatalog = () => {
   return dispatch => {
-    axios.get('/api/catalog').then(response => {
+    axios.get('/api/things').then(response => {
       const { data } = response;
       dispatch(addCatalog(createMap(data)));
     });

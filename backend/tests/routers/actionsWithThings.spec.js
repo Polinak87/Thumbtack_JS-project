@@ -44,7 +44,7 @@ describe('Actions with things', () => {
       });
 
     const response = await agent
-      .post('/api/addnewthing')
+      .post('/api/userthings')
       .field({ name: 'bag' })
       .field({ description: 'red leather' })
       .field({ categoryId: 1 })
@@ -85,8 +85,8 @@ describe('Actions with things', () => {
       });
 
     const response = await agent
-      .put('/api/addthingtomarket')
-      .send({ id: 1 });
+      .put('/api/userthings/1')
+      .send({ onMarket: true });
 
     const { statusCode, body } = response;
     const {
@@ -122,8 +122,8 @@ describe('Actions with things', () => {
       });
 
     const response = await agent
-      .put('/api/removethingfrommarket')
-      .send({ id: 1 });
+      .put('/api/userthings/1')
+      .send({ onMarket: false });
 
     expect(response.statusCode).toBe(200);
     expect(response.body.onMarket).toBe(false);
