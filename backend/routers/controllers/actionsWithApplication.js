@@ -210,6 +210,9 @@ const completeApplication = async (ctx) => {
       { where: { id: idThingDesired } },
     );
 
+    // Seach and processing applications, consist of exchanged userthings.
+    // Such applications can't be completed. They are canceled or rejected.
+
     let applications = await findApplicationsByCondition({
       idThingOffered,
       status: PENDING,

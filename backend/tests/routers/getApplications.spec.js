@@ -12,7 +12,7 @@ const {
   CANCELED,
 } = require('../../routers/controllers/actionsWithApplication');
 
-describe('get applications', () => {
+describe('Get applications', () => {
   beforeAll(async () => {
     this.app = app.callback();
   });
@@ -100,7 +100,7 @@ describe('get applications', () => {
     await sequelize.close();
   });
 
-  describe('get applications', () => {
+  describe('Get applications', () => {
     test('get outbox applications', async () => {
       const agent = await request.agent(this.app);
 

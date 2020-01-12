@@ -108,7 +108,7 @@ describe('Actions with applications', () => {
       expect(status).toBe(CANCELED);
     });
 
-    test('Reject application', async () => {
+    test('reject application', async () => {
       const agent = await request.agent(this.app);
 
       await agent
@@ -130,7 +130,7 @@ describe('Actions with applications', () => {
       expect(status).toBe(REJECTED);
     });
 
-    test('Complete application', async () => {
+    test('complete application', async () => {
       const agent1 = await request.agent(this.app);
       const agent2 = await request.agent(this.app);
 
@@ -245,7 +245,7 @@ describe('Actions with applications', () => {
       expect(status).toBe(COMPLETED);
     });
 
-    test('Reject application', async () => {
+    test('reject application', async () => {
       const agent1 = await request.agent(this.app);
       const agent2 = await request.agent(this.app);
 
@@ -278,7 +278,7 @@ describe('Actions with applications', () => {
       expect(status).toBe(CANCELED);
     });
 
-    test('Complete application', async () => {
+    test('complete application', async () => {
       const agent1 = await request.agent(this.app);
       const agent2 = await request.agent(this.app);
 

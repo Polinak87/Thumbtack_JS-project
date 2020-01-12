@@ -33,7 +33,7 @@ describe('Actions with things', () => {
     await sequelize.close();
   });
 
-  test('Add new thing to inventory', async () => {
+  test('download new thing', async () => {
     const agent = await request.agent(this.app);
 
     await agent
@@ -74,7 +74,7 @@ describe('Actions with things', () => {
     expect(userId).toBe(1);
   });
 
-  test('Add thing to market', async () => {
+  test('add thing to market', async () => {
     const agent = await request.agent(this.app);
 
     await agent
@@ -111,7 +111,7 @@ describe('Actions with things', () => {
     expect(userId).toBe(1);
   });
 
-  test('Remove thing from market', async () => {
+  test('remove thing from market', async () => {
     const agent = await request.agent(this.app);
 
     await agent

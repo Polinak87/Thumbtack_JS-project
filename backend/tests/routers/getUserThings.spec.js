@@ -67,7 +67,7 @@ describe('Actions with things', () => {
     await sequelize.close();
   });
 
-  test('Get things for users inventory', async () => {
+  test('get things for users inventory', async () => {
     const agent = await request.agent(this.app);
 
     await agent

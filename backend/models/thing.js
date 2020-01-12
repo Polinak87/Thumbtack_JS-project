@@ -19,14 +19,16 @@ module.exports = (sequelize) => {
   });
 
   Thing.associate = function (models) {
-    Thing.belongsToMany(models.User, {
-      through: models.UserThing,
+    const { User, UserThing, Category } = models;
+
+    Thing.belongsToMany(User, {
+      through: UserThing,
       foreignKey: 'thingId',
     });
-    Thing.hasMany(models.UserThing, {
+    Thing.hasMany(UserThing, {
       foreignKey: 'thingId',
     });
-    Thing.belongsTo(models.Category, {
+    Thing.belongsTo(Category, {
       foreignKey: 'categoryId',
     });
   };

@@ -8,7 +8,7 @@ const {
 } = require('../../models');
 const { PENDING } = require('../../routers/controllers/actionsWithApplication');
 
-describe('Actions with things', () => {
+describe('Actions with applications', () => {
   beforeAll(async () => {
     this.app = app.callback();
     await sequelize.sync({ force: true });
@@ -62,7 +62,7 @@ describe('Actions with things', () => {
     await sequelize.close();
   });
 
-  test('Create application', async () => {
+  test('create application', async () => {
     const agent1 = await request.agent(this.app);
     const agent2 = await request.agent(this.app);
 

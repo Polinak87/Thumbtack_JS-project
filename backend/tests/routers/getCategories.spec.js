@@ -7,7 +7,7 @@ const {
   sequelize,
 } = require('../../models');
 
-describe('Actions with things', () => {
+describe('Get categories', () => {
   beforeAll(async () => {
     this.app = app.callback();
     await sequelize.sync({ force: true });
@@ -34,7 +34,7 @@ describe('Actions with things', () => {
     await sequelize.close();
   });
 
-  test('Get categoties for form', async () => {
+  test('get categoties for form', async () => {
     const agent = await request.agent(this.app);
 
     await agent

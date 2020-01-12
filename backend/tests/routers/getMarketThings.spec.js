@@ -75,7 +75,7 @@ describe('Actions with things', () => {
     await sequelize.close();
   });
 
-  test('Get things for market', async () => {
+  test('get things for market', async () => {
     const agent1 = await request.agent(this.app);
     const agent2 = await request.agent(this.app);
 

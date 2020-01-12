@@ -4,7 +4,7 @@ const request = require('supertest');
 const { app } = require('../../app');
 const { sequelize } = require('../../models');
 
-describe('Users', () => {
+describe('Authorization', () => {
   beforeAll(async () => {
     this.app = app.callback();
     await sequelize.sync({ force: true });

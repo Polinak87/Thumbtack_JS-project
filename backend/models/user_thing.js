@@ -21,18 +21,20 @@ module.exports = (sequelize) => {
   });
 
   UserThing.associate = function (models) {
-    UserThing.hasMany(models.Application, {
+    const { Application, Thing, User } = models;
+
+    UserThing.hasMany(Application, {
       as: 'ThingOffered',
       foreignKey: 'idThingOffered',
     });
-    UserThing.hasMany(models.Application, {
+    UserThing.hasMany(Application, {
       as: 'ThingDesired',
       foreignKey: 'idThingDesired',
     });
-    UserThing.belongsTo(models.Thing, {
+    UserThing.belongsTo(Thing, {
       foreignKey: 'thingId',
     });
-    UserThing.belongsTo(models.User, {
+    UserThing.belongsTo(User, {
       foreignKey: 'userId',
     });
   };
