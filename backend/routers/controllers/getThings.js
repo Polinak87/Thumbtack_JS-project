@@ -35,7 +35,7 @@ const getMarketThings = async (ctx, next) => {
   const categoryForFiltration = params.get('filtrationType');
   const sortingType = params.get('sortingType');
 
-  if (!categoryForFiltration.localeCompare('all')) {
+  if (categoryForFiltration === 'all') {
     ctx.body = await UserThing.findAll({
       include: [{
         model: Thing,

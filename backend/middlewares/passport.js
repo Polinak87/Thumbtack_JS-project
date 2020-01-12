@@ -21,10 +21,12 @@ passport.use('local', new LocalStrategy(options, async (email, password, done) =
   });
 
   if (user) {
+    const { firstName, lastName, id } = user;
+
     return done(null, {
-      firstName: user.firstName,
-      lastName: user.lastName,
-      id: user.id,
+      firstName,
+      lastName,
+      id,
     });
   }
 
@@ -32,7 +34,9 @@ passport.use('local', new LocalStrategy(options, async (email, password, done) =
 }));
 
 passport.serializeUser((user, done) => {
-  done(null, user.id);
+  const { id } = user;
+
+  done(null, id);
 });
 
 passport.deserializeUser(async (userId, done) => {
@@ -42,9 +46,11 @@ passport.deserializeUser(async (userId, done) => {
     },
   });
 
+  const { email, password } = user;
+
   done(null, {
-    email: user.email,
-    password: user.password,
+    email,
+    password,
     id: userId,
   });
 });

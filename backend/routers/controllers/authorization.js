@@ -1,3 +1,5 @@
+/* eslint-disable consistent-return */
+
 'use strict';
 
 const passport = require('../../middlewares/passport');
@@ -5,12 +7,11 @@ const { User } = require('../../models');
 
 const checkAuthentication = (ctx) => {
   if (ctx.isUnauthenticated()) {
-    // ctx.redirect('/home');
+    ctx.redirect('/home');
     ctx.throw(401, 'Unauthenticated');
   }
 };
 
-// eslint-disable-next-line consistent-return
 const registration = async (ctx) => {
   if (ctx.isAuthenticated()) {
     return ctx.redirect('/profile');
@@ -35,7 +36,6 @@ const registration = async (ctx) => {
   }
 };
 
-// eslint-disable-next-line consistent-return
 const login = async (ctx) => {
   if (ctx.isAuthenticated()) {
     return ctx.redirect('/profile');

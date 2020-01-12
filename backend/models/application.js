@@ -25,11 +25,13 @@ module.exports = (sequelize) => {
   });
 
   Application.associate = function (models) {
-    Application.belongsTo(models.UserThing, {
+    const { UserThing } = models;
+
+    Application.belongsTo(UserThing, {
       as: 'ThingOffered',
       foreignKey: 'idThingOffered',
     });
-    Application.belongsTo(models.UserThing, {
+    Application.belongsTo(UserThing, {
       as: 'ThingDesired',
       foreignKey: 'idThingDesired',
     });

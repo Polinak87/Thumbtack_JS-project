@@ -29,11 +29,8 @@ const createApplication = async (ctx) => {
   ctx.status = 201;
 };
 
-const cancelApplication = async (ctx) => {
-  await checkAuthentication(ctx);
-  const { id } = ctx.params;
-
-  const currentApplication = await Application.findOne({
+const findApplication = (id) => {
+  return Application.findOne({
     include: [{
       model: UserThing,
       as: 'ThingOffered',
@@ -55,6 +52,13 @@ const cancelApplication = async (ctx) => {
     }],
     where: { id },
   });
+};
+
+const cancelApplication = async (ctx) => {
+  await checkAuthentication(ctx);
+  const { id } = ctx.params;
+
+  const currentApplication = await findApplication(id);
 
   if (currentApplication.status === PENDING) {
     await Application.update(
@@ -84,28 +88,7 @@ const rejectApplication = async (ctx) => {
   await checkAuthentication(ctx);
 
   const { id } = ctx.params;
-  const currentApplication = await Application.findOne({
-    include: [{
-      model: UserThing,
-      as: 'ThingOffered',
-      include: [{
-        model: Thing,
-        include: [{
-          model: Category,
-        }],
-      }],
-    }, {
-      model: UserThing,
-      as: 'ThingDesired',
-      include: [{
-        model: Thing,
-        include: [{
-          model: Category,
-        }],
-      }],
-    }],
-    where: { id },
-  });
+  const currentApplication = await findApplication(id);
 
   if (currentApplication.status === PENDING) {
     currentApplication.status = REJECTED;
@@ -124,11 +107,8 @@ const rejectApplication = async (ctx) => {
   }
 };
 
-const completeApplication = async (ctx) => {
-  await checkAuthentication(ctx);
-
-  const { id } = ctx.params;
-  const currentApplication = await Application.findOne({
+const findApplicationsByCondition = (condition) => {
+  return Application.findAll({
     include: [{
       model: UserThing,
       as: 'ThingOffered',
@@ -148,8 +128,42 @@ const completeApplication = async (ctx) => {
         }],
       }],
     }],
-    where: { id },
+    where: condition,
   });
+};
+
+const updateApplications = async (array, status) => {
+  const updatedArray = [];
+
+  for (let i = 0; i < array.length; i++) {
+    const ApplicationForUpdate = array[i].dataValues;
+
+    await Application.update(
+      {
+        status,
+      },
+      { where: { id: ApplicationForUpdate.id } },
+    )
+      .then(() => {
+        ApplicationForUpdate.status = status;
+      });
+
+    await updatedArray.push(
+      {
+        application: ApplicationForUpdate,
+        message: '',
+      },
+    );
+  }
+
+  return updatedArray;
+};
+
+const completeApplication = async (ctx) => {
+  await checkAuthentication(ctx);
+
+  const { id } = ctx.params;
+  const currentApplication = await findApplication(id);
 
   const {
     idUserAuthor,
@@ -159,177 +173,81 @@ const completeApplication = async (ctx) => {
     status,
   } = currentApplication;
 
-  let ApplicationsForReject;
-  let ApplicationsForCancel;
-
   ctx.body = [];
 
-  switch (status) {
-    case PENDING:
-      await Application.update(
-        {
-          status: COMPLETED,
-        },
-        { where: { id } },
-      ).then(() => {
-        currentApplication.status = COMPLETED;
-      });
+  if (status === PENDING) {
+    await Application.update(
+      {
+        status: COMPLETED,
+      },
+      { where: { id } },
+    ).then(() => {
+      currentApplication.status = COMPLETED;
+    });
 
-      await ctx.body.push(
-        {
-          application: currentApplication,
-          message: '',
-        },
-      );
+    await ctx.body.push(
+      {
+        application: currentApplication,
+        message: '',
+      },
+    );
 
-      await UserThing.update(
-        {
-          userId: idUserAnswer,
-          onMarket: 'false',
-          onMarketAt: null,
-        },
-        { where: { id: idThingOffered } },
-      );
+    await UserThing.update(
+      {
+        userId: idUserAnswer,
+        onMarket: 'false',
+        onMarketAt: null,
+      },
+      { where: { id: idThingOffered } },
+    );
 
-      await UserThing.update(
-        {
-          userId: idUserAuthor,
-          onMarket: 'false',
-          onMarketAt: null,
-        },
-        { where: { id: idThingDesired } },
-      );
+    await UserThing.update(
+      {
+        userId: idUserAuthor,
+        onMarket: 'false',
+        onMarketAt: null,
+      },
+      { where: { id: idThingDesired } },
+    );
 
-      await Application.findAll({
-        include: [{
-          model: UserThing,
-          as: 'ThingOffered',
-          include: [{
-            model: Thing,
-            include: [{
-              model: Category,
-            }],
-          }],
-        }, {
-          model: UserThing,
-          as: 'ThingDesired',
-          include: [{
-            model: Thing,
-            include: [{
-              model: Category,
-            }],
-          }],
-        }],
-        where: {
-          idThingOffered,
-          status: PENDING,
-        },
-      })
-        .then((applications) => {
-          ApplicationsForCancel = applications;
-        });
+    let applications = await findApplicationsByCondition({
+      idThingOffered,
+      status: PENDING,
+    });
 
-      await Application.findAll({
-        include: [{
-          model: UserThing,
-          as: 'ThingOffered',
-          include: [{
-            model: Thing,
-            include: [{
-              model: Category,
-            }],
-          }],
-        }, {
-          model: UserThing,
-          as: 'ThingDesired',
-          include: [{
-            model: Thing,
-            include: [{
-              model: Category,
-            }],
-          }],
-        }],
-        where: {
-          idThingDesired,
-          status: PENDING,
-        },
-      })
-        .then((applications) => {
-          ApplicationsForReject = applications;
-        });
+    let updatedApplications = await updateApplications(applications, REJECTED);
 
-      for (let i = 0; i < ApplicationsForReject.length; i++) {
-        const ApplicationForReject = ApplicationsForReject[i].dataValues;
+    ctx.body = [...ctx.body, ...updatedApplications];
 
-        await Application.update(
-          {
-            status: REJECTED,
-          },
-          { where: { id: ApplicationForReject.id } },
-        )
-          .then(() => {
-            ApplicationForReject.status = REJECTED;
-          });
+    applications = await findApplicationsByCondition({
+      idThingDesired,
+      status: PENDING,
+    });
 
-        await ctx.body.push(
-          {
-            application: ApplicationForReject,
-            message: '',
-          },
-        );
-      }
+    updatedApplications = await updateApplications(applications, CANCELED);
 
-      for (let i = 0; i < ApplicationsForCancel.length; i++) {
-        const ApplicationForCancel = ApplicationsForCancel[i].dataValues;
+    ctx.body = [...ctx.body, ...updatedApplications];
+    ctx.status = 200;
+  }
 
-        await Application.update(
-          {
-            status: CANCELED,
-          },
-          { where: { id: ApplicationForCancel.id } },
-        )
-          .then(() => {
-            ApplicationForCancel.status = CANCELED;
-          });
+  if (status === CANCELED) {
+    await ctx.body.push(
+      {
+        application: currentApplication,
+        message: 'Very sorry, the other user has just canceled the application.',
+      },
+    );
+    ctx.status = 200;
+  }
 
-        if (ApplicationForCancel.idUserAnswer === ctx.state.user.id) {
-          await ctx.body.push(
-            {
-              application: ApplicationForCancel,
-              message: '',
-            },
-          );
-        }
-      }
-
-      ctx.status = 200;
-      break;
-
-    case CANCELED:
-      await ctx.body.push(
-        {
-          application: currentApplication,
-          message: 'Very sorry, the other user has just canceled the application.',
-        },
-      );
-      ctx.status = 200;
-      break;
-
-    case REJECTED:
-      await ctx.body.push(
-        {
-          application: currentApplication,
-          message: 'Ops, another user has just accepted your application for exchange this thing. This application is automatically canceled.',
-        },
-      );
-      ctx.status = 200;
-      break;
-
-    default:
-    {
-      ctx.status = 200;
-      break;
-    }
+  if (status === REJECTED) {
+    await ctx.body.push(
+      {
+        application: currentApplication,
+        message: 'Ops, another user has just accepted your application for exchange this thing. This application is automatically canceled.',
+      },
+    );
+    ctx.status = 200;
   }
 };
 

@@ -16,7 +16,7 @@ const applicationsOutbox = async (ctx, next) => {
   const params = new URLSearchParams(query);
   const statusForFilter = params.get('status');
 
-  if (!statusForFilter.localeCompare('all')) {
+  if (statusForFilter === 'all') {
     ctx.body = await Application.findAll({
       include: [{
         model: UserThing,
@@ -79,7 +79,7 @@ const applicationsInbox = async (ctx, next) => {
   const params = new URLSearchParams(query);
   const statusForFilter = params.get('status');
 
-  if (!statusForFilter.localeCompare('all')) {
+  if (statusForFilter === 'all') {
     ctx.body = await Application.findAll({
       include: [{
         model: UserThing,
